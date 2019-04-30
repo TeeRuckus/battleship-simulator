@@ -1,0 +1,247 @@
+CLASS: fighterJetClass
+
+PUBLIC CLASS CONSTANTS:
+
+CLASS FIELDS:
+    serialNum (Real)
+    year (Interger)
+    ordance (string)
+    wingSpan (Real)
+
+COSTRUCTORS:
+
+Defualt:
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: a fighter jet with a serial number of 123.250, commisioned in
+                1950. It's a fighter jet with a wingspan of 3 meters and 
+                equiped with machine guns
+
+    ALGORITHM:
+        serialNum := 123.250 
+        year := 1950
+        ordance := "machine guns"
+        wingSpan := 3.0
+
+Alternate
+    IMPORT: inSerialNum (Real), inYear (Interger), inOrdance (String),
+            inWingSpan (Real)
+    EXPORT: none
+    ASSERTIONS: creates an object if the imports are valid, otherwise it will
+                FAIL
+
+    ALGORITHM:
+        IF (validateSerialNum <- inSerialNum) THEN
+            IF (validateYear <- inYear) THEN
+                IF (validateOrdance <- inOrdance) THEN
+                    IF (validateWingSpan <- inWingSpan) THEN
+
+                        serialNum := inSerialNum
+                        year := inYear
+                        ordance := inOrdance
+                        wingSpan := inWingSpan
+        ELSE
+            FAIL
+        END IF ELSE
+
+Copy:
+    IMPORT: inFighterJet (fighterJetClass)
+    EXPORT: none
+    ASSERTION: creates an object which is identical to the imported object
+
+    ALGORITHM:
+        serialNum := inFighterJet.getSerialNum <- none
+        year := inFighterJet.getYear <- none
+        ordance := inFighterJet.getOrdance <- none
+        wingSpan := inFighterJet.getWingSpan <- none
+
+ACCESSORS
+
+SUBMODULES: getSerialNum
+    IMPORT: none
+    EXPORT: serialNum (Real) 
+    ASSERTION: returns the last set serial number set
+
+SUBMODULE: getYear
+    IMPORT: none
+    EXPORT: year (Interger)
+    ASSERTION: returns the last set commision year
+
+SUBMODULE: get getOrdance
+    IMPORT: none
+    EXPORT: ordance (String)
+    ASSERTION: returns the last set ordance
+
+SUBMODULE: getWingSpan
+    IMPORT: none
+    EXPORT: wingSpan
+    ASSERTION: returns the last set wingspan
+
+MUTATORS:
+
+SUBMODULE: setSerialNum
+    IMPORT: inSerialNum (Real)
+    EXPORT: none
+    ASSERTION: sets the serial number to inSerialNum if it's valid, otherwise
+                it fails
+
+    ALGORITHM:
+        IF (validateSerialNum <- inSerialNum) THEN
+            serialNum := inSerialNum
+        ELSE
+            FAIL
+        END IF ELSE
+
+
+SUBMODULE: setYear
+    IMPORT: inYear (interger)
+    EXPORT: none
+    ASSERTION: set year to inYear if it's valid, otherwise it will fail
+
+    ALGORITHM:
+        IF (validateYear <- inYear) THEN
+            year := inYear
+        ELSE
+            FAIL
+        END IF ELSE
+
+SUBMODULE: setOrdance
+    IMPORT: inOrdance (String)
+    EXPORT: none
+    ASSERTION: set ordance to to inOrdance if it's valid, otherwise it will fail
+
+    ALGORITHM:
+        IF (validateOrdance <- inOrdance) THEN
+            ordance := inOrdance
+        ELSE
+            FAIL
+        END IF ELSE
+
+SUBMODULE: setWingSpan
+    IMPORT: inWingSpan (Real)
+    EXPORT: none
+    ASSERTION: set wingspan to inWingSpan if it's valid, otherwise
+
+    ALGORITHM:
+        IF (validateWingSpan <- inWingSpan) THEN
+            wingSpan :=  inWingSpan
+        ELSE
+            FAIL
+        END IF ELSE
+
+DOING METHODS:
+
+    SUBMODULE: calcTravel (*** I cannot impliment this yet, as my knowledge on
+                            how to is limited ***)
+
+PRIVATE SUBMODULES:
+
+    SUBMODULE: validateSerialNum
+        IMPORT: inSerialNum (Real)
+        EXPORT: isValid (Boolean)
+        ASSERTION: validates serial numbers as true whereby its first three
+                   digits are between 100 to 200 (inclusive), and the last three
+                   digits are between 001 - 999 (inclusive), otherwise it will
+                   validate them as false.
+
+        ALGORITHM:
+            isValid := FALSE
+            
+            wholePart := (Interger)inSerialNum 
+            decimalPart := (interger)(inSerialNum * 100) MOD 1000
+            
+            IF (100 <= wholePart <= 300) THEN
+                IF (1 <= decimalPart <= 999) THEN
+                    isValid :-= TRUE 
+                END IF
+            END IF
+
+    SUBMODULE: validateYear
+        IMPORT: inYear (intergers)
+        EXPORT: isValid (Boolean)
+        ASSERTION: A commission year between 1950 to 2022 (interger) will be
+                   valid, otherwise an error will be thrown to the user
+
+        ALGORITHM:
+            isValid := FALSE
+
+            IF ( 1950 <= inYear <= 2022) THEN
+                isValid :=   TRUE
+            END IF
+
+
+    SUBMODULE: validateOrdance
+        IMPORT: inOrdance (String)
+        EXPORT: isValid (boolean)
+        ASSERTION: it will only validate inOrdance if it has a string describing
+                   the ordance of the fighter jet
+
+        ALGORITHM:
+           isValid := False
+           
+            IF (LENGTH of inOrdance doesn't equals to 0) THEN
+                isValid := True
+            END IF     
+
+
+    SUBMODULE: validateWingSpan
+        IMPORT: inWingSpan (Real)
+        EXPORT: isValid (Boolean)
+        ASSERTION: a wingspan of between 2.2 and 25.6 will be valid 
+                   otherwise, an error will be thrown to the user
+
+        ALGORITHM:
+            isValid := FALSE
+
+            IF (2.20 <= inWingSpan <= 25.6) THEN
+                isValid := TRUE
+            END IF
+
+OTHER METHODS:
+
+SUBMODULE: clone
+    IMPORT: none
+    EXPORT: cloneFighterJet (Object)
+    ASSERTION: returns a cloned object of the current object
+
+    ALGORITHM:
+        CONSTRUCT cloneFighterJet USING ALTERNATE CONSTRUCTOR with
+            -serialNum
+            -year
+            -ordance
+            -wingSpan
+
+SUBMODULE: equals
+    IMPORT: inObjct (object)
+    EXPORT: isSame (boolean)
+    ASSERTION: two fighter jets are interchangable if they have the same ordance, and
+                wingspan
+
+    ALGORITHM:
+        isSame := FALSE
+        IF (inObj ISA fighterJetClass) THEN
+            inFighterJet  := (Convert to fighterJetClass)inObjct
+            isSame := (ordance EQUALS inFighterJet.getOrdance <- none) AND
+                      (wingSpan EQUALS inFighterJet.getWingSpan <- none)
+        END IF
+
+
+SUBMODULE: toString
+    IMPORT: none
+    EXPORT: str (String)
+    ASSERTION:
+
+    ALGORITHM:
+       str := "The ship " +serialNum+ " was comissioned in " +year+ ", its
+               engine has " +cylinders+ " cylinders and runs on " +fuel+ "fuel." 
+               "It is a fighter jet with a wing span of " +wingSpan+ " metres and 
+                "equiped with"  +ordance+ "."
+
+SUBMODULE: toFileString
+    IMPORT: none
+    EXPORT: str (String) 
+    ASSERTION:
+
+    ALGOTITHM:
+        str := "F, " +serialNum+ ", " +year+ ", " +cylinders+ ", " +fuel+ ", " 
+               "," +wingSpan+ ", " +ordance+ "."
