@@ -1,40 +1,43 @@
 CLASS: shipStorageClass 
 
+PUBLIC CLASS CONSTANTS: 
+    (Interger) maxSubCap := 15
+    (interger) maxJetCap := 15
+
 CLASS FIELDS:
-    (ARRAY OF subMarine object) storeSubs [] := SIZE of array is 15 
-                                                      elements
-    (ARRAY OF fighterJet object) storeJets [] := SIZE of array is 15 
-                                                       elements
-    (Interger) countSubMarines 
-    (Interger) countFighterJets 
+
+    (Interger) countSubs 
+    (Interger) countJets 
+    (ARRAY OF subMarine object) storeSubs [] 
+    (ARRAY OF fighterJet object) storeJets []
 
 COSTRUCTORS:
 
 Defualt:
     IMPORT: none
     EXPORT: none
-    ASSERTION: an empty storage of submarines and fighter jets, and count
-               variables of 1 for countSubMarines and countFighterJets is valid;
+    ASSERTION: count varibales of zero and empty arrays of 15 elements is valid
+               defualt sate
 
     ALGORITHM:
-        storeSubs := AN EMPTY ARRAY
-        storeJets := AN EMPTY ARRAY
-        countSubs := 1
-        countJets := 1 
+        countSubs := 0 
+        countJets := 0 
+        storeSubs[] := an EMPTY array of SIZE 15
+        storeJets[] := an EMPTY array of SIZE 15
 
 Alternate
-    IMPORT: (subMarine object) inSub [], 
-            (fighterJet object) inJet []
+    IMPORT: (subMarine object) inSub 
+            (fighterJet object) inJet 
     EXPORT: none
-    ASSERTIONS: creates an object if the imports are valid, otherwise it will
-                FAIL
+    ASSERTIONS: creates an object if the imports are valid in the next array 
+                index available, otherwise it will FAIL
 
     ALGORITHM:
 
-        IF (valiadateStoreSubss <- inSubMarine) THEN
-            IF (validateStoreJets <- inFighterJets THEN
-                storeSub[countSubs - 1] := inSub
-                storeJet[countJets - 1] := inJet 
+        IF (valiadateStoreSubs <- inSub) THEN
+            IF (validateStoreJets <- inJet) THEN
+                storeSub[countSubs] := inSub
+                storeJet[countJets] := inJet 
                 countSubs := countSubs + 1
                 countJets := countJets + 1
 
@@ -49,8 +52,8 @@ Copy:
 
     ALGORITHM:
 
-        storeSubs := inShipStorage.getStoreSubs <- none
-        storeJets := inShipStorage.getStoreJets <- none
+        storeSubs[] := inShipStorage.getStoreSubs <- none
+        storeJets[] := inShipStorage.getStoreJets <- none
 
 ACCESSORS
 
@@ -67,158 +70,257 @@ SUBMODULE: getStoreJets
 MUTATORS:
 
 SUBMODULE: setStoreSubs
-    IMPORT: inStoreSubs (Real)
+    IMPORT: inStoreSubs (address of inStoreSubs in memory)
     EXPORT: none
-    ASSERTION: sets the serial number to inSerialNum if it's valid, otherwise
-                it fails
+    ASSERTION: if the elements and array founf at the specified address is 
+               valid. setStoreJets will be valid, otherwise it will fail 
 
     ALGORITHM:
-        IF (validateSerialNum <- inSerialNum) THEN
-            serialNum := inSerialNum
+        IF (validateStoreSubs <- inStoreSubs) THEN 
+            storeSubs := inStoreSubs
         ELSE
             FAIL
         END IF ELSE
 
-
-SUBMODULE: setYear
-    IMPORT: inYear (interger)
-    EXPORT: none
-    ASSERTION: set year to inYear if it's valid, otherwise it will fail
+SUBMODULE: setStoreJets
+    IMPORT: inStoreJets (address of inStoreJers in memorty)
+    EXPORT: none 
+    ASSERTION: if the elements and array found at the specified adress is
+               valid. setStoreJets will be valid, otherwise it will fail
 
     ALGORITHM:
-        IF (validateYear <- inYear) THEN
-            year := inYear
+        IF (validateStoreJets <- inStoreJets) THEN
+            storeJets := inStoreJets 
         ELSE
             FAIL
         END IF ELSE
 
-SUBMODULE: setOrdance
-    IMPORT: inOrdance (String)
+SUBMODULE: addSub
+    IMPORT: inSub (subMarine object) , countSubs (Interger)
     EXPORT: none
-    ASSERTION: set ordance to to inOrdance if it's valid, otherwise it will fail
+    ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
+                storeSubs hasn't exceeded 15 elements 
 
     ALGORITHM:
-        IF (validateOrdance <- inOrdance) THEN
-            ordance := inOrdance
+        IF (validateSub <- inSub) THEN
+            IF (validateSubCap <- countSubs) THEN
+                
+                storeSubs[countSubs] := inSub
+
+                COMMENT: I am incrementing countSub by 1, to go to the next
+                         vaccant index of the storeSub
+
+                countSub := countSubs + 1
         ELSE
             FAIL
-        END IF ELSE
-
-SUBMODULE: setWingSpan
-    IMPORT: inWingSpan (Real)
+        END IF ELSE 
+         
+SUBMODULE: addJet
+    IMPORT: inJet (jetFighter object) , countJets (interger) 
     EXPORT: none
-    ASSERTION: set wingspan to inWingSpan if it's valid, otherwise
+    ASSERTION: a jet will be added to storeJEts if ther inJet is valid, and 
+               storeSubs hasn't exceeded 15 elements
 
     ALGORITHM:
-        IF (validateWingSpan <- inWingSpan) THEN
-            wingSpan :=  inWingSpan
+        IF (validateJet <- inJet) THEN 
+            IF (validateJetCap <- countJets) THEN 
+
+                storeJets[countJets] := inJet
+
+                COMMENT: I am incemention countJets by 1, to go to the next 
+                         vaccant index of the storeJets
+
+                countJets := countJets + 1
         ELSE
             FAIL
         END IF ELSE
 
 DOING METHODS:
+    
+SUBMODULE: calcTolShips
+    IMPORT: countSubs (interger), countJets (integer)
+    EXPORT: tolShips
 
-    SUBMODULE: calcTravel (*** I cannot impliment this yet, as my knowledge on
-                            how to is limited ***)
+    ALGORITHM:
+        
+        tolShips := (calcTolSubs <- countSubs) + (calcTolJets <- countJets)          
+    
+SUBMODULE: calcTolSubs
+    IMPORT: countSubs
+    EXPORT: tolSubs 
+    
+    ALGORITHM:
+       
+        COMMENT: the reason why I subtract 1 is because the other submodules
+                 are designed to go to the next index of storeSubs.
+                 Hence to get how much ships are avaliable, you have to 
+                 subtract 1. But, if the count variables haven't be
+                 used (i.e. they're zero) then they're no ships stored, 
+                 hence it is 0
+
+        IF (countSubs doesn't EQUAL 0) THEN
+            countSubs := countSubs -1 
+            tolSubs := countSubs
+        ELSE
+            tolSubs := countSub
+        END IF ELSE    
+
+SUBMODULE: calcTolJets
+    IMPORT: countJets
+    EXPORT: tolJets
+    
+    ALOGRITHM:
+
+        COMMENT: the reason why I subtract 1 is because the other submodules
+                 are designed to go to the next index of storeSubs.
+                 Hence to get how much ships are avaliable, you have to 
+                 subtract 1. But, if the count variables haven't be
+                 used (i.e. they're zero) then they're no ships stored, 
+                 hence it is 0
+
+        IF (countJets doesn't EQUAL) THEN
+
+            countJets := countJets -1
+            tolJets := countJets
+        ELSE
+            tolJets := countSub
+        END IF ELSE
 
 PRIVATE SUBMODULES:
 
-    SUBMODULE: validateSerialNum
-        IMPORT: inSerialNum (Real)
-        EXPORT: isValid (Boolean)
-        ASSERTION: validates serial numbers as true whereby its first three
-                   digits are between 100 to 200 (inclusive), and the last three
-                   digits are between 001 - 999 (inclusive), otherwise it will
-                   validate them as false.
+SUBMODULE: validateStoreSubs
+    IMPORT: inStoreSubs (address of inStoreSubs in memory)
+    EXPORT: isValid (Boolean)
+    ASSERTION: If the address of inStoreSubs is an array of maxSubCap elements, 
+               and it's a SubMarine object it's a valid inStoreSubs
 
-        ALGORITHM:
-            isValid := FALSE
-            
-            wholePart := (Interger)inSerialNum 
-            decimalPart := (interger)(inSerialNum * 100) MOD 1000
-            
-            IF (100 <= wholePart <= 300) THEN
-                IF (1 <= decimalPart <= 999) THEN
-                    isValid :-= TRUE 
-                END IF
-            END IF
+    ALGORITHM:
 
-    SUBMODULE: validateYear
-        IMPORT: inYear (intergers)
-        EXPORT: isValid (Boolean)
-        ASSERTION: A commission year between 1950 to 2022 (interger) will be
-                   valid, otherwise an error will be thrown to the user
-
-        ALGORITHM:
-            isValid := FALSE
-
-            IF ( 1950 <= inYear <= 2022) THEN
-                isValid :=   TRUE
-            END IF
-
-
-    SUBMODULE: validateOrdance
-        IMPORT: inOrdance (String)
-        EXPORT: isValid (boolean)
-        ASSERTION: it will only validate inOrdance if it has a string describing
-                   the ordance of the fighter jet
-
-        ALGORITHM:
-           isValid := False
-           
-            IF (LENGTH of inOrdance doesn't equals to 0) THEN
-                isValid := True
-            END IF     
-
-
-    SUBMODULE: validateWingSpan
-        IMPORT: inWingSpan (Real)
-        EXPORT: isValid (Boolean)
-        ASSERTION: a wingspan of between 2.2 and 25.6 will be valid 
-                   otherwise, an error will be thrown to the user
-
-        ALGORITHM:
-            isValid := FALSE
-
-            IF (2.20 <= inWingSpan <= 25.6) THEN
+        isValid := FALSE
+        IF (inStoreSubs ISA subMarineClass) THEN
+            IF (inStoreSubs LENGTH EQUALS to maxSubCap)               
                 isValid := TRUE
-            END IF
+            ELSE
+                OUTPUT: "ERROR: incorrect storage capacity"
+        ELSE
+            OUTPUT: "ERROR: not a submarine"
+
+SUBMODULE: validateStoreJets
+    IMPORT: inStoreJets (address of inStoreJets in memory)
+    EXPORT: isVali (Boolean)
+    ASSERTION: if the address of inStoreJets is an array of maxJetCap elements, 
+               and it's fighteJet object it's a valid inStoreJet
+
+    ALGORITHM:
+        
+        isValid := FALSE
+        IF (inStoreJets ISA fighterJetClass) THEN 
+            IF (inStoreJets LENGTH EQUALS to maxJetCap) THEN
+                isValid := TRUE
+            ELSE 
+                OUTPUT: "ERROR: incorrect storage capacity"
+        ELSE
+            OUTPUT: "ERROR: not a fighter jet"
+        END IF ELSE
+
+SUBMODULE: validateSub
+    IMPORT: inObjct (subMarine object)
+    EXPORT: isValid (Boolea)
+    ASSERTION: if inSub is a subMarine object then it's  valid 
+
+    ALGORITHM:
+        
+        isValid := FALSE
+        IF (inSub ISA subMarineClass) THEN
+            isValid := TRUE
+        ELSE
+            OUTPUT: "ERROR: not a submarine"
+        END IF ELSE
+
+SUBMODULE: validateJet
+    IMPORT: inObjct (fighterJet object)
+    EXPORT: isValid (Boolean)
+    ASSERTION: if inJet is a fighterJet object then it's valid
+
+    ALGORITHM:
+
+        isValid := FALSE
+        IF (inJet ISA fighterJetClass) THEN
+            isValid := TRUE
+        ELSE
+            OUTPUT: "ERRO: not a fighter Jet"
+        END IF ELSE
+
+SUBMODULE: validateSubCap
+    IMPORT: countSubs (Integers)
+    EXPORT: isValid (Boolean)
+    ASSERTION: if countSubs is within maxSubCap then it's valid
+
+    ALGORITHM:
+        
+        isValid := FALSE 
+        IF ( 0 <= countSubs <= maxSubCap ) THEN 
+            isValid := TRUE
+        ELSE
+            OUTPUT: "ERROR: to many subs, the max capacity is" +maxSubCap+ "."
+        END ELSE IF 
+
+SUBMODULE: validateJetCap
+    IMPORT: countJets (Integer)
+    EXPORT: isValid (Boolean)
+    ASSERTION: if countJets is within maxJetCap then it's valid
+
+    ALGORITHM:
+        
+        isValid := FALSE
+        IF ( 0 <= countJets <= maxJetCap) THEN
+            isValid := TRUE 
+        ELSE
+            OUTPUT: "ERROR: to many jets, the max capacity is" +maxJetCap+ "."
 
 OTHER METHODS:
 
 SUBMODULE: clone
     IMPORT: none
-    EXPORT: cloneFighterJet (Object)
+    EXPORT: cloneShipStorage (Object)
     ASSERTION: returns a cloned object of the current object
 
     ALGORITHM:
-        CONSTRUCT cloneFighterJet USING ALTERNATE CONSTRUCTOR with
-            -serialNum
-            -year
-            -ordance
-            -wingSpan
-
+        CONSTRUCT cloneShipStorage USING ALTERNATE CONSTRUCTOR withS
+            -(Interger) countSubs 
+            -(Interger) countJets 
+            -(ARRAY OF subMarine object) storeSubs [] 
+            -(ARRAY OF fighterJet object) storeJets []
+************************** I am bit confused with this submodule below**********
 SUBMODULE: equals
     IMPORT: inObjct (object)
     EXPORT: isSame (boolean)
-    ASSERTION: two fighter jets are interchangable if they have the same ordance, and
-                wingspan
+    ASSERTION: two ship storages are the same if they can store submarines and 
+               jets and they have the same storage capacity
 
     ALGORITHM:
         isSame := FALSE
-        IF (inObj ISA fighterJetClass) THEN
-            inFighterJet  := (Convert to fighterJetClass)inObjct
-            isSame := (ordance EQUALS inFighterJet.getOrdance <- none) AND
-                      (wingSpan EQUALS inFighterJet.getWingSpan <- none)
+        IF (inObj ISA shipStorageClass) THEN
+            inShipStorage := (Convert to shipStorageClass)inObjct
+            isSame := ((LENGTH)storeSubs EQUALS 
+                      (LENGTH)inShipStorage.getStoreSubs <- none) AND
+                      ((LENGTH)storeJets EQUALS 
+                      (LENGTH)inShipStorage.getStoreJets <- none)
         END IF
 
 
 SUBMODULE: toString
     IMPORT: none
-    EXPORT: str (String)
+    EXPORT: str [] (String)
     ASSERTION:
 
     ALGORITHM:
+        
+        (String) strSubs [] := SIZE of maxSubCap
+        (String) strJets [] := SIZE of maxJetCap 
+        (String str [] := SIZE of (maxSubCap + maxJetCap)
+
+        
        str := "The ship " +serialNum+ " was comissioned in " +year+ ", its
                engine has " +cylinders+ " cylinders and runs on " +fuel+ "fuel." 
                "It is a fighter jet with a wing span of " +wingSpan+ " metres and 
