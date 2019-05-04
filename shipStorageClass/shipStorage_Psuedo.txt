@@ -1,10 +1,10 @@
 CLASS: shipStorageArrayClass
 
-PUBLIC CLASS CONSTANTS: 
-    
+PUBLIC CLASS CONSTANTS:
+
     COMMENT: I have made two maxiumum capcity to make refactoring and
              expandibility of the code easier in the future, and to allow the
-             user to have a non 1:1 split of the capacity between submarines adnd
+             user to have a non 1:1 split of the capacity between submarines and
              jets.
 
     (Interger) MAXSUBCAP := 15
@@ -12,9 +12,9 @@ PUBLIC CLASS CONSTANTS:
 
 CLASS FIELDS:
 
-    (Interger) countSubs 
-    (Interger) countJets 
-    (ARRAY OF subMarine object) storeSubs [] 
+    (Interger) countSubs
+    (Interger) countJets
+    (ARRAY OF subMarine object) storeSubs []
     (ARRAY OF fighterJet object) storeJets []
 
 COSTRUCTORS:
@@ -26,16 +26,16 @@ Defualt:
                 variables is valid defualt sate.
 
     ALGORITHM:
-        countSubs := 0 
-        countJets := 0 
+        countSubs := 0
+        countJets := 0
         storeSubs[] := an EMPTY array of SIZE MAXSUBCAP
         storeJets[] := an EMPTY array of SIZE MAXJETCAP
 
 Alternate
-    IMPORT: (subMarine object) inSub 
-            (fighterJet object) inJet 
+    IMPORT: (subMarine object) inSub
+            (fighterJet object) inJet
     EXPORT: none
-    ASSERTIONS: creates an object if the imports are valid in the next array 
+    ASSERTIONS: creates an object if the imports are valid in the next array
                 index available, otherwise it will FAIL
 
     ALGORITHM:
@@ -43,7 +43,7 @@ Alternate
         IF (validateSubObjct <- inSub) THEN
             IF (validateJetObjct <- inJet) THEN
                 storeSub[countSubs] := inSub
-                storeJet[countJets] := inJet 
+                storeJet[countJets] := inJet
                 countSubs := countSubs + 1
                 countJets := countJets + 1
 
@@ -58,29 +58,36 @@ Copy:
 
     ALGORITHM:
 
-        storeSubs[] := inShipStorage.getStoreSubs <- none
-        storeJets[] := inShipStorage.getStoreJets <- none
+        FOR ((interger)ii := 0 TO LENGTH of inShipStorage.MAXSUBCAP CHANGEBY 1) 
+            THEN
+            storeSubs[ii] := inShipStorage.storeSubs[ii]
+        END FOR
+
+        FOR ((interger)ii := 0 TO LENGTH of inShipStorage.MAXJETCAP 
+            CHANGEBY 1) THEN 
+            storejets[ii] := inShipStorage.storeJets[ii]
+        END FOR
 
 ACCESSORS
 
 SUBMODULES: getStoreSubs
     IMPORT: none
-    EXPORT: storeSubs (address of storeSubs object in memory) 
+    EXPORT: storeSubs (address of storeSubs object in memory)
     ASSERTION: returns the elements which were last store storeSubs object
 
 SUBMODULE: getStoreJets
     IMPORT: none
     EXPORT: storeJets (address of storeJets object in memory)
-    ASSERTION: returns the elemnts which were last sttore in storeSubs object 
+    ASSERTION: returns the elemnts which were last sttore in storeSubs object
 
 SUBMODULE: getLastSub
     IMPORT: none
     EXOPORT: sub (subMarine Object)
 
     ALGORITHM:
-        COMMENT: I have subtracted one because the other constructors (i.e. 
-                 alternate constructor) will move the index  of the count 
-                 variable to the next available index, hence you have to 
+        COMMENT: I have subtracted one because the other constructors (i.e.
+                 alternate constructor) will move the index  of the count
+                 variable to the next available index, hence you have to
                  subtract one to get the last stored submarine
 
         sub := storeSub[countSubs - 1]
@@ -90,10 +97,10 @@ SUBMODULE: getLastjet
     EXPORT: jet (fighterJet object)
 
     ALGORITHM
-        
-        COMMENT: I have subtracted one because the other constructors (i.e. 
-                 alternate constructor) will move the index of the count 
-                 variable to the next available index, hence you have to 
+
+        COMMENT: I have subtracted one because the other constructors (i.e.
+                 alternate constructor) will move the index of the count
+                 variable to the next available index, hence you have to
                  subtract one to get the last stored jet
 
         jet := storeJet[countJets - 1]
@@ -101,13 +108,13 @@ SUBMODULE: getLastjet
 MUTATORS:
 
 SUBMODULE: setStoreSubs
-    IMPORT: inStoreSubs (address of inStoreSubs in memory)
+    IMPORT: inStoreSubs (address of inStoreSubs in memory) ****recondsider the inStoreSubs
     EXPORT: none
-    ASSERTION: if the elements and array found at the specified address is 
-               valid. setStoreJets will be valid, otherwise it will fail 
+    ASSERTION: if the elements and array found at the specified address is
+               valid. setStoreJets will be valid, otherwise it will fail
 
     ALGORITHM:
-        IF (validateStoreSubs <- inStoreSubs) THEN 
+        IF (validateStoreSubs <- inStoreSubs) THEN
             storeSubs := inStoreSubs
         ELSE
             FAIL
@@ -115,13 +122,13 @@ SUBMODULE: setStoreSubs
 
 SUBMODULE: setStoreJets
     IMPORT: inStoreJets (address of inStoreJers in memorty)
-    EXPORT: none 
+    EXPORT: none
     ASSERTION: if the elements and array found at the specified adress is
                valid. setStoreJets will be valid, otherwise it will fail
 
     ALGORITHM:
         IF (validateStoreJets <- inStoreJets) THEN
-            storeJets := inStoreJets 
+            storeJets := inStoreJets
         ELSE
             FAIL
         END IF ELSE
@@ -135,7 +142,7 @@ SUBMODULE: addSub
     ALGORITHM:
         IF (validateSub <- inSub) THEN
             IF (countSubs < MAXSUBCAP) THEN
-                
+
                 storeSubs[countSubs] := inSub
 
                 COMMENT: I am incrementing countSub by 1, to go to the next
@@ -146,99 +153,109 @@ SUBMODULE: addSub
                 FAIL "ERROR: The storage of the submarines is full."
         ELSE
             FAIL "ERROR: not a submarine"
-        END IF ELSE 
-         
+        END IF ELSE
+
 SUBMODULE: addJet
-    IMPORT: inJet (jetFighter object) , countJets (interger) 
+    IMPORT: inJet (jetFighter object) , countJets (interger)
     EXPORT: none
-    ASSERTION: a jet will be added to storeJEts if the inJet is valid, and 
+    ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
                storeSubs hasn't exceeded MAXJETCAP
 
     ALGORITHM:
-        IF (validateJet <- inJet) THEN 
-            IF (countJets < MAXJETCAP) THEN 
+        IF (validateJet <- inJet) THEN
+            IF (countJets < MAXJETCAP) THEN
 
                 storeJets[countJets] := inJet
 
-                COMMENT: I am incemention countJets by 1, to go to the next 
+                COMMENT: I am incemention countJets by 1, to go to the next
                          vaccant index of the storeJets
 
                 countJets := countJets + 1
             ELSE
                 FAIL "ERROR: storage of fighter jets is full"
         ELSE
-            FAIL "ERROR: not a fighter jet" 
+            FAIL "ERROR: not a fighter jet"
         END IF ELSE
 
 DOING METHODS:
 
 SUBMODULE: destinationCheck *** yet to be implemented
 
-SUBMODULE: findDuplicates *** yet  to be implemented
+SUBMODULE: findDuplicatesSubs
+    IMPORTS: none
+    EXPORT: dupilicates[] (Object) 
+    ASSERTION:
+
+    ALGORITHM:
+
+        (object) duplicates [] := SIZE of DYNAMIC SIZING
+        
+        FOR ((interger) ii := 0 TO LENGTH of storeSub - 1 CHANGEBY 1) THEN
+
+            COMMENT: I am starting the looping variable at one because I don't
+                     want the programme to store itself as a dupilcate, hence
+                     it will search for objects after itself
+
+            FOR((interger) jj := 1 TO LENGTH of storeSub -1 CHANGEBY 1) THEN
+                IF (storeSubs[ii].equals(storeSubs[jj])) THEN
+                    duplicate[ii] := storeSubs
+                    duplicate[jj] := storeSubs[jj]
+                END IF
+            END FOR
+        END FOR
+
+SUBMODULE: findDuplicatesJets
+    IMPORTS: none
+    EXPORT: dupilicates[] (Object) 
+    ASSERTION:
+
+    ALGORITHM:
+
+    (object) dupliocates [] := SIZE of DYNAMIC SIZING
+        
+        FOR ((interger) ii := 0 TO LENGTH of storeJet - 1 CHANGEBY 1) THEN
+
+            COMMENT: I am starting the looping variable at one because I don't
+                     want the programme to store itself as a dupilcate, hence
+                     it will search for objects after itself
+
+            FOR((interger) jj := 1 TO LENGTH of storeJet -1 CHANGEBY 1) THEN
+                IF (storeJets[ii].equals(storeJets[jj])) THEN
+                    duplicate[ii] := storeJets
+                    duplicate[jj] := storeJets[jj]
+                END IF
+            END FOR
+
+SUBMODULE: findDuplicates
+    IMPORTS: none
+    EXPORT: dupilicates (object)
+    ASSERTION
+
+    ALGORITHM:
     
+    
+
 SUBMODULE: calcTolShips
     IMPORT: countSubs (interger), countJets (integer)
     EXPORT: tolShips
 
     ALGORITHM:
-        
-        tolShips := (calcTolSubs <- countSubs) + (calcTolJets <- countJets)          
-    
-SUBMODULE: calcTolSubs
-    IMPORT: countSubs
-    EXPORT: tolSubs 
-    
-    ALGORITHM:
-       
-        COMMENT: the reason why I subtract 1 is because the other submodules
-                 are designed to go to the next index available of storeSubs.
-                 Hence to get how much ships are avaliable, you have to 
-                 subtract 1. But, if the count variables haven't be
-                 used (i.e. they're zero) then they're no ships stored, 
-                 hence it is 0
 
-        IF (countSubs doesn't EQUAL 0) THEN
-            countSubs := countSubs -1 
-            tolSubs := countSubs
-        ELSE
-            tolSubs := countSub
-        END IF ELSE    
+        tolShips := countSubs + countJets 
 
-SUBMODULE: calcTolJets
-    IMPORT: countJets
-    EXPORT: tolJets
-    
-    ALOGRITHM:
-
-        COMMENT: the reason why I subtract 1 is because the other submodules
-                 are designed to go to the next index available of storeSubs.
-                 Hence to get how much ships are avaliable, you have to 
-                 subtract 1. But, if the count variables haven't be
-                 used (i.e. they're zero) then they're no ships stored, 
-                 hence it is 0
-
-        IF (countJets doesn't EQUAL 0) THEN
-
-            countJets := countJets -1
-            tolJets := countJets
-        ELSE
-            tolJets := countSub
-        END IF ELSE
-
-
-PRIVATE SUBMODULES: 
+PRIVATE SUBMODULES:
 
 SUBMODULE: validateStoreSubs
     IMPORT: inStoreObect (address of inStoreSubs in memory)
     EXPORT: isValid (Boolean)
-    ASSERTION: If the address of inStoreSubs is an array of MAXSUBCAP elements, 
+    ASSERTION: If the address of inStoreSubs is an array of MAXSUBCAP elements,
                and it's a SubMarine object it's a valid inStoreSubs
 
     ALGORITHM:
 
         isValid := FALSE
         IF (inStoreObjct ISA subMarineClass) THEN
-            IF (inStoreObjct LENGTH EQUALS to MAXSUBCAP)               
+            IF (inStoreObjct LENGTH EQUALS to MAXSUBCAP)
                 isValid := TRUE
             ELSE
                 OUTPUT: "ERROR: incorrect storage capacity"
@@ -248,28 +265,28 @@ SUBMODULE: validateStoreSubs
 SUBMODULE: validateStoreJets
     IMPORT: inStoreObjct (address of inStoreJets in memory)
     EXPORT: isValid (Boolean)
-    ASSERTION: if the address of inStoreJets is an array of MAXJETCAP elements, 
+    ASSERTION: if the address of inStoreJets is an array of MAXJETCAP elements,
                and it's fighteJet object it's a valid inStoreJet
 
     ALGORITHM:
-        
+
         isValid := FALSE
-        IF (inStoreObjct  ISA fighterJetClass) THEN 
+        IF (inStoreObjct  ISA fighterJetClass) THEN
             IF (inStoreObjct LENGTH EQUALS to MAXJETCAP) THEN
                 isValid := TRUE
             ELSE
                 OUTPUT: "ERROR: incorrect storage capacity"
         ELSE
             OUTPUT: "ERROR: not a fighter jet"
-        END IF ELSE 
+        END IF ELSE
 
 SUBMODULE: validateSubObjct
     IMPORT: inObjct (subMarine object)
     EXPORT: isValid (Boolean)
-    ASSERTION: if inObjct is a subMarine object then it's  valid 
+    ASSERTION: if inObjct is a subMarine object then it's  valid
 
     ALGORITHM:
-        
+
         isValid := FALSE
         IF (inObjct ISA subMarineClass) THEN
             isValid := TRUE
@@ -300,46 +317,46 @@ SUBMODULE: clone
 
     ALGORITHM:
         CONSTRUCT cloneShipStorage USING ALTERNATE CONSTRUCTOR withS
-            -(Interger) countSubs 
-            -(Interger) countJets 
-            -(ARRAY OF subMarine object) storeSubs [] 
+            -(Interger) countSubs
+            -(Interger) countJets
+            -(ARRAY OF subMarine object) storeSubs []
             -(ARRAY OF fighterJet object) storeJets []
 
 SUBMODULE: equals
     IMPORT: inObjct (object)
     EXPORT: isSame (boolean)
-    ASSERTION: two ship storages are the same if they can store submarines and 
-               jets and they have the same storage capacity with the same 
+    ASSERTION: two ship storages are the same if they can store submarines and
+               jets and they have the same storage capacity with the same
                storage distrubution
 
     ALGORITHM:
         isSame := FALSE
         IF (inObj ISA shipStorageArrayClass) THEN
             inShipStorage := (Convert to shipStorageArrayClass)inObjct
-            isSame := ((LENGTH)storeSubs EQUALS 
+            isSame := ((LENGTH)storeSubs EQUALS
                       (LENGTH)inShipStorage.getStoreSubs <- none) AND
-                      ((LENGTH)storeJets EQUALS 
+                      ((LENGTH)storeJets EQUALS
                       (LENGTH)inShipStorage.getStoreJets <- none)
         END IF
 
-SUBODULE: equalsArray 
+SUBODULE: equalsArray
     IMPORT: arrayOne (Object), arrayTwo (object Two)
     EXPORT: isValid (Boolean)
     ASSERTION: if two array objects are the same class type and length, and have
                the same objects in the array and it's valid
 
     ALGORITHM:
-        
+
         isValid := FALSE
-        
+
         IF (length of arrayOne is EQUAL to length of arrayTwo) THEN
             isValid :=   TRUE
-            
+
             COMMENT: searching through both arrays to ensure that they have
-                     the same conetents in the array 
-            
+                     the same contents in the array
+
             (Interger) compareElements := 0
-            
+
             DO
                 isSame := arrayOne[compareElements].equals
                                                    (arrayTwo[compareElements])
@@ -350,15 +367,15 @@ SUBODULE: equalsArray
         END IF ELSE
 
  *********************** I might move this type of code straight
-to the user Intefac ***********************************************************       
+to the user Intefac ***********************************************************
 
 SUBMODULE: toStringSubArray
     IMPORT: none
-    EXPORT: str [] (address of str in memory of the data type string) 
+    EXPORT: str [] (address of str in memory of the data type string)
     ASSERTION:
 
     ALGORITHM:
-            
+
             str [] := SIZE of MAXSUBCAP
 
             COMMENT: I am subtracting one, so the for loop deosn't try to search
@@ -367,7 +384,7 @@ SUBMODULE: toStringSubArray
 
             FOR ((Interger) ii := 0 TO MAXSUBCAP -1 CHNAGEBY 1) THEN
                 st[ii] := storeSubs[ii].toString
-            END FOR        
+            END FOR
 
 SUBMODULE: toStringJet
     IMPORT: none
@@ -375,10 +392,10 @@ SUBMODULE: toStringJet
     ASSERTION:
 
     ALGORITHM:
-        
+
         str [] := SIZE of MAXJETCAP
 
-        COMMENT: I am subtracting one, so the for loop doesn't try to search 
+        COMMENT: I am subtracting one, so the for loop doesn't try to search
                  outside the indexs of the str array as its indes starts at 0
 
         FOR ((Interger) ii = 0 TO MAXJETCAP - 1 CHANGEBY 1) THEN
@@ -391,20 +408,20 @@ SUBMODULE: toStringArry
     ASSERTION:
 
     ALGORITHM:
-        
-        COMMENT: I am adding an extra 1 to tolShipsInfo. Because, I want an 
+
+        COMMENT: I am adding an extra 1 to tolShipsInfo. Because, I want an
                  extra index to store the summary of the ship storage units
-                 (i.e. how many ships they're in total. How many jets they're, 
+                 (i.e. how many ships they're in total. How many jets they're,
                  and how many submarines they're)
 
         (Interger) tolShipsInfo := MAXSUBCAP + MAXSUBJET + 1
 
-        (String) strArry [] := SIZE of tolShipInfo 
+        (String) strArry [] := SIZE of tolShipInfo
 
-        str [0] := "The hanger contains " +calcTolShips+ " ships. There's " 
-                    +calcTolSubs+ " submarines, and there's " +calcTolJets+ 
+        str [0] := "The hanger contains " +calcTolShips+ " ships. There's "
+                    +calcTolSubs+ " submarines, and there's " +calcTolJets+
                     "fighter jets in the hanger"
-        
+
         COMMENT: I am starting the looping condition at 1, becasue the 0 index
                  is reserved for the summary of the arrays, and I am subtracting
                  one so the for loop doesn't try to look outside the array as
@@ -414,6 +431,11 @@ SUBMODULE: toStringArry
             strArry [ii] :=  storeSubs[ii].toString
         END FOR
 
-        FOR (MAXSUBCAP - 1 TO tolShipsInfo - 1 CHANGEBY 1
+        COMMENT: I used the starting index of (MAXSUBCAP) becasue I want to
+                 start adding the information of the fighter jets, to the next
+                 vaccant spot after the information of the submarines and it
+                 corresponds to MAXSUBCAP
+
+        FOR (MAXSUBCAP TO tolShipsInfo - 1 CHANGEBY 1
             strArry [ii] :=  storeJets[ii].toString
-        END FOR 
+        END FOR
