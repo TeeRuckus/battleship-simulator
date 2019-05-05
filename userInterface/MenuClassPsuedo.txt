@@ -69,7 +69,7 @@ SUBMODULE: getOptions
 MUTATORS:
 
 SUBMODULE: setMssg
-    IMPORT: inMssg
+    IMPORT: inMssg (String) 
     EXPORT: none
     ASSERTION: set mssg to inMssg if it is not null
 
@@ -79,7 +79,7 @@ SUBMODULE: setMssg
         END IF
 
 SUBMODULE: setOptions
-    IMPROT: inOptions
+    IMPROT: inOptions (integer)
     EXPORT: none
     ASSERTION: set options if it's not less than 0 
 

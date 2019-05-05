@@ -59,11 +59,48 @@ Defualt:
                                                           3. Find fighter Jet
                                                              duplicates only")
         battleShipMenus[3] := menuClassInteger.setOptions(3)
-        
-        
 
-DOING METHODS:
+SUBMODULE: mainMenu
+    IMPORT: none
+    EXPORT: none
+    PURPOSE:
 
+    ALGORITHM:
+
+        (interger)userOp := battleShipMenus[0].selOpMenu
+
+        CASE userOP
+            1:
+                addShips <- none
+            2: 
+                viewShips <- none
+            3: 
+                findDuplicates <- none 
+            4:
+                destinationCheck <- none
+            5:
+                loadShips <- none
+            6: 
+                saveShips <- exit
+            7:
+                OUTPUT: "Goodbye friend"
+            DEFUALT: 
+                OUTPUT: "Invalid option" 
+        END CASE       
+
+SUBMODULE: addShips
+    IMPORT: none
+    EXPORT: none
+    PURPOSE: to invoke the appropriate methods to add ships to the programme
+
+    ALGORITHM:
+        
+        (Interger) userOp := battleShipMenus[1].selOpMenu
+
+        CASE userOp
+            1: 
+                
+            
 PRIVATE SUBMODULES:
 
 OTHER METHODS:
