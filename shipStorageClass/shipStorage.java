@@ -76,16 +76,15 @@ public class shipStorage
         EXPORT: none
         ASSERTION: creates an object which is identical to the imported object
         **********************************************************************/
-        public shipStorage(shipStorage inShipStorage)
+        public shipStorage inShipStorage(shipStorage inShipStorage)
         {
             private int ii;
 
-            for(ii = 0 ; .length of inShipStorage.MAXSUBCAP ; ii++)
+            for(ii = 0 ; inShipStorage.MAXSUBCAP ; ii++)
             {
                 storeSubs[ii] = inShipStorage.storeSubs[ii];
             }
-            for (ii = 0 ; .length of inShipStorage.MAXJETCAP 
-                ; ii++)  
+            for (ii = 0 ; inShipStorage.MAXJETCA; ii++)  
             {
                 storejets[ii] = inShipStorage.storeJets[ii];
             }
@@ -377,6 +376,7 @@ public class shipStorage
             {
                 System.out.println("ERROR: not a submarine");
             }
+            return isValid; 
         }
 
         /**********************************************************************
@@ -404,6 +404,7 @@ public class shipStorage
             {
                 System.out.println("ERROR: not a fighter jet");
             }
+            return isValid;
         }
         /**********************************************************************
         SUBMODULE: validateSubObjct
@@ -411,159 +412,190 @@ public class shipStorage
         EXPORT: isValid (Boolean)
         ASSERTION: if inObjct is a subMarine object then it's  valid
         **********************************************************************/
-        private
-        ALGORITHM:
-
-            isValid = false
-            if (inObjct ISA subMarineClass) 
-                isValid = true
+        private boolean validateSubObjct(subMarineClass inObjct)
+        {
+            isValid = false;
+            if (inObjct instanceof subMarineClass) 
+            {
+                isValid = true;
+            }
             else
+            {
                 System.out.println(: "ERROR: not a submarine"
-             if else
+            }
+            return isValid;
+        }
 
-    SUBMODULE: validateJetObjct
+        /**********************************************************************
+        SUBMODULE: validateJetObjct
         IMPORT: inObjct (fighterJet object)
         EXPORT: isValid (Boolean)
         ASSERTION: if inJet is a fighterJet object then it's valid
-
-        ALGORITHM:
-
-            isValid = false
-            if (inObjct ISA fighterJetClass) 
-                isValid = true
+        **********************************************************************/
+        private boolean validateJetObjct(fighterJetClass inObjct)
+        {
+            isValid = false;
+            if (inObjct instanceof fighterJetClass) 
+            {
+                isValid = true;
+            }
             else
-                System.out.println(: "ERROR: not a fighter jet"
-             if else
+            {
+                System.out.println("ERROR: not a fighter jet");
+            }
+            return isValid;
+        }
+        //OTHER METHODS:
 
-    OTHER METHODS:
-
-    SUBMODULE: clone
+        /**********************************************************************
+        SUBMODULE: clone
         IMPORT: none
         EXPORT: cloneShipStorage (Object)
         ASSERTION: returns a cloned object of the current object
+        **********************************************************************/
+        public shipStorage()
+        {
+            shipStorage cloneShipStorage
+        
+            cloneShipStorage - new shipStorage(this.countSubs, this.countJet,
+                                              this.storeSubs, this.storeJets);
+            return cloneShipStorage;
+        }
 
-        ALGORITHM:
-            CONSTRUCT cloneShipStorage USING ALTERNATE CONSTRUC;R withS
-                -(int) countSubs
-                -(int) countJets
-                -(ARRAY OF subMarine object) storeSubs []
-                -(ARRAY OF fighterJet object) storeJets []
-
-    SUBMODULE: equals
+        /**********************************************************************
+        SUBMODULE: equals
         IMPORT: inObjct (object)
         EXPORT: isSame (boolean)
         ASSERTION: two ship storages are the same if they can store submarines and
                    jets and they have the same storage capacity with the same
                    storage distrubution
-
-        ALGORITHM:
-            isSame = false
-            if (inObj ISA shipStorage) 
+        **********************************************************************/
+        public boolean equals (Object inObjct)
+        {
+            isSame = false;
+            if (inObj instanceof shipStorage) 
+            {
                 inShipStorage = (Convert to shipStorage)inObjct
-                isSame = ((.length)storeSubs EQUALS
-                          (.length)inShipStorage.getStoreSubs <- none) AND
-                          ((.length)storeJets EQUALS
-                          (.length)inShipStorage.getStoreJets <- none)
-             if
-
-    SUBODULE: equalsArray
+                isSame = ((storeSubs.length()).equals(
+                            inShipStorage.getStoreSubs()) && 
+                            (storeJets.length()).equals(
+                            inShipStorage.getStoreJets()));
+            }
+            return isSame;
+        }
+        /**********************************************************************
+        SUBODULE: equalsArray
         IMPORT: arrayOne (Object), arrayTwo (object Two)
         EXPORT: isValid (Boolean)
         ASSERTION: if two array objects are the same class type and length, and have
                    the same objects in the array and it's valid
+        **********************************************************************/
+        public boolean equalsArrau(Object arrayOne, Object arrayTwo)
+        {
+            isValid = false;
 
-        ALGORITHM:
+            if (arrayOne.length() ==  arrayTwo.length()) 
+            {
+                isValid =   true;
 
-            isValid = false
+                 /*searching through both arrays to ensure that they have
+                 the same contents in the array*/
 
-            if (length of arrayOne is EQUAL to length of arrayTwo) 
-                isValid =   true
+                int compareElements = 0;
 
-                COMMENT: searching through both arrays to ensure that they have
-                         the same contents in the array
-
-                (int) compareElements = 0
-
-                DO
-                    isSame = arrayOne[compareElements].equals
-                                                       (arrayTwo[compareElements])
-                    compareElements = compareElements + 1
-                WHILE isSame < .length of arrayOne
+                do
+                {
+                    isSame = arrayOne[compareElements].equals(
+                                    arrayTwo[compareElements]);
+                    compareElements++;
+                }while(isSame < arrayOne.length());
+            }
             else
-                System.out.println(: "ERROR: the array objects are not the same"
-             if else
+            {
+                System.out.println("ERROR: the array objects are not the same");
+            }
 
-     *********************** I might move this type of code straight
-    to the user Intefac ***********************************************************
+     /************************ I might move this type of code straight
+    to the user Intefac ****************************************************/
 
-    SUBMODULE: toStringSubArray
+        /**********************************************************************
+        SUBMODULE: toStringSubArr
         IMPORT: none
         EXPORT: str [] (address of str in memory of the data type string)
         ASSERTION:
+        **********************************************************************/
+        public String toStringSubArr()
+        {
+                String str [] = new String [MAXSUBCAP];
 
-        ALGORITHM:
+                 /*I am subtracting one, so the for loop deosn't try to search
+                 outside the indexs of the str arrays as its index starts at*/
 
-                str [] = SIZE of MAXSUBCAP
-
-                COMMENT: I am subtracting one, so the for loop deosn't try to search
-                         outside the indexs of the str arrays as its index starts at
-                         0
-
-                for ((int) ii = 0 ; MAXSUBCAP -1 CHNAGEBY 1) 
-                    st[ii] = storeSubs[ii].toString
-                 for
-
-    SUBMODULE: toStringJet
+                for (int ii = 0 ; MAXSUBCAP - 1;ii++) 
+                {
+                    str[ii] = storeSubs[ii].toString;
+                }
+                return str;
+        }
+        /**********************************************************************
+        SUBMODULE: toStringJet
         IMPORT: none
         EXPORT: str [] (address of str in memory of the data type string)
         ASSERTION:
+        **********************************************************************/
+        public String toStringJet()
+        {
+            String str [] = new String [MAXJETCAP];
 
-        ALGORITHM:
+             /*I am subtracting one, so the for loop doesn't try to search
+             outside the indexs of the str array as its indes starts at 0*/
 
-            str [] = SIZE of MAXJETCAP
-
-            COMMENT: I am subtracting one, so the for loop doesn't try to search
-                     outside the indexs of the str array as its indes starts at 0
-
-            for ((int) ii = 0 ; MAXJETCAP - 1 ; 1) 
-                str [ii] = storeSubs[ii].toString
-             for
-    *************************end of useless code ***********************************
-    SUBMODULE: toStringArry
+            for (int ii = 0 ; MAXJETCAP - 1 ;ii++) 
+            {
+                str [ii] = storeSubs[ii].toString;
+            }
+            return str;
+        }
+    /*************************end of useless code ****************************/
+        /**********************************************************************
+        SUBMODULE: toStringArr
         IMPORT: none
         EXPORT: strArry [] (String)
         ASSERTION:
+        **********************************************************************/
+        public String toStringArr() 
+        {
+             /*I am adding an extra 1 to tolShipsInfo. Because, I want an
+             extra index to store the summary of the ship storage units
+             (i.e. how many ships they're in total. How many jets they're,
+             and how many submarines they're)*/
 
-        ALGORITHM:
+            int tolShipsInfo = MAXSUBCAP + MAXSUBJET + 1;
 
-            COMMENT: I am adding an extra 1 to tolShipsInfo. Because, I want an
-                     extra index to store the summary of the ship storage units
-                     (i.e. how many ships they're in total. How many jets they're,
-                     and how many submarines they're)
+            String strArry [] = new Strin [tolShipInfo];
 
-            (int) tolShipsInfo = MAXSUBCAP + MAXSUBJET + 1
-
-            (String) strArry [] = SIZE of tolShipInfo
-
-            str [0] = "The hanger contains " +calcTolShips+ " ships. There's "
+            str [0] = "The hanger contains " +calcTolShips+ " ships. There's "+
                         +calcTolSubs+ " submarines, and there's " +calcTolJets+
-                        "fighter jets in the hanger"
+                        "fighter jets in the hanger";
 
-            COMMENT: I am starting the looping condition at 1, becasue the 0 index
-                     is reserved for the summary of the arrays, and I am subtracting
-                     one so the for loop doesn't try to look outside the array as
-                     the index of an array starts at 1
+             /*I am starting the looping condition at 1, becasue the 0 index
+             is reserved for the summary of the arrays, and I am subtracting
+             one so the for loop doesn't try to look outside the array as
+             the index of an array starts at 1*/
 
-            for ((int)ii= 1 ; MAXSUBCAP -1 CHNAGEBY 1
+            for (int ii= 1 ; MAXSUBCAP -1; ii++)
+            {
                 strArry [ii] =  storeSubs[ii].toString
-             for
+            }
 
-            COMMENT: I used the starting index of (MAXSUBCAP) becasue I want to
-                     start adding the information of the fighter jets, to the next
-                     vaccant spot after the information of the submarines and it
-                     corresponds to MAXSUBCAP
+             /*I used the starting index of (MAXSUBCAP) becasue I want to
+             start adding the information of the fighter jets, to the next
+             vaccant spot after the information of the submarines and it
+             corresponds to MAXSUBCAP*/
 
-            for (MAXSUBCAP ; tolShipsInfo - 1 ; 1
+            for (int ii = MAXSUBCAP ; tolShipsInfo - 1 ; ii++)
+            {
                 strArry [ii] =  storeJets[ii].toString
-             for
-
+            }
+            return strArry;
+        }

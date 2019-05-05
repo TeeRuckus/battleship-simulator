@@ -374,7 +374,7 @@ SUBODULE: equalsArray
  *********************** I might move this type of code straight
 to the user Intefac ***********************************************************
 
-SUBMODULE: toStringSubArray
+SUBMODULE: toStringSubArr
     IMPORT: none
     EXPORT: str [] (address of str in memory of the data type string)
     ASSERTION:
@@ -391,7 +391,7 @@ SUBMODULE: toStringSubArray
                 st[ii] := storeSubs[ii].toString
             END FOR
 
-SUBMODULE: toStringJet
+SUBMODULE: toStringJetArr
     IMPORT: none
     EXPORT: str [] (address of str in memory of the data type string)
     ASSERTION:
@@ -407,7 +407,7 @@ SUBMODULE: toStringJet
             str [ii] := storeSubs[ii].toString
         END FOR
 *************************end of useless code ***********************************
-SUBMODULE: toStringArry
+SUBMODULE: toStringArr
     IMPORT: none
     EXPORT: strArry [] (String)
     ASSERTION:
@@ -441,6 +441,6 @@ SUBMODULE: toStringArry
                  vaccant spot after the information of the submarines and it
                  corresponds to MAXSUBCAP
 
-        FOR (MAXSUBCAP TO tolShipsInfo - 1 CHANGEBY 1
+        FOR((integer) ii:= MAXSUBCAP TO tolShipsInfo - 1 CHANGEBY 1
             strArry [ii] :=  storeJets[ii].toString
         END FOR
