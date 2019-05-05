@@ -78,7 +78,7 @@ public class shipStorage
         **********************************************************************/
         public shipStorage(shipStorage inShipStorage)
         {
-            int ii;
+            private int ii;
 
             for(ii = 0 ; .length of inShipStorage.MAXSUBCAP ; ii++)
             {
@@ -193,49 +193,72 @@ public class shipStorage
         ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
                     storeSubs hasn't exceeded the MAXSUBCAP
         **********************************************************************/
-
-        ALGORITHM:
-            if (validateSub <- inSub) 
+        public void addSub(subMarineClass inSub, int countSubs)
+        {
+            if (validateSub(inSub))
+            {
                 if (countSubs < MAXSUBCAP) 
+                {
+                    storeSubs[countSubs] = inSub; 
 
-                    storeSubs[countSubs] = inSub
-
-                    COMMENT: I am incrementing countSub by 1, to go to the next
-                             vaccant index of the storeSub
-
-                    countSub = countSubs + 1
+                    /*I am incrementing countSub by 1, to go to the next
+                    vaccant index of the storeSub*/
+                    countSub++;
+                }
                 else
-                    FAIL "ERROR: The storage of the submarines is full."
+                {
+                    throw new IllegalArgumentException("ERROR: The storage of"+
+                                                   " the submarines is full.");
+                }
+            }
             else
-                FAIL "ERROR: not a submarine"
-            END if else
-
-    SUBMODULE: addJet
-        IMPORT: inJet (jetFighter object) , countJets (interger)
+            {
+                throw new IllegalArgumentExeption( "ERROR: not a submarine");
+            }
+            
+        }
+        /**********************************************************************
+        SUBMODULE: addJet
+        IMPORT: inJet (fighterJetClass object) , countJets (interger)
         EXPORT: none
         ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
                    storeSubs hasn't exceeded MAXJETCAP
-
-        ALGORITHM:
-            if (validateJet <- inJet) 
+        **********************************************************************/
+        public void addJet(fighterJetClass inJet, int countJets)
+        {
+            if(validateJet(inJet))
+            {
                 if (countJets < MAXJETCAP) 
+                {
+                    storeJets[countJets] = inJet;
 
-                    storeJets[countJets] = inJet
-
-                    COMMENT: I am incemention countJets by 1, to go to the next
-                             vaccant index of the storeJets
-
-                    countJets = countJets + 1
+                    /*I am incemention countJets by 1, to go to the next
+                    vaccant index of the storeJets*/
+                    countJets++;
+                }
                 else
-                    FAIL "ERROR: storage of fighter jets is full"
+                {
+                    throw new IndexOutOfBoundException("ERROR: storage of "+ 
+                                                       "fighter jets is full");
+                }
+            }
             else
-                FAIL "ERROR: not a fighter jet"
-            END if else
+            {
+                throw new IllegalArgumentException("ERROR: not a fighter jet");
+            }
+        }
 
-    DOING METHODS:
+        //DOING METHODS:
 
-    SUBMODULE: destinationCheck *** yet to be implemented
+        /**********************************************************************
+        SUBMODULE: destinationCheck *** yet to be implemented
+        **********************************************************************/
+        public String destinationChec()
+        {
+            return "I  have not been implemented yet"; 
+        }
 
+        /**********************************************************************
     SUBMODULE: findDuplicatesSubs
         IMPORTS: none
         EXPORT: dupilicates[] (Object) 
@@ -255,9 +278,9 @@ public class shipStorage
                     if (storeSubs[ii].equals(storeSubs[jj])) 
                         duplicate[ii] = storeSubs
                         duplicate[jj] = storeSubs[jj]
-                    END if
-                END FOR
-            END FOR
+                     if
+                 FOR
+             FOR
 
     SUBMODULE: findDuplicatesJets
         IMPORTS: none
@@ -278,8 +301,8 @@ public class shipStorage
                     if (storeJets[ii].equals(storeJets[jj])) 
                         duplicate[ii] = storeJets
                         duplicate[jj] = storeJets[jj]
-                    END if
-                END FOR
+                     if
+                 FOR
 
     SUBMODULE: findDuplicates
         IMPORTS: none
@@ -336,7 +359,7 @@ public class shipStorage
                     System.out.println(: "ERROR: incorrect storage capacity"
             else
                 System.out.println(: "ERROR: not a fighter jet"
-            END if else
+             if else
 
     SUBMODULE: validateSubObjct
         IMPORT: inObjct (subMarine object)
@@ -350,7 +373,7 @@ public class shipStorage
                 isValid = TRUE
             else
                 System.out.println(: "ERROR: not a submarine"
-            END if else
+             if else
 
     SUBMODULE: validateJetObjct
         IMPORT: inObjct (fighterJet object)
@@ -364,7 +387,7 @@ public class shipStorage
                 isValid = TRUE
             else
                 System.out.println(: "ERROR: not a fighter jet"
-            END if else
+             if else
 
     OTHER METHODS:
 
@@ -395,7 +418,7 @@ public class shipStorage
                           (.length)inShipStorage.getStoreSubs <- none) AND
                           ((.length)storeJets EQUALS
                           (.length)inShipStorage.getStoreJets <- none)
-            END if
+             if
 
     SUBODULE: equalsArray
         IMPORT: arrayOne (Object), arrayTwo (object Two)
@@ -422,7 +445,7 @@ public class shipStorage
                 WHILE isSame < .length of arrayOne
             else
                 System.out.println(: "ERROR: the array objects are not the same"
-            END if else
+             if else
 
      *********************** I might move this type of code straight
     to the user Intefac ***********************************************************
@@ -442,7 +465,7 @@ public class shipStorage
 
                 FOR ((int) ii = 0 TO MAXSUBCAP -1 CHNAGEBY 1) 
                     st[ii] = storeSubs[ii].toString
-                END FOR
+                 FOR
 
     SUBMODULE: toStringJet
         IMPORT: none
@@ -458,7 +481,7 @@ public class shipStorage
 
             FOR ((int) ii = 0 TO MAXJETCAP - 1 ; 1) 
                 str [ii] = storeSubs[ii].toString
-            END FOR
+             FOR
     *************************end of useless code ***********************************
     SUBMODULE: toStringArry
         IMPORT: none
@@ -487,7 +510,7 @@ public class shipStorage
 
             FOR ((int)ii= 1 TO MAXSUBCAP -1 CHNAGEBY 1
                 strArry [ii] =  storeSubs[ii].toString
-            END FOR
+             FOR
 
             COMMENT: I used the starting index of (MAXSUBCAP) becasue I want to
                      start adding the information of the fighter jets, to the next
@@ -496,5 +519,5 @@ public class shipStorage
 
             FOR (MAXSUBCAP TO tolShipsInfo - 1 ; 1
                 strArry [ii] =  storeJets[ii].toString
-            END FOR
+             FOR
 
