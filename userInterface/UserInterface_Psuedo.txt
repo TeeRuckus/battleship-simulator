@@ -15,8 +15,52 @@ Defualt:
 
     ALGORITHM:
 
+        (Integer) menuNum := 4
         create a new instances of shipStorage 
-        create a new instances of menu
+        
+        (menuClassInteger Object) battleShipMenus [] := SIZE of menuNum
+        
+        FOR((interger) ii := 0 TO menuNum (exclusive) CHANGEBY 1 
+            battleShipMenus[ii] := new instances of menuClassInteger
+        END FOR
+        
+        COMMENT: this is the main menu
+
+        battleShipMenus[0] := menuClassInteger.setMssg(" 1. Add Ships
+                                                         2. View Ships
+                                                         3. find duplicates
+                                                         4. destination Check
+                                                         5. Load ships
+                                                         6. Save Ships
+                                                         7. Exit"
+        battleShipMenus[0] := menuClassInteget.setOptions(7)
+        
+        COMMENT: the menu the user is exposed to when they select 1 from the main
+                 menu
+
+        battleShipMenus[1] := menuClassInteger.setMssg("1. add manually
+                                                      2. add from a file ")
+        battleShipMenus[1] := menuClassInteger.setOptions(2)
+
+        COMMENT: the menu the user is exposed to when they select 2 from the 
+                 main menu 
+
+        battleShipMenus[2] := menuClassInteger.setMssg(" 1. View all ships
+                                                         2. View submarines only
+                                                         3. View fighter jets 
+                                                            only ")
+        battleShipMenus[2] := menuClassInteger.setOptions(3)
+    
+        COMMENT: the menu the user is exposed to when they select 3 on the menu
+
+        battleShipMenus[3] := menuClassInterger.setMssg(" 1. Find all duplicates
+                                                          2. Find submarine 
+                                                             duplicates only
+                                                          3. Find fighter Jet
+                                                             duplicates only")
+        battleShipMenus[3] := menuClassInteger.setOptions(3)
+        
+        
 
 DOING METHODS:
 
@@ -24,12 +68,3 @@ PRIVATE SUBMODULES:
 
 OTHER METHODS:
 
-SUBMODULE: menuOp
-    IMPORT: mssg (String)
-    EXPORT: none
-    PURPOSE: to allow display all the available options of the programme to the 
-             user and allow the user to select the option they want
-
-    ALGORITHM:
-
-    
