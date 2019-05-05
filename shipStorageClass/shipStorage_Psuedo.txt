@@ -1,4 +1,4 @@
-CLASS: shipStorageArrayClass
+CLASS: shipStorage
 
 PUBLIC CLASS CONSTANTS:
 
@@ -52,7 +52,7 @@ Alternate
         END IF ELSE
 
 Copy:
-    IMPORT: inShipStorage (shipStorageArrayClass)
+    IMPORT: inShipStorage (shipStorage)
     EXPORT: none
     ASSERTION: creates an object which is identical to the imported object
 
@@ -334,8 +334,8 @@ SUBMODULE: equals
 
     ALGORITHM:
         isSame := FALSE
-        IF (inObj ISA shipStorageArrayClass) THEN
-            inShipStorage := (Convert to shipStorageArrayClass)inObjct
+        IF (inObj ISA shipStorage) THEN
+            inShipStorage := (Convert to shipStorage)inObjct
             isSame := ((LENGTH)storeSubs EQUALS
                       (LENGTH)inShipStorage.getStoreSubs <- none) AND
                       ((LENGTH)storeJets EQUALS
