@@ -3,6 +3,7 @@ CLASS: userInterfaceClass
 CLASS FIELDS: 
     
     shipStorage (shipStorage object)
+    menu (menuClassInteger)
 
 COSTRUCTORS:
 
@@ -14,20 +15,8 @@ Defualt:
 
     ALGORITHM:
 
-        create a new object of shipStorage
-
-Copy:
-    IMPORT: inUI
-    EXPORT: none
-    ASSERTION: creates an object which is identical to the imported object
-
-ACCESSORS
-
-MUTATORS:
-    SUBMODULE: setMenu
-        IMPORT: inUserInterface
-        EXPORT: none
-        PURPOSE: to set 
+        create a new instances of shipStorage 
+        create a new instances of menu
 
 DOING METHODS:
 
@@ -43,14 +32,4 @@ SUBMODULE: menuOp
 
     ALGORITHM:
 
-    (interger) userOP := 0
-    DO
-        TRY
-            OUTPUT: mssg
-            OUTPUT: >>>
-            INPUT: userOp
-        CATCH: InputMismatchException
-            OUTPUT: "ERROR: get error message from complier
-            userOp := 0
-        END TRY CATCH
-    WHILE userOP is equal to 0
+    

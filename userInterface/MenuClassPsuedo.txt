@@ -27,13 +27,9 @@ Defualt:
                  against the menu options. This method is based on an assumption
                  that the menu is not going to have 0 as a parameter.
         
-        (integer) num := 1 
-        parameters [] := SIZE of 3 
-
-        FOR ((interger)ii=0 TO LENGTH of parameters -1 CHNAGEBY 1) THEN
-            parameters[ii] := num
-            num := num + 1
-        END FOR
+        parameters [] := SIZE of options
+        
+        parameters := generateElements <- none
 
 Alternate
     IMPORT: (menuClassInterger object) inMenu
@@ -46,6 +42,73 @@ Alternate
             menu := inMenu
         END IF
 
+Copy:
+    IMPORT: inMenu (menuClassInterger object)
+    EXPORT: none
+    ASSERTIONS: creates an object which is identical to the inMenu object
+
+    ALGORITHM:
+        mssg := inMenu.getMssg
+        options := inMenu.getOptions
+    
+        COMMENT: there's no point of copying the elements when you can 
+                 re-generate the elements, and it's easier to do it that way
+        parameters[] := SIZE of options
+        parameters := generateElements <- options
+
+ACCESORS
+
+SUMBODULE: getMssg
+    IMPORT: none
+    EXPORT: mssg(String)
+
+SUBMODULE: getOptions
+    IMPORT: none
+    EXPORT: options 
+
+MUTATORS:
+
+SUBMODULE: setMssg
+    IMPORT: inMssg
+    EXPORT: none
+    ASSERTION: set mssg to inMssg if it is not null
+
+    ALGORITHM:
+        IF (inMssg is not null) THEN
+            mssg := inMssg
+        END IF
+
+SUBMODULE: setOptions
+    IMPROT: inOptions
+    EXPORT: none
+    ASSERTION: set options if it's not less than 0 
+
+    ALGORITHM:
+        IF (inOptions > 0)
+            options := inOptions
+        END IF
+
+DOING SUBMODULES
+
+SUMODULE: selOpMenu
+    IMPORT: mssg (String)
+    EXPORT: userOp (Integer)
+    PURPOSE: to grab the users option out of the given selections of the 
+             programme.
+
+    ALGORITHM:
+        (interger) userOP := 0
+        DO
+            TRY
+                OUTPUT: mssg
+                OUTPUT: >>>
+                INPUT: userOp
+            CATCH: InputMismatchException
+                OUTPUT: "ERROR: get error message from complier
+                userOp := 0
+            END TRY CATCH
+        WHILE userOP is equal to 0 and not equal to parameters*********
+
 PRIVATE SUBMODULES
 
 SUBMODULE: validateMenu
@@ -57,5 +120,33 @@ SUBMODULE: validateMenu
         isValid := FALSE
         
         IF (mssg LENGTH doesn't equal 0) THEN
-            IF (
             isValid := TRUE
+        END IF 
+
+SUMBODULE: generateElements
+    IMPORT: options (Interger)
+    EXPORT: none
+    ASSERTIONS: if the printed options are equal to the variable options, except
+                printed out incrementally.
+    ALGORITHM:
+        (integer) num := 1 
+
+        FOR ((interger)ii=0 TO LENGTH of options -1 CHNAGEBY 1) THEN
+            parameters[ii] := num
+            num := num + 1
+        END FOR
+
+OTHER METHODS
+
+SUBMODULE: clone
+    IMPORT: none
+    EXPORT: cloneMenuClassInteger
+    ASSERTION: returns a clones object of the current object 
+
+    ALGORITHM:
+        CONSTRUCT cloneMenuclassInteger USING ALTERNATE CONSTRUCTOR with
+            -mssg
+            -options
+            -parameters
+
+SUBMODULE: equals
