@@ -4,7 +4,7 @@ PUBLIC CLASS CONSTANTS:
     STEEL := "STEEL"
     ALLY := "ALLOY"
     TTNM := "TITANIUM"
-    TOL := 0.001
+    TOL := 0.0001
 
 CLASS FIELDS:
     serialNum (Real)
