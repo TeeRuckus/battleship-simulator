@@ -23,7 +23,7 @@ public class shipStorage
         subMarineClass storeSubs [];
         fighterJetClass storeJets [];
 
-        //COSTRUC;RS:
+        //COSTRUCRS:
         
         /**********************************************************************
         Defualt:
@@ -76,10 +76,10 @@ public class shipStorage
         EXPORT: none
         ASSERTION: creates an object which is identical to the imported object
         **********************************************************************/
-        public shipStorage inShipStorage(shipStorage inShipStorage)
+        public shipStorage(shipStorage inShipStorage)
         {
-            private int ii;
-
+            //private int ii;
+            int ii;
             for(ii = 0 ; inShipStorage.MAXSUBCAP ; ii++)
             {
                 storeSubs[ii] = inShipStorage.storeSubs[ii];
@@ -279,7 +279,7 @@ public class shipStorage
                  want the programme to store itself as a dupilcate, hence
                  it will search for objects after itself*/
 
-                for(int jj = 1 ; storeSubs.length() -1 ; 1)
+                for(int jj = 1 ; storeSubs.length() -1 ;jj++)
                 {
                     if(storeSubs[ii].equals(storeSubs[jj])) 
                     {
@@ -315,7 +315,7 @@ public class shipStorage
                  want the programme to store itself as a dupilcate, hence
                  it will search for objects after itself*/
 
-                for((int) jj = 1 ; .length of storeJet -1 ; 1) 
+                for(int jj = 1 ;storeJet.length() -1 ; jj++) 
                 {
                     if (storeJets[ii].equals(storeJets[jj])) 
                     { 
@@ -326,6 +326,7 @@ public class shipStorage
                 
                 return duplicate; 
             }
+        }
 
         /**********************************************************************
         SUBMODULE: findDuplicates
@@ -421,7 +422,7 @@ public class shipStorage
             }
             else
             {
-                System.out.println(: "ERROR: not a submarine"
+                System.out.println("ERROR: not a submarine");
             }
             return isValid;
         }
@@ -455,9 +456,9 @@ public class shipStorage
         **********************************************************************/
         public shipStorage()
         {
-            shipStorage cloneShipStorage
+            shipStorage cloneShipStorage;
         
-            cloneShipStorage - new shipStorage(this.countSubs, this.countJet,
+            cloneShipStorage = new shipStorage(this.countSubs, this.countJet,
                                               this.storeSubs, this.storeJets);
             return cloneShipStorage;
         }
@@ -475,7 +476,7 @@ public class shipStorage
             isSame = false;
             if (inObj instanceof shipStorage) 
             {
-                inShipStorage = (Convert to shipStorage)inObjct
+                inShipStorage = (ShipStorage)inObjct;
                 isSame = ((storeSubs.length()).equals(
                             inShipStorage.getStoreSubs()) && 
                             (storeJets.length()).equals(
@@ -514,6 +515,7 @@ public class shipStorage
             {
                 System.out.println("ERROR: the array objects are not the same");
             }
+        }
 
      /************************ I might move this type of code straight
     to the user Intefac ****************************************************/
@@ -585,7 +587,7 @@ public class shipStorage
 
             for (int ii= 1 ; MAXSUBCAP -1; ii++)
             {
-                strArry [ii] =  storeSubs[ii].toString
+                strArry [ii] =  storeSubs[ii].toString;
             }
 
              /*I used the starting index of (MAXSUBCAP) becasue I want to
@@ -595,7 +597,8 @@ public class shipStorage
 
             for (int ii = MAXSUBCAP ; tolShipsInfo - 1 ; ii++)
             {
-                strArry [ii] =  storeJets[ii].toString
+                strArry [ii] =  storeJets[ii].toString;
             }
             return strArry;
         }
+    }
