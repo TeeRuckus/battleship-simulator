@@ -39,115 +39,160 @@ public class shipStorage
             storeSubs = new subMarineClass [MAXSUBCAP];
             storeJets = new fighterJetClass [MAXJETCAP];
         }
-    }
-    /*
-    Alternate
+    
+        /**********************************************************************
+        Alternate
         IMPORT: (subMarine object) inSub
                 (fighterJet object) inJet
         EXPORT: none
         ASSERTIONS: creates an object if the imports are valid in the next array
                     index available, otherwise it will FAIL
+        **********************************************************************/
+        public shipStorage(subMarineClass inSub, fighterJetClass inJet)
+        {
+            if(validateSubObjct(inSub))
+            {
+                if(validateJetObjct(inJet))
+                { 
+                    storeSub[countSubs] = inSub;
+                    storeJet[countJets] = inJet;
+                    countSubs = countSubs + 1; 
+                    countJets = countJets + 1;
+                } 
+                else
+                {
+                    throw new IllegalArgumentException("\n Invalid Jet \n");
+                }
+            }
+            else
+            {
+                throw new IllegalArgumentException("\n Invalid Submarine \n");
+            }
+        }
 
-        ALGORITHM:
-
-            if (validateSubObjct <- inSub) 
-                if (validateJetObjct <- inJet) 
-                    storeSub[countSubs] = inSub
-                    storeJet[countJets] = inJet
-                    countSubs = countSubs + 1
-                    countJets = countJets + 1
-
-            ELSE
-                FAIL
-            END if ELSE
-
-    Copy:
-        IMPORT: inShipStorage (shipStorageArrayClass)
+        /**********************************************************************
+        Copy:
+        IMPORT: inShipStorage (shipStorage)
         EXPORT: none
         ASSERTION: creates an object which is identical to the imported object
+        **********************************************************************/
+        public shipStorage(shipStorage inShipStorage)
+        {
+            int ii;
 
-        ALGORITHM:
+            for(ii = 0 ; .length of inShipStorage.MAXSUBCAP ; ii++)
+            {
+                storeSubs[ii] = inShipStorage.storeSubs[ii];
+            }
+            for (ii = 0 ; .length of inShipStorage.MAXJETCAP 
+                ; ii++)  
+            {
+                storejets[ii] = inShipStorage.storeJets[ii];
+            }
+        }
 
-            FOR ((interger)ii = 0 TO .length of inShipStorage.MAXSUBCAP CHANGEBY 1) 
-                
-                storeSubs[ii] = inShipStorage.storeSubs[ii]
-            END FOR
+    //ACCESSORS
 
-            FOR ((interger)ii = 0 TO .length of inShipStorage.MAXJETCAP 
-                CHANGEBY 1)  
-                storejets[ii] = inShipStorage.storeJets[ii]
-            END FOR
-
-    ACCESSORS
-
-    SUBMODULES: getStoreSubs
+        /**********************************************************************
+        SUBMODULES: getStoreSubs (subMarineClass Object) 
         IMPORT: none
         EXPORT: storeSubs (address of storeSubs object in memory)
         ASSERTION: returns the elements which were last store storeSubs object
-
-    SUBMODULE: getStoreJets
+        **********************************************************************/
+        public subMarineClass getStoreSubs()
+        {
+            return storeSubs;
+        }
+        /**********************************************************************
+        SUBMODULE: getStoreJets (figherJetClass Object)
         IMPORT: none
         EXPORT: storeJets (address of storeJets object in memory)
         ASSERTION: returns the elemnts which were last sttore in storeSubs object
+        **********************************************************************/
+        public fighterJetClass getStoreJets()
+        {
+            return storeJets;
+        }
 
-    SUBMODULE: getLastSub
+        /**********************************************************************
+        SUBMODULE: getLastSub (subMarineClass Object) 
         IMPORT: none
         EXOPORT: sub (subMarine Object)
+        **********************************************************************/
+        public subMarineClass getLastSub()
+        {
+            /* I have subtracted one because the other constructors (i.e.
+            alternate constructor) will move the index  of the count
+            variable to the next available index, hence you have to
+            subtract one to get the last stored submarine*/
 
-        ALGORITHM:
-            COMMENT: I have subtracted one because the other constructors (i.e.
-                     alternate constructor) will move the index  of the count
-                     variable to the next available index, hence you have to
-                     subtract one to get the last stored submarine
+            return sub = storeSub[countSubs - 1]; 
+        } 
 
-            sub = storeSub[countSubs - 1]
-
-    SUBMODULE: getLastjet
+        /**********************************************************************
+        SUBMODULE: getLastjet (fighterJetClass Object)
         IMPORT: none
         EXPORT: jet (fighterJet object)
+        **********************************************************************/
+        public fighterJetClass getLastJet()
+        {
 
-        ALGORITHM
+             /*I have subtracted one because the other constructors (i.e.
+             alternate constructor) will move the index of the count
+             variable to the next available index, hence you have to
+             subtract one to get the last stored jet*/
 
-            COMMENT: I have subtracted one because the other constructors (i.e.
-                     alternate constructor) will move the index of the count
-                     variable to the next available index, hence you have to
-                     subtract one to get the last stored jet
+            return jet = storeJet[countJets - 1];
+        }
 
-            jet = storeJet[countJets - 1]
+        //MUTATORS:
 
-    MUTATORS:
-
-    SUBMODULE: setStoreSubs
-        IMPORT: inStoreSubs (address of inStoreSubs in memory) ****recondsider the inStoreSubs
+        /**********************************************************************
+        SUBMODULE: setStoreSubs 
+        IMPORT: inStoreSubs (subMarineClass Object) ****recondsider the inStoreSubs
         EXPORT: none
         ASSERTION: if the elements and array found at the specified address is
                    valid. setStoreJets will be valid, otherwise it will fail
+        **********************************************************************/
+        public void setStoreSubs(subMarineClas  inStoreSubs)
+        {
+            if(validateStoreSubs(inStoreSubs))
+            {
+                storeSubs = inStoreSubs;
+            }
+            else 
+            {
+                throw new IllegalArgumentException("\n Invalid submarine "+
+                                                    "storage");
+            }
+        }
 
-        ALGORITHM:
-            if (validateStoreSubs <- inStoreSubs) 
-                storeSubs = inStoreSubs
-            ELSE
-                FAIL
-            END if ELSE
-
-    SUBMODULE: setStoreJets
-        IMPORT: inStoreJets (address of inStoreJers in memorty)
+        /**********************************************************************
+        SUBMODULE: setStoreJets
+        IMPORT: inStoreJets (fighterJetClass Object)
         EXPORT: none
         ASSERTION: if the elements and array found at the specified adress is
                    valid. setStoreJets will be valid, otherwise it will fail
-
-        ALGORITHM:
-            if (validateStoreJets <- inStoreJets) 
-                storeJets = inStoreJets
-            ELSE
-                FAIL
-            END if ELSE
-
-    SUBMODULE: addSub
+        **********************************************************************/
+        public void setStoreJets(fighterJetClass inStoreJets)
+        {
+            if(validateStoreJets(inStoreJets))
+            {
+                storeJets = inStoreJets;
+            }
+            else
+            {
+                throw new IllegalArgumentExveption("\n Invalid fighter Jet "+
+                                                    "storage");
+            }
+        } 
+        /**********************************************************************
+        SUBMODULE: addSub
         IMPORT: inSub (subMarine object) , countSubs (int)
         EXPORT: none
         ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
                     storeSubs hasn't exceeded the MAXSUBCAP
+        **********************************************************************/
 
         ALGORITHM:
             if (validateSub <- inSub) 
@@ -159,11 +204,11 @@ public class shipStorage
                              vaccant index of the storeSub
 
                     countSub = countSubs + 1
-                ELSE
+                else
                     FAIL "ERROR: The storage of the submarines is full."
-            ELSE
+            else
                 FAIL "ERROR: not a submarine"
-            END if ELSE
+            END if else
 
     SUBMODULE: addJet
         IMPORT: inJet (jetFighter object) , countJets (interger)
@@ -181,11 +226,11 @@ public class shipStorage
                              vaccant index of the storeJets
 
                     countJets = countJets + 1
-                ELSE
+                else
                     FAIL "ERROR: storage of fighter jets is full"
-            ELSE
+            else
                 FAIL "ERROR: not a fighter jet"
-            END if ELSE
+            END if else
 
     DOING METHODS:
 
@@ -200,13 +245,13 @@ public class shipStorage
 
             (object) duplicates [] = SIZE of DYNAMIC SIZING
             
-            FOR ((interger) ii = 0 TO .length of storeSub - 1 CHANGEBY 1) 
+            FOR ((interger) ii = 0 TO .length of storeSub - 1 ; 1) 
 
                 COMMENT: I am starting the looping variable at one because I don't
                          want the programme to store itself as a dupilcate, hence
                          it will search for objects after itself
 
-                FOR((interger) jj = 1 TO .length of storeSub -1 CHANGEBY 1) 
+                FOR((interger) jj = 1 TO .length of storeSub -1 ; 1) 
                     if (storeSubs[ii].equals(storeSubs[jj])) 
                         duplicate[ii] = storeSubs
                         duplicate[jj] = storeSubs[jj]
@@ -223,13 +268,13 @@ public class shipStorage
 
         (object) duplicates [] = SIZE of DYNAMIC SIZING
             
-            FOR ((interger) ii = 0 TO .length of storeJet - 1 CHANGEBY 1) 
+            FOR ((interger) ii = 0 TO .length of storeJet - 1 ; 1) 
 
                 COMMENT: I am starting the looping variable at one because I don't
                          want the programme to store itself as a dupilcate, hence
                          it will search for objects after itself
 
-                FOR((interger) jj = 1 TO .length of storeJet -1 CHANGEBY 1) 
+                FOR((interger) jj = 1 TO .length of storeJet -1 ; 1) 
                     if (storeJets[ii].equals(storeJets[jj])) 
                         duplicate[ii] = storeJets
                         duplicate[jj] = storeJets[jj]
@@ -270,9 +315,9 @@ public class shipStorage
             if (inStoreObjct ISA subMarineClass) 
                 if (inStoreObjct .length EQUALS to MAXSUBCAP)
                     isValid = TRUE
-                ELSE
+                else
                     System.out.println(: "ERROR: incorrect storage capacity"
-            ELSE
+            else
                 System.out.println(: "ERROR: not a submarine"
 
     SUBMODULE: validateStoreJets
@@ -287,11 +332,11 @@ public class shipStorage
             if (inStoreObjct  ISA fighterJetClass) 
                 if (inStoreObjct .length EQUALS to MAXJETCAP) 
                     isValid = TRUE
-                ELSE
+                else
                     System.out.println(: "ERROR: incorrect storage capacity"
-            ELSE
+            else
                 System.out.println(: "ERROR: not a fighter jet"
-            END if ELSE
+            END if else
 
     SUBMODULE: validateSubObjct
         IMPORT: inObjct (subMarine object)
@@ -303,9 +348,9 @@ public class shipStorage
             isValid = FALSE
             if (inObjct ISA subMarineClass) 
                 isValid = TRUE
-            ELSE
+            else
                 System.out.println(: "ERROR: not a submarine"
-            END if ELSE
+            END if else
 
     SUBMODULE: validateJetObjct
         IMPORT: inObjct (fighterJet object)
@@ -317,9 +362,9 @@ public class shipStorage
             isValid = FALSE
             if (inObjct ISA fighterJetClass) 
                 isValid = TRUE
-            ELSE
+            else
                 System.out.println(: "ERROR: not a fighter jet"
-            END if ELSE
+            END if else
 
     OTHER METHODS:
 
@@ -344,8 +389,8 @@ public class shipStorage
 
         ALGORITHM:
             isSame = FALSE
-            if (inObj ISA shipStorageArrayClass) 
-                inShipStorage = (Convert to shipStorageArrayClass)inObjct
+            if (inObj ISA shipStorage) 
+                inShipStorage = (Convert to shipStorage)inObjct
                 isSame = ((.length)storeSubs EQUALS
                           (.length)inShipStorage.getStoreSubs <- none) AND
                           ((.length)storeJets EQUALS
@@ -375,9 +420,9 @@ public class shipStorage
                                                        (arrayTwo[compareElements])
                     compareElements = compareElements + 1
                 WHILE isSame < .length of arrayOne
-            ELSE
+            else
                 System.out.println(: "ERROR: the array objects are not the same"
-            END if ELSE
+            END if else
 
      *********************** I might move this type of code straight
     to the user Intefac ***********************************************************
@@ -411,7 +456,7 @@ public class shipStorage
             COMMENT: I am subtracting one, so the for loop doesn't try to search
                      outside the indexs of the str array as its indes starts at 0
 
-            FOR ((int) ii = 0 TO MAXJETCAP - 1 CHANGEBY 1) 
+            FOR ((int) ii = 0 TO MAXJETCAP - 1 ; 1) 
                 str [ii] = storeSubs[ii].toString
             END FOR
     *************************end of useless code ***********************************
@@ -449,7 +494,7 @@ public class shipStorage
                      vaccant spot after the information of the submarines and it
                      corresponds to MAXSUBCAP
 
-            FOR (MAXSUBCAP TO tolShipsInfo - 1 CHANGEBY 1
+            FOR (MAXSUBCAP TO tolShipsInfo - 1 ; 1
                 strArry [ii] =  storeJets[ii].toString
             END FOR
-*/ 
+

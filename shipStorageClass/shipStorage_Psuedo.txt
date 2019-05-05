@@ -1,4 +1,5 @@
 CLASS: shipStorage
+                throw new IllegalArgumentException("\n 
 
 PUBLIC CLASS CONSTANTS:
 
@@ -46,9 +47,10 @@ Alternate
                 storeJet[countJets] := inJet
                 countSubs := countSubs + 1
                 countJets := countJets + 1
-
+            ELSE
+                FAIL "Invalid fighterJet"
         ELSE
-            FAIL
+            FAIL "Invalid submarine" 
         END IF ELSE
 
 Copy:
@@ -70,17 +72,17 @@ Copy:
 
 ACCESSORS
 
-SUBMODULES: getStoreSubs
+SUBMODULES: getStoreSubs (subMarineClass object)
     IMPORT: none
     EXPORT: storeSubs (address of storeSubs object in memory)
     ASSERTION: returns the elements which were last store storeSubs object
 
-SUBMODULE: getStoreJets
+SUBMODULE: getStoreJets (fighterJetClass object)
     IMPORT: none
     EXPORT: storeJets (address of storeJets object in memory)
     ASSERTION: returns the elemnts which were last sttore in storeSubs object
 
-SUBMODULE: getLastSub
+SUBMODULE: getLastSub (subMarineClass object)
     IMPORT: none
     EXOPORT: sub (subMarine Object)
 
@@ -92,7 +94,7 @@ SUBMODULE: getLastSub
 
         sub := storeSub[countSubs - 1]
 
-SUBMODULE: getLastjet
+SUBMODULE: getLastjet (fighterJetClass Object)
     IMPORT: none
     EXPORT: jet (fighterJet object)
 
@@ -107,7 +109,7 @@ SUBMODULE: getLastjet
 
 MUTATORS:
 
-SUBMODULE: setStoreSubs
+SUBMODULE: setStoreSubs 
     IMPORT: inStoreSubs (address of inStoreSubs in memory) ****recondsider the inStoreSubs
     EXPORT: none
     ASSERTION: if the elements and array found at the specified address is
@@ -120,7 +122,7 @@ SUBMODULE: setStoreSubs
             FAIL
         END IF ELSE
 
-SUBMODULE: setStoreJets
+SUBMODULE: setStoreJets 
     IMPORT: inStoreJets (address of inStoreJers in memorty)
     EXPORT: none
     ASSERTION: if the elements and array found at the specified adress is
@@ -133,7 +135,7 @@ SUBMODULE: setStoreJets
             FAIL
         END IF ELSE
 
-SUBMODULE: addSub
+SUBMODULE: addSub 
     IMPORT: inSub (subMarine object) , countSubs (Interger)
     EXPORT: none
     ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
