@@ -23,7 +23,7 @@ public class shipStorage
         subMarineClass storeSubs [];
         fighterJetClass storeJets [];
 
-        //COSTRUCTORS:
+        //COSTRUC;RS:
         
         /**********************************************************************
         Defualt:
@@ -145,7 +145,7 @@ public class shipStorage
             return jet = storeJet[countJets - 1];
         }
 
-        //MUTATORS:
+        //MUTA;RS:
 
         /**********************************************************************
         SUBMODULE: setStoreSubs 
@@ -219,7 +219,7 @@ public class shipStorage
         }
         /**********************************************************************
         SUBMODULE: addJet
-        IMPORT: inJet (fighterJetClass object) , countJets (interger)
+        IMPORT: inJet (fighterJetClass object) , countJets (int)
         EXPORT: none
         ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
                    storeSubs hasn't exceeded MAXJETCAP
@@ -259,118 +259,164 @@ public class shipStorage
         }
 
         /**********************************************************************
-    SUBMODULE: findDuplicatesSubs
+        SUBMODULE: findDuplicateSubs
         IMPORTS: none
         EXPORT: dupilicates[] (Object) 
         ASSERTION:
-
-        ALGORITHM:
-
-            (object) duplicates [] = SIZE of DYNAMIC SIZING
+        **********************************************************************/
+        public subMarineclass [] findDuplicateSubs() 
+        {
+            /*this following pieces of code is going to differ from my psudo
+              code. I need to research and find out if there's such a thing as
+              dynamic sizing. So I am just going to set the maxium size of the
+              submarines and fighter jets multiplied by two because you're not
+              going to get more than that amount of duplicates */ 
+             subMarineClass duplicates [] = new subMarineClass 
+                                            [(MAXSUBCAP + MAXJETCAP) * 2];
             
-            FOR ((interger) ii = 0 TO .length of storeSub - 1 ; 1) 
+            for (int ii = 0 ; storeSubs.length - 1 ; ii++) 
+            {
+                /*I am starting the looping variable at one because 1 don't
+                 want the programme to store itself as a dupilcate, hence
+                 it will search for objects after itself*/
 
-                COMMENT: I am starting the looping variable at one because I don't
-                         want the programme to store itself as a dupilcate, hence
-                         it will search for objects after itself
+                for(int jj = 1 ; storeSubs.length() -1 ; 1)
+                {
+                    if(storeSubs[ii].equals(storeSubs[jj])) 
+                    {
+                        duplicate[ii] = storeSubs;
+                        duplicate[jj] = storeSubs[jj];
+                    }
+                }
+             }
+            
+            return duplicate; 
+        }
 
-                FOR((interger) jj = 1 TO .length of storeSub -1 ; 1) 
-                    if (storeSubs[ii].equals(storeSubs[jj])) 
-                        duplicate[ii] = storeSubs
-                        duplicate[jj] = storeSubs[jj]
-                     if
-                 FOR
-             FOR
-
-    SUBMODULE: findDuplicatesJets
+        /**********************************************************************
+        SUBMODULE: findDuplicateJets
         IMPORTS: none
         EXPORT: dupilicates[] (Object) 
         ASSERTION:
+        **********************************************************************/
+        public fighterJetClass[] findDuplicateJets() 
+        {
+            /*this following pieces of code is going to differ from my psudo
+              code. I need to research and find out if there's such a thing as
+              dynamic sizing. So I am just going to set the maxium size of the
+              submarines and fighter jets multiplied by two because you're not
+              going to get more than that amount of duplicates */ 
 
-        ALGORITHM:
-
-        (object) duplicates [] = SIZE of DYNAMIC SIZING
+            fighterJetClass duplicates [] = new fighterJetClass 
+                                            [(MAXSUBCAP + MAXJETCAP) * 2]; 
             
-            FOR ((interger) ii = 0 TO .length of storeJet - 1 ; 1) 
+            for (int ii = 0 ;storeJet.length() - 1 ;ii++) 
+            {
+                 /*I am starting the looping variable at one because I don't
+                 want the programme to store itself as a dupilcate, hence
+                 it will search for objects after itself*/
 
-                COMMENT: I am starting the looping variable at one because I don't
-                         want the programme to store itself as a dupilcate, hence
-                         it will search for objects after itself
-
-                FOR((interger) jj = 1 TO .length of storeJet -1 ; 1) 
+                for((int) jj = 1 ; .length of storeJet -1 ; 1) 
+                {
                     if (storeJets[ii].equals(storeJets[jj])) 
-                        duplicate[ii] = storeJets
-                        duplicate[jj] = storeJets[jj]
-                     if
-                 FOR
+                    { 
+                        duplicate[ii] = storeJets;
+                        duplicate[jj] = storeJets[jj];
+                    }
+                }
+                
+                return duplicate; 
+            }
 
-    SUBMODULE: findDuplicates
+        /**********************************************************************
+        SUBMODULE: findDuplicates
         IMPORTS: none
         EXPORT: dupilicates (object)
         ASSERTION
-
+        **********************************************************************/
+        /*
         ALGORITHM:
 
         (object) duplicates [] = SIZE of DYNAMIC SIZING
-       
-        
-        
+        */
 
-    SUBMODULE: calcTolShips
-        IMPORT: countSubs (interger), countJets (integer)
-        EXPORT: tolShips
+        /**********************************************************************
+        SUBMODULE: calcTolShips
+        IMPORT: countSubs (integer), countJets (integer)
+        EXPORT: tolShips (integer) 
+        **********************************************************************/
+        public int calcTolShips(int countSubs, int countJets)
+        {
+            return tolShips = countSubs + countJets; 
+        }
 
-        ALGORITHM:
+        //PRIVATE SUBMODULES:
 
-            tolShips = countSubs + countJets 
-
-    PRIVATE SUBMODULES:
-
-    SUBMODULE: validateStoreSubs
-        IMPORT: inStoreObect (address of inStoreSubs in memory)
+        /**********************************************************************
+        SUBMODULE: validateStoreSubs
+        IMPORT: inStoreSub (subMarineClass) 
         EXPORT: isValid (Boolean)
         ASSERTION: If the address of inStoreSubs is an array of MAXSUBCAP elements,
                    and it's a SubMarine object it's a valid inStoreSubs
-
-        ALGORITHM:
-
-            isValid = FALSE
-            if (inStoreObjct ISA subMarineClass) 
-                if (inStoreObjct .length EQUALS to MAXSUBCAP)
-                    isValid = TRUE
+        **********************************************************************/
+        private boolean validateStoreSubs(subMarineClass inStoreSub)
+        {
+            isValid = false;
+            if (inStoreSub instanceof subMarineClass) 
+            {
+                if (inStoreObjct.length() == MAXSUBCAP)
+                {
+                    isValid = true;
+                }
                 else
-                    System.out.println(: "ERROR: incorrect storage capacity"
+                {
+                    System.out.println("ERROR: incorrect storage capacity");
+                }
+            }
             else
-                System.out.println(: "ERROR: not a submarine"
+            {
+                System.out.println("ERROR: not a submarine");
+            }
+        }
 
-    SUBMODULE: validateStoreJets
-        IMPORT: inStoreObjct (address of inStoreJets in memory)
+        /**********************************************************************
+        SUBMODULE: validateStoreJets
+        IMPORT: inStoreJets (fighterJetClass)
         EXPORT: isValid (Boolean)
         ASSERTION: if the address of inStoreJets is an array of MAXJETCAP elements,
                    and it's fighteJet object it's a valid inStoreJet
-
-        ALGORITHM:
-
-            isValid = FALSE
-            if (inStoreObjct  ISA fighterJetClass) 
-                if (inStoreObjct .length EQUALS to MAXJETCAP) 
-                    isValid = TRUE
+        **********************************************************************/
+        private boolean validateStoreJets(fighterJetClass inStoreJets)
+        {
+            isValid = false;
+            if (inStoreObjct instanceof fighterJetClass) 
+            {
+                if (inStoreObjct.length() == MAXJETCAP) 
+                {
+                    isValid = true;
+                }
                 else
-                    System.out.println(: "ERROR: incorrect storage capacity"
+                {
+                    System.out.println("ERROR: incorrect storage capacity");
+                }
+            }
             else
-                System.out.println(: "ERROR: not a fighter jet"
-             if else
-
-    SUBMODULE: validateSubObjct
+            {
+                System.out.println("ERROR: not a fighter jet");
+            }
+        }
+        /**********************************************************************
+        SUBMODULE: validateSubObjct
         IMPORT: inObjct (subMarine object)
         EXPORT: isValid (Boolean)
         ASSERTION: if inObjct is a subMarine object then it's  valid
-
+        **********************************************************************/
+        private
         ALGORITHM:
 
-            isValid = FALSE
+            isValid = false
             if (inObjct ISA subMarineClass) 
-                isValid = TRUE
+                isValid = true
             else
                 System.out.println(: "ERROR: not a submarine"
              if else
@@ -382,9 +428,9 @@ public class shipStorage
 
         ALGORITHM:
 
-            isValid = FALSE
+            isValid = false
             if (inObjct ISA fighterJetClass) 
-                isValid = TRUE
+                isValid = true
             else
                 System.out.println(: "ERROR: not a fighter jet"
              if else
@@ -397,7 +443,7 @@ public class shipStorage
         ASSERTION: returns a cloned object of the current object
 
         ALGORITHM:
-            CONSTRUCT cloneShipStorage USING ALTERNATE CONSTRUCTOR withS
+            CONSTRUCT cloneShipStorage USING ALTERNATE CONSTRUC;R withS
                 -(int) countSubs
                 -(int) countJets
                 -(ARRAY OF subMarine object) storeSubs []
@@ -411,7 +457,7 @@ public class shipStorage
                    storage distrubution
 
         ALGORITHM:
-            isSame = FALSE
+            isSame = false
             if (inObj ISA shipStorage) 
                 inShipStorage = (Convert to shipStorage)inObjct
                 isSame = ((.length)storeSubs EQUALS
@@ -428,10 +474,10 @@ public class shipStorage
 
         ALGORITHM:
 
-            isValid = FALSE
+            isValid = false
 
             if (length of arrayOne is EQUAL to length of arrayTwo) 
-                isValid =   TRUE
+                isValid =   true
 
                 COMMENT: searching through both arrays to ensure that they have
                          the same contents in the array
@@ -463,9 +509,9 @@ public class shipStorage
                          outside the indexs of the str arrays as its index starts at
                          0
 
-                FOR ((int) ii = 0 TO MAXSUBCAP -1 CHNAGEBY 1) 
+                for ((int) ii = 0 ; MAXSUBCAP -1 CHNAGEBY 1) 
                     st[ii] = storeSubs[ii].toString
-                 FOR
+                 for
 
     SUBMODULE: toStringJet
         IMPORT: none
@@ -479,9 +525,9 @@ public class shipStorage
             COMMENT: I am subtracting one, so the for loop doesn't try to search
                      outside the indexs of the str array as its indes starts at 0
 
-            FOR ((int) ii = 0 TO MAXJETCAP - 1 ; 1) 
+            for ((int) ii = 0 ; MAXJETCAP - 1 ; 1) 
                 str [ii] = storeSubs[ii].toString
-             FOR
+             for
     *************************end of useless code ***********************************
     SUBMODULE: toStringArry
         IMPORT: none
@@ -508,16 +554,16 @@ public class shipStorage
                      one so the for loop doesn't try to look outside the array as
                      the index of an array starts at 1
 
-            FOR ((int)ii= 1 TO MAXSUBCAP -1 CHNAGEBY 1
+            for ((int)ii= 1 ; MAXSUBCAP -1 CHNAGEBY 1
                 strArry [ii] =  storeSubs[ii].toString
-             FOR
+             for
 
             COMMENT: I used the starting index of (MAXSUBCAP) becasue I want to
                      start adding the information of the fighter jets, to the next
                      vaccant spot after the information of the submarines and it
                      corresponds to MAXSUBCAP
 
-            FOR (MAXSUBCAP TO tolShipsInfo - 1 ; 1
+            for (MAXSUBCAP ; tolShipsInfo - 1 ; 1
                 strArry [ii] =  storeJets[ii].toString
-             FOR
+             for
 

@@ -60,12 +60,12 @@ Copy:
 
     ALGORITHM:
 
-        FOR ((interger)ii := 0 TO LENGTH of inShipStorage.MAXSUBCAP CHANGEBY 1) 
+        FOR ((integer)ii := 0 TO LENGTH of inShipStorage.MAXSUBCAP CHANGEBY 1) 
             THEN
             storeSubs[ii] := inShipStorage.storeSubs[ii]
         END FOR
 
-        FOR ((interger)ii := 0 TO LENGTH of inShipStorage.MAXJETCAP 
+        FOR ((integer)ii := 0 TO LENGTH of inShipStorage.MAXJETCAP 
             CHANGEBY 1) THEN 
             storejets[ii] := inShipStorage.storeJets[ii]
         END FOR
@@ -158,7 +158,7 @@ SUBMODULE: addSub
         END IF ELSE
 
 SUBMODULE: addJet
-    IMPORT: inJet (jetFighter object) , countJets (interger)
+    IMPORT: inJet (jetFighter object) , countJets (integer)
     EXPORT: none
     ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
                storeSubs hasn't exceeded MAXJETCAP
@@ -183,7 +183,7 @@ DOING METHODS:
 
 SUBMODULE: destinationCheck *** yet to be implemented
 
-SUBMODULE: findDuplicatesSubs
+SUBMODULE: findDuplicateSubs
     IMPORTS: none
     EXPORT: dupilicates[] (Object) 
     ASSERTION:
@@ -192,21 +192,21 @@ SUBMODULE: findDuplicatesSubs
 
         (object) duplicates [] := SIZE of DYNAMIC SIZING
         
-        FOR ((interger) ii := 0 TO LENGTH of storeSub - 1 CHANGEBY 1) THEN
+        FOR ((integer) ii := 0 TO LENGTH of storeSub - 1 CHANGEBY 1) THEN
 
-            COMMENT: I am starting the looping variable at one because I don't
+            COMMENT: I am starting the looping variable at one because 1 don't
                      want the programme to store itself as a dupilcate, hence
                      it will search for objects after itself
 
-            FOR((interger) jj := 1 TO LENGTH of storeSub -1 CHANGEBY 1) THEN
+            FOR((integer) jj := 1 TO LENGTH of storeSub -1 CHANGEBY 1) THEN
                 IF (storeSubs[ii].equals(storeSubs[jj])) THEN
                     duplicate[ii] := storeSubs
                     duplicate[jj] := storeSubs[jj]
                 END IF
-            END FOR
+
         END FOR
 
-SUBMODULE: findDuplicatesJets
+SUBMODULE: findDuplicateJets
     IMPORTS: none
     EXPORT: dupilicates[] (Object) 
     ASSERTION:
@@ -215,13 +215,13 @@ SUBMODULE: findDuplicatesJets
 
     (object) duplicates [] := SIZE of DYNAMIC SIZING
         
-        FOR ((interger) ii := 0 TO LENGTH of storeJet - 1 CHANGEBY 1) THEN
+        FOR ((integer) ii := 0 TO LENGTH of storeJet - 1 CHANGEBY 1) THEN
 
             COMMENT: I am starting the looping variable at one because I don't
                      want the programme to store itself as a dupilcate, hence
                      it will search for objects after itself
 
-            FOR((interger) jj := 1 TO LENGTH of storeJet -1 CHANGEBY 1) THEN
+            FOR((integer) jj := 1 TO LENGTH of storeJet -1 CHANGEBY 1) THEN
                 IF (storeJets[ii].equals(storeJets[jj])) THEN
                     duplicate[ii] := storeJets
                     duplicate[jj] := storeJets[jj]
@@ -241,8 +241,8 @@ SUBMODULE: findDuplicates
     
 
 SUBMODULE: calcTolShips
-    IMPORT: countSubs (interger), countJets (integer)
-    EXPORT: tolShips
+    IMPORT: countSubs (integer), countJets (integer)
+    EXPORT: tolShips (integer)
 
     ALGORITHM:
 
@@ -251,7 +251,7 @@ SUBMODULE: calcTolShips
 PRIVATE SUBMODULES:
 
 SUBMODULE: validateStoreSubs
-    IMPORT: inStoreObect (address of inStoreSubs in memory)
+    IMPORT: inStoreSub (subMarineClass) 
     EXPORT: isValid (Boolean)
     ASSERTION: If the address of inStoreSubs is an array of MAXSUBCAP elements,
                and it's a SubMarine object it's a valid inStoreSubs
@@ -268,7 +268,7 @@ SUBMODULE: validateStoreSubs
             OUTPUT: "ERROR: not a submarine"
 
 SUBMODULE: validateStoreJets
-    IMPORT: inStoreObjct (address of inStoreJets in memory)
+    IMPORT: inStoreJet (fighterJetClass)
     EXPORT: isValid (Boolean)
     ASSERTION: if the address of inStoreJets is an array of MAXJETCAP elements,
                and it's fighteJet object it's a valid inStoreJet
