@@ -211,7 +211,7 @@ SUBMODULE: findDuplicatesJets
 
     ALGORITHM:
 
-    (object) dupliocates [] := SIZE of DYNAMIC SIZING
+    (object) duplicates [] := SIZE of DYNAMIC SIZING
         
         FOR ((interger) ii := 0 TO LENGTH of storeJet - 1 CHANGEBY 1) THEN
 
@@ -232,6 +232,9 @@ SUBMODULE: findDuplicates
     ASSERTION
 
     ALGORITHM:
+
+    (object) duplicates [] := SIZE of DYNAMIC SIZING
+   
     
     
 

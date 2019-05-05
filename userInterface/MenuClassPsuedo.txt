@@ -1,0 +1,61 @@
+CLASS: menuClassInteger
+
+CALSS FIELDS:
+
+    mssg (String)
+    options (interger)
+    parameters [] (Integer)
+
+CONSTRUCTORS
+
+Defualt:
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: a defualt string message with 3 options and 3 parameters is a 
+               valid menu constructor
+
+    ALGORITHM:
+        
+        mssg := "Please select one of the following options to do something
+                    1. go to section one of the programme
+                    2. go to section two of the programme
+                    3. go to section three of the programme "
+        options := 3
+        
+        COMMENT: I trying to create something which will hold the options in the
+                 menu mssg, so it later can be used to check the users input
+                 against the menu options. This method is based on an assumption
+                 that the menu is not going to have 0 as a parameter.
+        
+        (integer) num := 1 
+        parameters [] := SIZE of 3 
+
+        FOR ((interger)ii=0 TO LENGTH of parameters -1 CHNAGEBY 1) THEN
+            parameters[ii] := num
+            num := num + 1
+        END FOR
+
+Alternate
+    IMPORT: (menuClassInterger object) inMenu
+    EXPORT: none
+    ASSERTIONS: creates a menu object if the imports of the menu are valid 
+
+    ALGORITHM:
+
+        IF (validateMenu <- inMenu) THEN
+            menu := inMenu
+        END IF
+
+PRIVATE SUBMODULES
+
+SUBMODULE: validateMenu
+    IMPORT: inObjct
+    EXPORT: isValid (boolean)
+    ASSERTIONS: validates if the menu object is valid
+
+    ALGORITHM:  
+        isValid := FALSE
+        
+        IF (mssg LENGTH doesn't equal 0) THEN
+            IF (
+            isValid := TRUE
