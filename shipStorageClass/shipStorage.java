@@ -80,11 +80,11 @@ public class shipStorage
         {
             //private int ii;
             int ii;
-            for(ii = 0 ; inShipStorage.MAXSUBCAP ; ii++)
+            for(ii = 0 ; ii < inShipStorage.MAXSUBCAP ; ii++)
             {
                 storeSubs[ii] = inShipStorage.storeSubs[ii];
             }
-            for (ii = 0 ; inShipStorage.MAXJETCA; ii++)  
+            for (ii = 0 ; ii < inShipStorage.MAXJETCAP; ii++)  
             {
                 storejets[ii] = inShipStorage.storeJets[ii];
             }
@@ -153,7 +153,7 @@ public class shipStorage
         ASSERTION: if the elements and array found at the specified address is
                    valid. setStoreJets will be valid, otherwise it will fail
         **********************************************************************/
-        public void setStoreSubs(subMarineClas  inStoreSubs)
+        public void setStoreSubs(subMarineClass  inStoreSubs)
         {
             if(validateStoreSubs(inStoreSubs))
             {
@@ -273,13 +273,13 @@ public class shipStorage
              subMarineClass duplicates [] = new subMarineClass 
                                             [(MAXSUBCAP + MAXJETCAP) * 2];
             
-            for (int ii = 0 ; storeSubs.length - 1 ; ii++) 
+            for (int ii = 0 ;ii <  storeSubs.length ; ii++) 
             {
                 /*I am starting the looping variable at one because 1 don't
                  want the programme to store itself as a dupilcate, hence
                  it will search for objects after itself*/
 
-                for(int jj = 1 ; storeSubs.length() -1 ;jj++)
+                for(int jj = 1 ; jj <  storeSubs.length() ;jj++)
                 {
                     if(storeSubs[ii].equals(storeSubs[jj])) 
                     {
@@ -309,13 +309,13 @@ public class shipStorage
             fighterJetClass duplicates [] = new fighterJetClass 
                                             [(MAXSUBCAP + MAXJETCAP) * 2]; 
             
-            for (int ii = 0 ;storeJet.length() - 1 ;ii++) 
+            for (int ii = 0 ;ii < storeJet.length() ;ii++) 
             {
                  /*I am starting the looping variable at one because I don't
                  want the programme to store itself as a dupilcate, hence
                  it will search for objects after itself*/
 
-                for(int jj = 1 ;storeJet.length() -1 ; jj++) 
+                for(int jj = 1 ; jj < storeJet.length(); jj++) 
                 {
                     if (storeJets[ii].equals(storeJets[jj])) 
                     { 
@@ -471,7 +471,7 @@ public class shipStorage
                    jets and they have the same storage capacity with the same
                    storage distrubution
         **********************************************************************/
-        public boolean equals (Object inObjct)
+        public boolean equals(Object inObjct)
         {
             isSame = false;
             if (inObj instanceof shipStorage) 
@@ -491,7 +491,7 @@ public class shipStorage
         ASSERTION: if two array objects are the same class type and length, and have
                    the same objects in the array and it's valid
         **********************************************************************/
-        public boolean equalsArrau(Object arrayOne, Object arrayTwo)
+        public boolean equalsArr(Object arrayOne, Object arrayTwo)
         {
             isValid = false;
 
@@ -526,16 +526,16 @@ public class shipStorage
         EXPORT: str [] (address of str in memory of the data type string)
         ASSERTION:
         **********************************************************************/
-        public String toStringSubArr()
+        public String [] toStringSubArr()
         {
                 String str [] = new String [MAXSUBCAP];
 
                  /*I am subtracting one, so the for loop deosn't try to search
                  outside the indexs of the str arrays as its index starts at*/
 
-                for (int ii = 0 ; MAXSUBCAP - 1;ii++) 
+                for (int ii = 0 ; ii < MAXSUBCAP;ii++) 
                 {
-                    str[ii] = storeSubs[ii].toString;
+                    str[ii] = storeSubs[ii].toString();
                 }
                 return str;
         }
@@ -545,16 +545,16 @@ public class shipStorage
         EXPORT: str [] (address of str in memory of the data type string)
         ASSERTION:
         **********************************************************************/
-        public String toStringJet()
+        public String [] toStringJet()
         {
             String str [] = new String [MAXJETCAP];
 
              /*I am subtracting one, so the for loop doesn't try to search
              outside the indexs of the str array as its indes starts at 0*/
 
-            for (int ii = 0 ; MAXJETCAP - 1 ;ii++) 
+            for (int ii = 0 ;ii < MAXJETCAP;ii++) 
             {
-                str [ii] = storeSubs[ii].toString;
+                str [ii] = storeSubs[ii].toString();
             }
             return str;
         }
@@ -565,19 +565,19 @@ public class shipStorage
         EXPORT: strArry [] (String)
         ASSERTION:
         **********************************************************************/
-        public String toStringArr() 
+        public String[] toStringArr() 
         {
              /*I am adding an extra 1 to tolShipsInfo. Because, I want an
              extra index to store the summary of the ship storage units
              (i.e. how many ships they're in total. How many jets they're,
              and how many submarines they're)*/
 
-            int tolShipsInfo = MAXSUBCAP + MAXSUBJET + 1;
+            int tolShipsInfo = MAXSUBCAP + MAXJETCAP + 1;
 
-            String strArry [] = new Strin [tolShipInfo];
+            String strArr [] = new String [tolShipsInfo];
 
-            str [0] = "The hanger contains " +calcTolShips+ " ships. There's "+
-                        +calcTolSubs+ " submarines, and there's " +calcTolJets+
+            strArr [0] = "The hanger contains " +calcTolShips+ " ships. There's "+
+                        +countSubs+ " submarines, and there's " +countJets+
                         "fighter jets in the hanger";
 
              /*I am starting the looping condition at 1, becasue the 0 index
@@ -585,9 +585,9 @@ public class shipStorage
              one so the for loop doesn't try to look outside the array as
              the index of an array starts at 1*/
 
-            for (int ii= 1 ; MAXSUBCAP -1; ii++)
+            for (int ii= 1 ; ii < MAXSUBCAP; ii++)
             {
-                strArry [ii] =  storeSubs[ii].toString;
+                strArr [ii] =  storeSubs[ii].toString();
             }
 
              /*I used the starting index of (MAXSUBCAP) becasue I want to
@@ -595,10 +595,10 @@ public class shipStorage
              vaccant spot after the information of the submarines and it
              corresponds to MAXSUBCAP*/
 
-            for (int ii = MAXSUBCAP ; tolShipsInfo - 1 ; ii++)
+            for (int ii = MAXSUBCAP ; ii < tolShipsInfo; ii++)
             {
-                strArry [ii] =  storeJets[ii].toString;
+                strArr [ii] =  storeJets[ii].toString();
             }
-            return strArry;
+            return strArr;
         }
     }

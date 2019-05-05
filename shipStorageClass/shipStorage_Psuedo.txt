@@ -60,12 +60,13 @@ Copy:
 
     ALGORITHM:
 
-        FOR ((integer)ii := 0 TO LENGTH of inShipStorage.MAXSUBCAP CHANGEBY 1) 
+        FOR ((integer)ii := 0 TO LENGTH of inShipStorage.MAXSUBCAP (exclusive
+                         CHANGEBY 1) 
             THEN
             storeSubs[ii] := inShipStorage.storeSubs[ii]
         END FOR
 
-        FOR ((integer)ii := 0 TO LENGTH of inShipStorage.MAXJETCAP 
+        FOR ((integer)ii := 0 TO LENGTH of inShipStorage.MAXJETCAP (exclusive) 
             CHANGEBY 1) THEN 
             storejets[ii] := inShipStorage.storeJets[ii]
         END FOR
@@ -192,13 +193,14 @@ SUBMODULE: findDuplicateSubs
 
         (object) duplicates [] := SIZE of DYNAMIC SIZING
         
-        FOR ((integer) ii := 0 TO LENGTH of storeSub - 1 CHANGEBY 1) THEN
+        FOR ((integer) ii := 0 TO LENGTH of storeSub(exclusive) CHANGEBY 1) THEN
 
             COMMENT: I am starting the looping variable at one because 1 don't
                      want the programme to store itself as a dupilcate, hence
                      it will search for objects after itself
 
-            FOR((integer) jj := 1 TO LENGTH of storeSub -1 CHANGEBY 1) THEN
+            FOR((integer) jj := 1 TO LENGTH of storeSub (exclusive)
+                                 CHANGEBY 1) THEN
                 IF (storeSubs[ii].equals(storeSubs[jj])) THEN
                     duplicate[ii] := storeSubs
                     duplicate[jj] := storeSubs[jj]
@@ -215,13 +217,15 @@ SUBMODULE: findDuplicateJets
 
     (object) duplicates [] := SIZE of DYNAMIC SIZING
         
-        FOR ((integer) ii := 0 TO LENGTH of storeJet - 1 CHANGEBY 1) THEN
+        FOR ((integer) ii := 0 TO LENGTH of storeJet (exclusive)
+                             CHANGEBY 1) THEN
 
             COMMENT: I am starting the looping variable at one because I don't
                      want the programme to store itself as a dupilcate, hence
                      it will search for objects after itself
 
-            FOR((integer) jj := 1 TO LENGTH of storeJet -1 CHANGEBY 1) THEN
+            FOR((integer) jj := 1 TO LENGTH of storeJet (exclusive)
+                                 CHANGEBY 1) THEN
                 IF (storeJets[ii].equals(storeJets[jj])) THEN
                     duplicate[ii] := storeJets
                     duplicate[jj] := storeJets[jj]
@@ -383,11 +387,7 @@ SUBMODULE: toStringSubArr
 
             str [] := SIZE of MAXSUBCAP
 
-            COMMENT: I am subtracting one, so the for loop deosn't try to search
-                     outside the indexs of the str arrays as its index starts at
-                     0
-
-            FOR ((Interger) ii := 0 TO MAXSUBCAP -1 CHNAGEBY 1) THEN
+            FOR ((Interger) ii := 0 TO MAXSUBCAP (exclusive) CHNAGEBY 1) THEN
                 st[ii] := storeSubs[ii].toString
             END FOR
 
@@ -403,13 +403,13 @@ SUBMODULE: toStringJetArr
         COMMENT: I am subtracting one, so the for loop doesn't try to search
                  outside the indexs of the str array as its indes starts at 0
 
-        FOR ((Interger) ii = 0 TO MAXJETCAP - 1 CHANGEBY 1) THEN
+       FOR ((Interger) ii = 0 TO MAXJETCAP (exclusive) CHANGEBY 1) THEN
             str [ii] := storeSubs[ii].toString
         END FOR
 *************************end of useless code ***********************************
 SUBMODULE: toStringArr
     IMPORT: none
-    EXPORT: strArry [] (String)
+    EXPORT: strarr [] (String)
     ASSERTION:
 
     ALGORITHM:
@@ -421,10 +421,10 @@ SUBMODULE: toStringArr
 
         (Interger) tolShipsInfo := MAXSUBCAP + MAXSUBJET + 1
 
-        (String) strArry [] := SIZE of tolShipInfo
+        (String) strarr [] := SIZE of tolShipInfo
 
         str [0] := "The hanger contains " +calcTolShips+ " ships. There's "
-                    +calcTolSubs+ " submarines, and there's " +calcTolJets+
+                    +countSubs+ " submarines, and there's " +countJets+
                     "fighter jets in the hanger"
 
         COMMENT: I am starting the looping condition at 1, becasue the 0 index
@@ -432,8 +432,8 @@ SUBMODULE: toStringArr
                  one so the for loop doesn't try to look outside the array as
                  the index of an array starts at 1
 
-        FOR ((Interger)ii:= 1 TO MAXSUBCAP -1 CHNAGEBY 1
-            strArry [ii] :=  storeSubs[ii].toString
+        FOR ((Interger)ii:= 1 TO MAXSUBCAP (exclusive) CHNAGEBY 1
+            strarr [ii] :=  storeSubs[ii].toString
         END FOR
 
         COMMENT: I used the starting index of (MAXSUBCAP) becasue I want to
@@ -441,6 +441,6 @@ SUBMODULE: toStringArr
                  vaccant spot after the information of the submarines and it
                  corresponds to MAXSUBCAP
 
-        FOR((integer) ii:= MAXSUBCAP TO tolShipsInfo - 1 CHANGEBY 1
-            strArry [ii] :=  storeJets[ii].toString
+        FOR((integer) ii:= MAXSUBCAP TO tolShipsInfo (exclusive) CHANGEBY 1
+            strarr [ii] :=  storeJets[ii].toString
         END FOR
