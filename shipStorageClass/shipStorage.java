@@ -50,12 +50,12 @@ public class shipStorage
         **********************************************************************/
         public shipStorage(subMarineClass inSub, fighterJetClass inJet)
         {
-            if(validateSubObjct(inSub))
+            if(validateSub(inSub))
             {
-                if(validateJetObjct(inJet))
+                if(validateJet(inJet))
                 { 
-                    storeSub[countSubs] = inSub;
-                    storeJet[countJets] = inJet;
+                    storeSubs[countSubs] = inSub;
+                    storeJets[countJets] = inJet;
                     countSubs = countSubs + 1; 
                     countJets = countJets + 1;
                 } 
@@ -86,7 +86,7 @@ public class shipStorage
             }
             for (ii = 0 ; ii < inShipStorage.MAXJETCAP; ii++)  
             {
-                storejets[ii] = inShipStorage.storeJets[ii];
+                storeJets[ii] = inShipStorage.storeJets[ii];
             }
         }
 
@@ -98,7 +98,7 @@ public class shipStorage
         EXPORT: storeSubs (address of storeSubs object in memory)
         ASSERTION: returns the elements which were last store storeSubs object
         **********************************************************************/
-        public subMarineClass getStoreSubs()
+        public subMarineClass [] getStoreSubs()
         {
             return storeSubs;
         }
@@ -108,7 +108,7 @@ public class shipStorage
         EXPORT: storeJets (address of storeJets object in memory)
         ASSERTION: returns the elemnts which were last sttore in storeSubs object
         **********************************************************************/
-        public fighterJetClass getStoreJets()
+        public fighterJetClass [] getStoreJets()
         {
             return storeJets;
         }
@@ -124,8 +124,9 @@ public class shipStorage
             alternate constructor) will move the index  of the count
             variable to the next available index, hence you have to
             subtract one to get the last stored submarine*/
-
-            return sub = storeSub[countSubs - 1]; 
+		
+            subMarineClass sub; 
+            return sub = storeSubs[countSubs - 1]; 
         } 
 
         /**********************************************************************
@@ -140,11 +141,11 @@ public class shipStorage
              alternate constructor) will move the index of the count
              variable to the next available index, hence you have to
              subtract one to get the last stored jet*/
-
-            return jet = storeJet[countJets - 1];
+            fighterJetClass jet; 
+            return jet = storeJets[countJets - 1];
         }
 
-        //MUTA;RS:
+        //MUTATORS:
 
         /**********************************************************************
         SUBMODULE: setStoreSubs 
@@ -153,7 +154,7 @@ public class shipStorage
         ASSERTION: if the elements and array found at the specified address is
                    valid. setStoreJets will be valid, otherwise it will fail
         **********************************************************************/
-        public void setStoreSubs(subMarineClass  inStoreSubs)
+        public void setStoreSubs(subMarineClass[] inStoreSubs)
         {
             if(validateStoreSubs(inStoreSubs))
             {
@@ -173,7 +174,7 @@ public class shipStorage
         ASSERTION: if the elements and array found at the specified adress is
                    valid. setStoreJets will be valid, otherwise it will fail
         **********************************************************************/
-        public void setStoreJets(fighterJetClass inStoreJets)
+        public void setStoreJets(fighterJetClass[] inStoreJets)
         {
             if(validateStoreJets(inStoreJets))
             {
@@ -181,7 +182,7 @@ public class shipStorage
             }
             else
             {
-                throw new IllegalArgumentExveption("\n Invalid fighter Jet "+
+                throw new IllegalArgumentException("\n Invalid fighter Jet "+
                                                     "storage");
             }
         } 
@@ -201,8 +202,8 @@ public class shipStorage
                     storeSubs[countSubs] = inSub; 
 
                     /*I am incrementing countSub by 1, to go to the next
-                    vaccant index of the storeSub*/
-                    countSub++;
+                    vaccant index of the storeSubs*/
+                    countSubs++;
                 }
                 else
                 {
@@ -212,7 +213,7 @@ public class shipStorage
             }
             else
             {
-                throw new IllegalArgumentExeption( "ERROR: not a submarine");
+                throw new IllegalArgumentException( "ERROR: not a submarine");
             }
             
         }
@@ -237,7 +238,7 @@ public class shipStorage
                 }
                 else
                 {
-                    throw new IndexOutOfBoundException("ERROR: storage of "+ 
+                    throw new IndexOutOfBoundsException("ERROR: storage of "+ 
                                                        "fighter jets is full");
                 }
             }
@@ -263,7 +264,7 @@ public class shipStorage
         EXPORT: dupilicates[] (Object) 
         ASSERTION:
         **********************************************************************/
-        public subMarineclass [] findDuplicateSubs() 
+        public subMarineClass [] findDuplicateSubs() 
         {
             /*this following pieces of code is going to differ from my psudo
               code. I need to research and find out if there's such a thing as
@@ -283,8 +284,8 @@ public class shipStorage
                 {
                     if(storeSubs[ii].equals(storeSubs[jj])) 
                     {
-                        duplicate[ii] = storeSubs;
-                        duplicate[jj] = storeSubs[jj];
+                        duplicates[ii] = storeSubs;
+                        duplicates[jj] = storeSubs[jj];
                     }
                 }
              }
@@ -309,22 +310,22 @@ public class shipStorage
             fighterJetClass duplicates [] = new fighterJetClass 
                                             [(MAXSUBCAP + MAXJETCAP) * 2]; 
             
-            for (int ii = 0 ;ii < storeJet.length() ;ii++) 
+            for (int ii = 0 ;ii < storeJets.length() ;ii++) 
             {
                  /*I am starting the looping variable at one because I don't
                  want the programme to store itself as a dupilcate, hence
                  it will search for objects after itself*/
 
-                for(int jj = 1 ; jj < storeJet.length(); jj++) 
+                for(int jj = 1 ; jj < storeJets.length(); jj++) 
                 {
                     if (storeJets[ii].equals(storeJets[jj])) 
                     { 
-                        duplicate[ii] = storeJets;
-                        duplicate[jj] = storeJets[jj];
+                        duplicates[ii] = storeJets;
+                        duplicates[jj] = storeJets[jj];
                     }
                 }
                 
-                return duplicate; 
+                return duplicates;
             }
         }
 
@@ -347,6 +348,7 @@ public class shipStorage
         **********************************************************************/
         public int calcTolShips(int countSubs, int countJets)
         {
+            int tolShips; 
             return tolShips = countSubs + countJets; 
         }
 
@@ -361,7 +363,7 @@ public class shipStorage
         **********************************************************************/
         private boolean validateStoreSubs(subMarineClass inStoreSub)
         {
-            isValid = false;
+            boolean isValid = false;
             if (inStoreSub instanceof subMarineClass) 
             {
                 if (inStoreObjct.length() == MAXSUBCAP)
@@ -389,10 +391,10 @@ public class shipStorage
         **********************************************************************/
         private boolean validateStoreJets(fighterJetClass inStoreJets)
         {
-            isValid = false;
-            if (inStoreObjct instanceof fighterJetClass) 
+            boolean isValid = false;
+            if (inStoreJets instanceof fighterJetClass) 
             {
-                if (inStoreObjct.length() == MAXJETCAP) 
+                if (inStoreJets.length() == MAXJETCAP) 
                 {
                     isValid = true;
                 }
@@ -408,14 +410,14 @@ public class shipStorage
             return isValid;
         }
         /**********************************************************************
-        SUBMODULE: validateSubObjct
+        SUBMODULE: validateSub
         IMPORT: inObjct (subMarine object)
         EXPORT: isValid (Boolean)
         ASSERTION: if inObjct is a subMarine object then it's  valid
         **********************************************************************/
-        private boolean validateSubObjct(subMarineClass inObjct)
+        private boolean validateSub(subMarineClass inObjct)
         {
-            isValid = false;
+            boolean isValid = false;
             if (inObjct instanceof subMarineClass) 
             {
                 isValid = true;
@@ -428,14 +430,14 @@ public class shipStorage
         }
 
         /**********************************************************************
-        SUBMODULE: validateJetObjct
+        SUBMODULE: validateJet
         IMPORT: inObjct (fighterJet object)
         EXPORT: isValid (Boolean)
         ASSERTION: if inJet is a fighterJet object then it's valid
         **********************************************************************/
-        private boolean validateJetObjct(fighterJetClass inObjct)
+        private boolean validateJet(fighterJetClass inObjct)
         {
-            isValid = false;
+            boolean isValid = false;
             if (inObjct instanceof fighterJetClass) 
             {
                 isValid = true;
@@ -454,11 +456,11 @@ public class shipStorage
         EXPORT: cloneShipStorage (Object)
         ASSERTION: returns a cloned object of the current object
         **********************************************************************/
-        public shipStorage()
+        public shipStorage clone()
         {
             shipStorage cloneShipStorage;
         
-            cloneShipStorage = new shipStorage(this.countSubs, this.countJet,
+            cloneShipStorage = new shipStorage(this.countSubs, this.countJets,
                                               this.storeSubs, this.storeJets);
             return cloneShipStorage;
         }
@@ -473,10 +475,10 @@ public class shipStorage
         **********************************************************************/
         public boolean equals(Object inObjct)
         {
-            isSame = false;
-            if (inObj instanceof shipStorage) 
+            boolean isSame = false;
+            if (inObjct instanceof shipStorage) 
             {
-                inShipStorage = (ShipStorage)inObjct;
+                shipStorage inShipStorage = (ShipStorage)inObjct;
                 isSame = ((storeSubs.length()).equals(
                             inShipStorage.getStoreSubs()) && 
                             (storeJets.length()).equals(
@@ -491,9 +493,9 @@ public class shipStorage
         ASSERTION: if two array objects are the same class type and length, and have
                    the same objects in the array and it's valid
         **********************************************************************/
-        public boolean equalsArr(Object arrayOne, Object arrayTwo)
+        public boolean equalsArr(Object[] arrayOne, Object[] arrayTwo)
         {
-            isValid = false;
+            boolean isValid = false;
 
             if (arrayOne.length() ==  arrayTwo.length()) 
             {
@@ -509,7 +511,7 @@ public class shipStorage
                     isSame = arrayOne[compareElements].equals(
                                     arrayTwo[compareElements]);
                     compareElements++;
-                }while(isSame < arrayOne.length());
+                }while(compareElements < arrayOne.length());
             }
             else
             {
@@ -576,7 +578,9 @@ public class shipStorage
 
             String strArr [] = new String [tolShipsInfo];
 
-            strArr [0] = "The hanger contains " +calcTolShips+ " ships. There's "+
+            shipNum = calcTolShips(); 
+
+            strArr [0] = "The hanger contains " +shipNum+ " ships. There's "+
                         +countSubs+ " submarines, and there's " +countJets+
                         "fighter jets in the hanger";
 

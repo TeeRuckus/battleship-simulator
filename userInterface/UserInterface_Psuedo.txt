@@ -11,20 +11,68 @@ Defualt:
     IMPORT: none
     EXPORT: none
     ASSERTION: creaetes a shipStorage object 
+
+    AGORITHM:
+
+        create a new instances of a shipStorage
+        create a new instance of a menuClassInteger
+
+Alternate:
+    IMPORT:
+    EXPORT:
+    ASSERTIONS:
+    
+    ALGORITHM: 
+        
+        COMMENT: I don't think this is needed, as the shipStorage, and 
+                 menuClassInteger have they own alternate constructors
+Copy
+    IMPORT:
+    EXPORT
+    ASSERTIONS
+
+    ALGORITHM:
+        
+        COMMENT: I don't think this is needed aswell because the shipStorage and
+                 the menuClassInterger classes have their own copt constructors.
+
+ACCESSORS: 
+
+    COMMENT: This is not needed as well as the shipStorage and the 
+             menuClassInterger classes have their own accessor methods which
+             can be invoked respectively.
+
+MUTATORS:  
+    
+    COMMENT: this is not needed either, as the shipStorage and the 
+             the menuClassInterger habe their own respective mutators which can 
+             be invoked individually 
+
+DOING METHODS
+
+SUBMODULE: createMenus
+    IMPORT: none
+    EXPORT: none
+    ASSERTIONS: creates menu's with the parameters set by the programmer.
               
 
     ALGORITHM:
 
         (Integer) menuNum := 4
+
         create a new instances of shipStorage 
         
         (menuClassInteger Object) battleShipMenus [] := SIZE of menuNum
+        
+        COMMENT: I am creating multiple menu's to accomadate the functionality 
+                 of my programme.
         
         FOR((interger) ii := 0 TO menuNum (exclusive) CHANGEBY 1 
             battleShipMenus[ii] := new instances of menuClassInteger
         END FOR
         
-        COMMENT: this is the main menu
+        COMMENT: this is the main menu where the user is first exposed to the
+                 overall functionality of the programme
 
         battleShipMenus[0] := menuClassInteger.setMssg(" 1. Add Ships
                                                          2. View Ships
@@ -33,10 +81,13 @@ Defualt:
                                                          5. Load ships
                                                          6. Save Ships
                                                          7. Exit"
+        COMMENT: note to self, try to figure out how to have these in one 
+                 statement. Maybe do this when you create the actual objects
+
         battleShipMenus[0] := menuClassInteget.setOptions(7)
         
-        COMMENT: the menu the user is exposed to when they select 1 from the main
-                 menu
+        COMMENT: the menu the user is exposed to when they select 1 from the
+                 main menu
 
         battleShipMenus[1] := menuClassInteger.setMssg("1. add manually
                                                       2. add from a file ")
@@ -60,13 +111,219 @@ Defualt:
                                                              duplicates only")
         battleShipMenus[3] := menuClassInteger.setOptions(3)
 
+SUBMODULE: getUserSerialNum
+    IMPORT: none
+    EXPORT: serialNum
+    PURPOSE: to ask the serial number from the user, and to validate their 
+             input
+
+    ALGORITHM
+
+        (Boolean) isValid
+        DO
+            TRY
+                OUTPUT: "Please enter the serial number of the ship:"
+                INPUT: serialNum (String)
+                
+                COMMENT: you can use either the submarine or fighterjet classes
+                         to validate the serial number as they're excatly the
+                         same
+    
+                IF (validateSerialNum <- serialNum) THEN
+                    isValid := TRUE
+                END IF 
+
+            CATCH InputMismatchException 
+                OUTPUT: "ERROR: please input a valid serial numbe" 
+                +error message
+                isValid := FALSE
+        WHILE ((is not equal to isValid)
+
+SUBMODULE: getUserShipType
+    IMPORT: none 
+    EXPORT: shipType 
+    PURPOSE: to get the ship type from the user and validate it 
+    
+    ALGORITHM:
+        (Boolean) isValid 
+        DO
+            TRY       
+                isValid := TRUE
+                OUTPUT: "Press the followng to enter ship type:
+                         S - Submarine
+                         F- - Fighter Jet "
+                INPUT: shipType (character)
+            CATCH InputMismatchException
+                OUTPUT "ERROR: please input a single character 
+                        +complier message
+                isValid := FALSE 
+            END TRY CATCH
+        WHILE ((shipType doesn't equal to 'f' or 'F' or 'S' or 's') AND (
+                not equal to isValid)
+
+SUBMODULE: getUserCylinders
+    IMPORT: none
+    EXPORT: cylinders (integer) 
+    PURPOSE: to get the cylinders from the user and to validate it
+
+    ALGORITHM:
+        (Boolean) isValid
+        DO 
+            TRY
+                OUTPUT: "Number of cylinders of the ships: "
+                INPUT: cylnders (integer)
+
+                COMMENT: You can use either the submarine or fighterejet class
+                         to validate the number of cylinders 
+
+                IF (validateCylinders <- cylinders) THEN
+                    isValid := TRUE
+                END IF 
+
+            CATCH InputMismatchException
+                OUTPUT: "ERROR: please input an interger" +complier message
+                isValid := FALSE 
+            END TRY CATCH
+        WHILE (not equal to isValid)
+
+SUBMODULES: getUserHull
+    IMPORT: none
+    EXPORT: hull (String) 
+    PURPOSE: to get the cylinders from the user and validate it
+    
+    ALGORITHM:
+        (Boolean) isValid
+        DO
+            TRY
+                OUTPUT: "Enter hull of the ship: "
+                INPUT: hull (Stirng)
+
+                IF (ValidateHull <- hull) THEN
+                    isValid := TRUE
+                END IF
+
+            CATCH InputMismatchException
+                OUTPUT: "ERROR: please input a string" +complier message
+                isValid := FALSE
+            END TRY CATCH
+        WHILE(not equal to isValid)
+
+SUBMODULES: getUserMaxDepth
+    IMPORT: none
+    EXPORT: depth (Real)
+    PURPOSE: to get the max depth from the user and validate it
+
+    ALGORITHM:
+        (Boolean) isValid
+        DO
+            TRY
+                OUTPUT: "Please enter the max depth of the ship"
+                INPUT: depth (real)
+
+                IF (validateMaxDepth <- depth) THEN
+                    isValid := TRUE 
+                END IF
+    
+            CATCH InputMismatchException
+                OUTPUT: "ERROR: please input a real number: "  
+                        +complier message
+                isValid := FALSE
+            END TRY CATCH
+        WHILE(not equal to isValid) 
+
+SUBMODULES: getUserWingSpan
+    IMPORT: none 
+    EXPORT: wingSpan (Real)
+    PURPOSE: to get the max wingspan from the user and validate it 
+
+    ALGORITHM:
+        (Boolean) isValid
+        DO
+            TRY
+                OUTPUT: "Please enter the wingspan of the ship"
+                INPUT: wingSpan (Real)
+                
+                IF (validateWingSpan <- wingSpan) THEN 
+                    isValid := TRUE
+                END IF
+            
+            CATCH InputMismatchException
+                OUTPUT: "ERROR: please input a real number: " +complier message
+                isValid := FALSE 
+            END TRY CATCH 
+        WHILE (not equal to isValid)
+
+SUBMODULES: getUserOrdance
+    IMPORT: none
+    EXPORT: ordance
+    PURPOSE: to get the ordance from the user and validate  it
+
+    ALGORITHM: 
+        (Boolean) isValid
+        DO
+            TRY
+                OUTPUT: "Please enter the ordance of the ship: "
+                INPUT: ordance (String)
+
+                IF (validateOrdance <- ordance) THEN
+                    isValid := TRUE
+                END IF
+
+            CATCH InputMismatchException
+                OUTPUT: "ERROR:"  +complier message
+                isValid := FALSE
+            END TRY CATCH
+        WHILE (not equal to isValid)
+
+PRIVATE SUBMODULES
+
+SUBMODULE: addShipsManually
+    IMPORT: none 
+    EXPORT: none
+    PURPOSE: to allow the user to add ships manually to the programme, and the
+             appopriate eror handling and validation. 
+
+    ALGORITHM:
+        
+        shipType := getUserShipType <- none      
+        serialNum := getUserSerialNum <- none
+        year := getUserYear <- none
+        cylinders := getUserCylinders <- none 
+
+        CASE shipType
+            'S':'s"
+                hull := getUserHull <- none
+                maxDepth := getUserMaxDepth <- none
+                FileManger.createShipObjcts <- shipType, year, cylinders, fuel
+                                                hull, maxDepth
+            'F':'f'
+                wingSpan := getUserWingSpan <- none
+                ordance := getUserOrdance <- none 
+                FileManger.createUserObjcts <- shipType, year, cylinders, fuel
+                                                wingSpan, ordance
+        END CASE 
+
+SUBMODULE: addShipsFile
+    IMPORT:
+    NONE:
+    PURPOSE:
+
+    ALGORITHM: 
+        OUTPUT: "Please enter file name to read ships from"
+        INPUT: fileName (String)
+        FileManger.readFile <- fileName
+
+OTHER METHODS
+
 SUBMODULE: mainMenu
     IMPORT: none
     EXPORT: none
-    PURPOSE:
+    PURPOSE: to control the structure of the main menu and to invoke the 
+             appropriate methods
 
     ALGORITHM:
-
+        
+        battleShipMenus[0].getMssg
         (interger)userOp := battleShipMenus[0].selOpMenu
 
         CASE userOP
@@ -95,10 +352,16 @@ SUBMODULE: addShips
 
     ALGORITHM:
         
+        battleShipMenus[1].getMssg
         (Interger) userOp := battleShipMenus[1].selOpMenu
 
         CASE userOp
-            1: 
+            1:
+                addShipsManually <- none
+            2:
+                addShipFile <- none
+            DEFUALT:
+                OUTPUT: "Invalid option"
                 
             
 PRIVATE SUBMODULES:
