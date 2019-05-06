@@ -6,10 +6,8 @@ PUBLIC CLASS CONSTANTS:
              expandibility of the code easier in the future, and to allow the
              user to have a non 1:1 split of the capacity between submarines and
              jets.
-    COMMENT: jackie said to have only one maxiumum capacity
 
-    (Integer) MAXSUBCAP := 15
-    (Integer) MAXJETCAP := 15
+    (Integer) MAXCAP := 15
 
 CLASS FIELDS:
 
@@ -29,8 +27,8 @@ Defualt:
     ALGORITHM:
         countSubs := 0
         countJets := 0
-        storeSubs[] := an EMPTY array of SIZE MAXSUBCAP
-        storeJets[] := an EMPTY array of SIZE MAXJETCAP
+        storeSubs[] := an EMPTY array of SIZE MAXCAP
+        storeJets[] := an EMPTY array of SIZE MAXCAP
 
 ACCESSORS
 
@@ -101,7 +99,7 @@ SUBMODULE: addShipSubmarine (this is the submarine version)
     IMPORT: inSub (subMarine object) , countSubs (Integer)
     EXPORT: none
     ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
-                storeSubs hasn't exceeded the MAXSUBCAP
+                storeSubs hasn't exceeded the MAXCAP
 
     ALGORITHM:
         IF (validateSub <- inSub) THEN
@@ -122,7 +120,7 @@ SUBMODULE: addShipFighterJet (this is the fighter jet version) -> we will
     IMPORT: inJet (jetFighter object) , countJets (integer)
     EXPORT: none
     ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
-               storeSubs hasn't exceeded MAXJETCAP
+               storeSubs hasn't exceeded MAXCAP
 
     ALGORITHM:
         IF (validateJet <- inJet) THEN
@@ -146,20 +144,48 @@ SUBMODULE: destinationCheckSubmarine
     PURPOSE:
 
     ALGORITHM:
+        
+        FOR((integer)ii := 0 TO MAXCAP (exclusive) CHANGEBY 1) THEN 
 
+SUBMODULE: calcTravelTimeSubmarine
+    IMPORT: (Integer) distance, (Integer) cylinders, (Real) maxDepth
+    EXPORT: timeHours (Real) 
+    PUROSE: is to calculate the travel time of submarine in hours 
+    
+    ALGORITHM:
+    
+        (Real) ratio := ((Real)distance/(Real)(cylinders))
+        (Real) denom := (10.00 + (maxDepth * -1.00))
+        (Real) invDenom := 1.00/denom 
+        
+        timeHours := ratio*invDenom
         
 SUBMODULE: destinationCheckFighterJet
 
-SUBMODULE: findDuplicateSubs
-    IMPORTS: none
-    EXPORT: dupilicates[] (Object) 
-    ASSERTION:
+SUBMODULE: calcTravelTimeFighterJets
+    IMPORT: (Integer) distance, (Real) wingSpan, (Integer) cylinders
+    EXPORT: timeHours
+    PURPOSE: is to calculate the tracel time of the fighter jet in hours
 
     ALGORITHM:
 
-        (object) duplicates [] := SIZE of DYNAMIC SIZING
+        (Real) denom := wingSpan * (Real) cylinders * 150.00 
+        timeHours := (Real)distance/denom
+
+SUBMODULE: findDuplicateSubs
+    IMPORTS: none
+    EXPORT: dupilicates[] (subMarineClass object)
+    ASSERTION:
+
+    ALGORITHM:
         
-        FOR ((integer) ii := 0 TO LENGTH of storeSub(exclusive) CHANGEBY 1) THEN
+        COMMENT: The multipilcation by 2 is done because it allows the 
+                 duplicates array store the actual ship and it's dupilcate in 
+                 the indexes next to each other 
+
+        (object) duplicates [] := SIZE of MAXCAP * 2
+        
+        FOR ((integer) ii := 0 TO MAXCAP (exclusive) CHANGEBY 1) THEN
 
             COMMENT: I am starting the looping variable at one because 1 don't
                      want the programme to store itself as a dupilcate, hence
@@ -176,15 +202,14 @@ SUBMODULE: findDuplicateSubs
 
 SUBMODULE: findDuplicateJets
     IMPORTS: none
-    EXPORT: dupilicates[] (Object) 
+    EXPORT: dupilicates[] (fighterJetClass object) 
     ASSERTION:
 
     ALGORITHM:
 
-    (object) duplicates [] := SIZE of DYNAMIC SIZING
+    (object) duplicates [] := SIZE of MAXCAP * 2 
         
-        FOR ((integer) ii := 0 TO LENGTH of storeJet (exclusive)
-                             CHANGEBY 1) THEN
+        FOR ((integer) ii := 0 TO MAXCAP (exclusive) CHANGEBY 1) THEN
 
             COMMENT: I am starting the looping variable at one because I don't
                      want the programme to store itself as a dupilcate, hence
@@ -197,18 +222,6 @@ SUBMODULE: findDuplicateJets
                     duplicate[jj] := storeJets[jj]
                 END IF
             END FOR
-
-SUBMODULE: findDuplicates
-    IMPORTS: none
-    EXPORT: dupilicates (object)
-    ASSERTION
-
-    ALGORITHM:
-
-    (object) duplicates [] := SIZE of DYNAMIC SIZING
-   
-    
-    
 
 SUBMODULE: calcTolShips
     IMPORT: countSubs (integer), countJets (integer)
@@ -223,14 +236,14 @@ PRIVATE SUBMODULES:
 SUBMODULE: validateStoreSubs
     IMPORT: inStoreSub (subMarineClass) 
     EXPORT: isValid (Boolean)
-    ASSERTION: If the address of inStoreSubs is an array of MAXSUBCAP elements,
+    ASSERTION: If the address of inStoreSubs is an array of MAXCAP elements,
                and it's a SubMarine object it's a valid inStoreSubs
 
     ALGORITHM:
 
         isValid := FALSE
         IF (inStoreObjct ISA subMarineClass) THEN
-            IF (inStoreObjct LENGTH EQUALS to MAXSUBCAP)
+            IF (inStoreObjct LENGTH EQUALS to MAXCAP)
                 isValid := TRUE
             ELSE
                 OUTPUT: "ERROR: incorrect storage capacity"
@@ -240,14 +253,14 @@ SUBMODULE: validateStoreSubs
 SUBMODULE: validateStoreJets
     IMPORT: inStoreJet (fighterJetClass)
     EXPORT: isValid (Boolean)
-    ASSERTION: if the address of inStoreJets is an array of MAXJETCAP elements,
+    ASSERTION: if the address of inStoreJets is an array of MAXCAP elements,
                and it's fighteJet object it's a valid inStoreJet
 
     ALGORITHM:
 
         isValid := FALSE
         IF (inStoreObjct  ISA fighterJetClass) THEN
-            IF (inStoreObjct LENGTH EQUALS to MAXJETCAP) THEN
+            IF (inStoreObjct LENGTH EQUALS to MAXCAP) THEN
                 isValid := TRUE
             ELSE
                 OUTPUT: "ERROR: incorrect storage capacity"
@@ -381,9 +394,9 @@ SUBMODULE: toStringSubArr
 
     ALGORITHM:
 
-            str [] := SIZE of MAXSUBCAP
+            str [] := SIZE of MAXCAP
 
-            FOR ((Integer) ii := 0 TO MAXSUBCAP (exclusive) CHNAGEBY 1) THEN
+            FOR ((Integer) ii := 0 TO MAXCAP (exclusive) CHNAGEBY 1) THEN
                 st[ii] := storeSubs[ii].toString
             END FOR
 
@@ -394,12 +407,12 @@ SUBMODULE: toStringJetArr
 
     ALGORITHM:
 
-        str [] := SIZE of MAXJETCAP
+        str [] := SIZE of MAXCAP
 
         COMMENT: I am subtracting one, so the for loop doesn't try to search
                  outside the indexs of the str array as its indes starts at 0
 
-       FOR ((Integer) ii = 0 TO MAXJETCAP (exclusive) CHANGEBY 1) THEN
+       FOR ((Integer) ii = 0 TO MAXCAP (exclusive) CHANGEBY 1) THEN
             str [ii] := storeSubs[ii].toString
         END FOR
 *************************end of useless code ***********************************
@@ -415,7 +428,7 @@ SUBMODULE: toStringArr
                  (i.e. how many ships they're in total. How many jets they're,
                  and how many submarines they're)
 
-        (Integer) tolShipsInfo := MAXSUBCAP + MAXSUBJET + 1
+        (Integer) tolShipsInfo := MAXCAP + MAXSUBJET + 1
 
         (String) strarr [] := SIZE of tolShipInfo
         
@@ -430,15 +443,15 @@ SUBMODULE: toStringArr
                  one so the for loop doesn't try to look outside the array as
                  the index of an array starts at 1
 
-        FOR ((Integer)ii:= 1 TO MAXSUBCAP (exclusive) CHNAGEBY 1
+        FOR ((Integer)ii:= 1 TO MAXCAP (exclusive) CHNAGEBY 1
             strarr [ii] :=  storeSubs[ii].toString
         END FOR
 
-        COMMENT: I used the starting index of (MAXSUBCAP) becasue I want to
+        COMMENT: I used the starting index of (MAXCAP) becasue I want to
                  start adding the information of the fighter jets, to the next
                  vaccant spot after the information of the submarines and it
-                 corresponds to MAXSUBCAP
+                 corresponds to MAXCAP
 
-        FOR((integer) ii:= MAXSUBCAP TO tolShipsInfo (exclusive) CHANGEBY 1
+        FOR((integer) ii:= MAXCAP TO tolShipsInfo (exclusive) CHANGEBY 1
             strarr [ii] :=  storeJets[ii].toString
         END FOR
