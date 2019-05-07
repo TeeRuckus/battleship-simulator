@@ -3,7 +3,6 @@ CLASS: userInterfaceClass
 CLASS FIELDS: 
     
     shipStorage (shipStorage object)
-    menu (menuClassInteger)
 
 COSTRUCTORS:
 
@@ -14,42 +13,56 @@ Defualt:
 
     AGORITHM:
 
-        create a new instances of a shipStorage
-        create a new instance of a menuClassInteger
+        create a new shipStorage object 
 
-Alternate:
-    IMPORT:
-    EXPORT:
-    ASSERTIONS:
-    
-    ALGORITHM: 
-        
-        COMMENT: I don't think this is needed, as the shipStorage, and 
-                 menuClassInteger have they own alternate constructors
-Copy
-    IMPORT:
-    EXPORT
-    ASSERTIONS
+METHODS 
+
+SUBMODULE: inputIntMenu
+    IMPORT: mssg (String)
+    EXPORT: userOp (Integer)
+    PURPOSE: to allow the user to select one of the options listed in the menu
+             using an integer.
 
     ALGORITHM:
-        
-        COMMENT: I don't think this is needed aswell because the shipStorage and
-                 the menuClassInterger classes have their own copt constructors.
+        (Boolean) isValid := FALSE
+        DO
+            TRY
+                OUTPUT: mssg 
+                INPUT: userSel
+                isValid := TRUE 
+            CATCH InputMismatchException 
+                OUTPUT: "Please input an integer" 
 
-ACCESSORS: 
+                COMMENT: I am inputing nothing to clear the buffer of the
+                         probalmatic problem, and to avoid the catch loop 
+                         running an infinite loop.
+                INPUT: none (Integer)
+            END TRY CATCH
+        WHILE (equal to not isValid)        
 
-    COMMENT: This is not needed as well as the shipStorage and the 
-             menuClassInterger classes have their own accessor methods which
-             can be invoked respectively.
+SUBMODULE: inputCharMenu
+    IMPRORT: mssg (String) 
+    EXPORT: userOP (Character)
+    PURPOSE: to allow the user to select one of the options listed in the menu 
+             using a single character. 
 
-MUTATORS:  
-    
-    COMMENT: this is not needed either, as the shipStorage and the 
-             the menuClassInterger habe their own respective mutators which can 
-             be invoked individually 
-
-DOING METHODS
-
+    ALGORITHM:
+        (Boolean) isValid := FALSE
+        DO
+            TRY
+                OUTPUT: mssg
+                INPUT: userSel         
+                isValid := TRUE 
+            CATCH InputMismatchException
+                OUTPUT "Please enter a single character"
+            
+                COMMENT: I am inputing nothing yo clear the buffer f the probalmatic
+                         problem. and to avoid the catch loop running an infinte
+                         loop
+                INPUT: none (Integer)
+            END TRY CATCH 
+        WHILE (equal to not isValid) 
+            
 SUBMODULE: createMenus
     IMPORT: none
     EXPORT: none
@@ -58,30 +71,11 @@ SUBMODULE: createMenus
 
     ALGORITHM:
 
-        (Integer) menuNum := 4
-
-        create a new instances of shipStorage 
-        
-        (menuClassInteger Object) battleShipMenus [] := SIZE of menuNum
-        
-        COMMENT: I am creating multiple menu's to accomadate the functionality 
-                 of my programme.
-        
-        FOR((interger) ii := 0 TO menuNum (exclusive) CHANGEBY 1 
-            battleShipMenus[ii] := new instances of menuClassInteger
-        END FOR
-        
+       
         COMMENT: this is the main menu where the user is first exposed to the
                  overall functionality of the programme
 
-        battleShipMenus[0] := menuClassInteger.setMssg(" 1. Add Ships
-                                                         2. View Ships
-                                                         3. find duplicates
-                                                         4. destination Check
-                                                         5. Load ships
-                                                         6. Save Ships
-                                                         7. Exit"
-        COMMENT: note to self, try to figure out how to have these in one 
+        battleShipMenus[0] := menuClassInteger.setMssg        COMMENT: note to self, try to figure out how to have these in one 
                  statement. Maybe do this when you create the actual objects
 
         battleShipMenus[0] := menuClassInteget.setOptions(7)
@@ -96,20 +90,11 @@ SUBMODULE: createMenus
         COMMENT: the menu the user is exposed to when they select 2 from the 
                  main menu 
 
-        battleShipMenus[2] := menuClassInteger.setMssg(" 1. View all ships
-                                                         2. View submarines only
-                                                         3. View fighter jets 
-                                                            only ")
-        battleShipMenus[2] := menuClassInteger.setOptions(3)
+        battleShipMenus[2] := menuClassInteger.setMssg        battleShipMenus[2] := menuClassInteger.setOptions(3)
     
         COMMENT: the menu the user is exposed to when they select 3 on the menu
 
-        battleShipMenus[3] := menuClassInterger.setMssg(" 1. Find all duplicates
-                                                          2. Find submarine 
-                                                             duplicates only
-                                                          3. Find fighter Jet
-                                                             duplicates only")
-        battleShipMenus[3] := menuClassInteger.setOptions(3)
+        battleShipMenus[3] := menuClassInterger.setMssg        battleShipMenus[3] := menuClassInteger.setOptions(3)
 
 SUBMODULE: getUserSerialNum
     IMPORT: none
@@ -275,9 +260,7 @@ SUBMODULES: getUserOrdance
             END TRY CATCH
         WHILE (not equal to isValid)
 
-PRIVATE SUBMODULES
-
-SUBMODULE: addShipsManually
+SUBMODULE: addUserShips
     IMPORT: none 
     EXPORT: none
     PURPOSE: to allow the user to add ships manually to the programme, and the
@@ -323,8 +306,20 @@ SUBMODULE: mainMenu
 
     ALGORITHM:
         
-        battleShipMenus[0].getMssg
-        (interger)userOp := battleShipMenus[0].selOpMenu
+        DO
+            userOp := inputIntMenu <- (" 1. Add Ships
+                                         2. View Ships
+                                         3. find duplicates
+                                         4. destination Check
+                                         5. Load ships
+                                         6. Save Ships
+                                         7. Exit")
+    
+            IF (userOP doesn't equal to 1 or 2 or 3 or 4 or 5 or 6 or 7) THEN
+                OUTPUT: "Please enter an option which is in the menu below: "
+            END IF 
+
+        WHILE userOP doesn't equal to 1 or 2 or 3 or 4 or 5 or 6 or 7
 
         CASE userOP
             1:
@@ -341,30 +336,57 @@ SUBMODULE: mainMenu
                 saveShips <- exit
             7:
                 OUTPUT: "Goodbye friend"
-            DEFUALT: 
-                OUTPUT: "Invalid option" 
+            DEFUALT: OUTPUT: "Invalid option" 
         END CASE       
 
-SUBMODULE: addShips
+SUBMODULE: addShipsMenu
     IMPORT: none
     EXPORT: none
     PURPOSE: to invoke the appropriate methods to add ships to the programme
 
     ALGORITHM:
         
-        battleShipMenus[1].getMssg
-        (Interger) userOp := battleShipMenus[1].selOpMenu
+        DO
+            (Integer) userOp := inputIntMenu <- ("1. View all ships
+                                                  2. View submarines only
+                                                  3. View fighter jets 
+                                                    only ")
+            IF (userOp doesn't equal to 1 or 2 or 3) THEN
+                OUTPUT: "Please enter an option which is in the menu below: "
+            END IF 
+        WHILE (userOp doesn't equal 1 or 2 or 3)
+
 
         CASE userOp
             1:
-                addShipsManually <- none
+                addUserShips <- none
             2:
                 addShipFile <- none
             DEFUALT:
                 OUTPUT: "Invalid option"
+
+SUBMODULE: duplicatesMenu 
+    IMPORT: none
+    EXPROT: none
+    PURPOSE
+
+    ALGORITHM:
+        DO 
+            (Integer) userOp := inputIntMenu <- ("1. Find all duplicates
+                                                  2. Find submarine 
+                                                     duplicates only
+                                                  3. Find fighter Jet
+                                                     duplicates only")
+            IF (userOp doesn't equal to 1 or 2 or 3) THEN
+                OUTPUT: "please input what is in the menu below: "
+            END IF
+        WHILE (userOp doesn't equal to 1 or 2 or 3 ) 
+
+        case userOp
+            1:
+                FOR ((integer) ii TO
+                
+
                 
             
-PRIVATE SUBMODULES:
-
-OTHER METHODS:
 
