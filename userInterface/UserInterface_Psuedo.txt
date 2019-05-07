@@ -28,7 +28,7 @@ SUBMODULE: inputIntMenu
         DO
             TRY
                 OUTPUT: mssg 
-                INPUT: userSel
+                INPUT: userOp
                 isValid := TRUE 
             CATCH InputMismatchException 
                 OUTPUT: "Please input an integer" 
@@ -51,7 +51,7 @@ SUBMODULE: inputCharMenu
         DO
             TRY
                 OUTPUT: mssg
-                INPUT: userSel         
+                INPUT: userOp         
                 isValid := TRUE 
             CATCH InputMismatchException
                 OUTPUT "Please enter a single character"
@@ -63,39 +63,6 @@ SUBMODULE: inputCharMenu
             END TRY CATCH 
         WHILE (equal to not isValid) 
             
-SUBMODULE: createMenus
-    IMPORT: none
-    EXPORT: none
-    ASSERTIONS: creates menu's with the parameters set by the programmer.
-              
-
-    ALGORITHM:
-
-       
-        COMMENT: this is the main menu where the user is first exposed to the
-                 overall functionality of the programme
-
-        battleShipMenus[0] := menuClassInteger.setMssg        COMMENT: note to self, try to figure out how to have these in one 
-                 statement. Maybe do this when you create the actual objects
-
-        battleShipMenus[0] := menuClassInteget.setOptions(7)
-        
-        COMMENT: the menu the user is exposed to when they select 1 from the
-                 main menu
-
-        battleShipMenus[1] := menuClassInteger.setMssg("1. add manually
-                                                      2. add from a file ")
-        battleShipMenus[1] := menuClassInteger.setOptions(2)
-
-        COMMENT: the menu the user is exposed to when they select 2 from the 
-                 main menu 
-
-        battleShipMenus[2] := menuClassInteger.setMssg        battleShipMenus[2] := menuClassInteger.setOptions(3)
-    
-        COMMENT: the menu the user is exposed to when they select 3 on the menu
-
-        battleShipMenus[3] := menuClassInterger.setMssg        battleShipMenus[3] := menuClassInteger.setOptions(3)
-
 SUBMODULE: getUserSerialNum
     IMPORT: none
     EXPORT: serialNum
@@ -323,11 +290,11 @@ SUBMODULE: mainMenu
 
         CASE userOP
             1:
-                addShips <- none
+                addShipsMenu <- none
             2: 
-                viewShips <- none
+                viewShipsMenu <- none
             3: 
-                findDuplicates <- none 
+                findDuplicatesMenu <- none 
             4:
                 destinationCheck <- none
             5:
@@ -347,15 +314,13 @@ SUBMODULE: addShipsMenu
     ALGORITHM:
         
         DO
-            (Integer) userOp := inputIntMenu <- ("1. View all ships
-                                                  2. View submarines only
-                                                  3. View fighter jets 
-                                                    only ")
-            IF (userOp doesn't equal to 1 or 2 or 3) THEN
+            (Integer) userOp := inputIntMenu <- ("1. Add ships manually
+                                                  2. Add ships from file"
+
+            IF (userOp doesn't equal to 1 or 2) THEN
                 OUTPUT: "Please enter an option which is in the menu below: "
             END IF 
-        WHILE (userOp doesn't equal 1 or 2 or 3)
-
+        WHILE (userOp doesn't equal 1 or 2)
 
         CASE userOp
             1:
@@ -364,6 +329,53 @@ SUBMODULE: addShipsMenu
                 addShipFile <- none
             DEFUALT:
                 OUTPUT: "Invalid option"
+
+SUBMODULE: viewShips
+    IMPORT: none
+    EXPORT: none
+    PURPOSE:
+
+    ALGORITHM:
+        DO
+            (Integer) userOp := inputIntMenu <- ("1. View all ships
+                                                  2. View submarines only
+                                                  3. View fighter jets 
+                                                    only ")
+            IF (userOp doesn't equal to 1 or 2 or 3 ) THEN
+                OUTPUT "Pleae enter an option which is in the following meanu:
+            END  IF
+        WHILE (userOp doesn't equal 1 or 2 or 3)
+        
+        CASE userOp
+            1: 
+                viewSubs <- none
+                viewJets <-none
+            2: 
+                viewSubs <- none    
+            3:
+                viewJets <- none
+
+SUBMPODULE: viewSubs
+    IMPORT: none
+    EXPORT: none
+    PURPOSE:
+
+    ALGORITHM:
+
+        FOR ((Integer)ii TO shipStorage.MAXCAP (exclusive) CHANGEBY 1) THEN 
+            OUTPUT: shipStorage.toStringSubArr[ii]
+        END FOR
+
+SUBMODULE: viewJets
+    IMPORT: none
+    EXPORT: none
+    PURPOSE:
+
+    ALGOTITHM:
+        
+        FOR ((Integer) ii TO shipStorage.MAXCAP (exclusive) CHANGEBY 1) THEN
+            OUTPUT: shipStorage.toStringJetArr[ii]
+        END FOR
 
 SUBMODULE: duplicatesMenu 
     IMPORT: none
@@ -384,9 +396,60 @@ SUBMODULE: duplicatesMenu
 
         case userOp
             1:
-                FOR ((integer) ii TO
-                
+                displaySubDuplicates <- none
+                displayJetDuplicates <- none              
+            2:
+                displaySubDuplicates <- none
+            3:
+                displayJetDuplicates <- none
 
-                
-            
+SUBMODULE: displaySubDuplicates:
+    IMPORT: none
+    EXPORT: none
+    PURPOSE:
 
+    ALGORITHM:
+
+        FOR ((integer) ii TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
+            OUTPUT: "The ships " 
+                     +shipStorage.findDuplicateSub[ii].toStringSub+ 
+                     and the ship +shipStorage.findDuplciateSub[ii+1].
+                     toStringSub are dupicates of one another.
+        END FOR
+
+SUBMODULE: displayJetDuplicates: 
+    IMPORT: none
+    EXPORT: none
+    PURPOSE:
+
+    ALGORITHM:
+
+        FOR ((integer) ii TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
+            OUTPUT: "The ships " 
+                     +shipStorage.findDuplicateJet[ii].toStringJet+ 
+                     and the ship +shipStorage.findDuplciateJet[ii+1].
+                     toStringJet are dupicates of one another.
+        END FOR
+
+SUBMODULE: destinationCheck
+    IMPORT: none
+    EXPORT: none
+    PURPOSE:
+
+    ALGORITHM:
+        
+        OUTPUT: "not yet implememntededed"
+
+        OUTPUT: "Please put a rounded distance to see what 
+        shipStorage.destinationCheckSub <- distance       
+
+SUBMODULE: loadShips
+    IMPORT: none
+    EXPORT: none
+    PURPOSE:
+
+    ALGORITHM:
+
+    
+
+SUBMODULE: saveShips

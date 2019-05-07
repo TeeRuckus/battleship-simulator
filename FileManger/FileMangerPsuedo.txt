@@ -1,0 +1,167 @@
+CLASS: fileMangerClasss
+
+CLASS FIELDS:
+
+    shipStorage (shipStorage object)
+    
+COSTRUCTORS:
+
+Defualt:
+    
+    make a new object of shipStorage
+
+SUBMODULE: getSavedNames
+    IMPORT: none
+    EXPORT:
+    PURPOSE: to display all saved files in the file saving directories
+    ASSERTION: displays all the names the user has previsouly saved.
+
+    ALGORITHM:
+    
+    COMMENT: (reference properly later) code adapted from:
+         https://www.mkyong.com/java/java-how-to-list-all-files-in-a-directory/    
+
+SUMBODULE: readFile
+    IMPORT: fileName (String)
+    EXPORT: none
+    PURPOSE: to read and prcess the contents of a file
+
+    ALGORITHM: 
+
+        theFile <- OPENFILE fileName
+        INPUT line FROM fileName
+
+        TRY 
+            (Interger) lineNum := 1
+            (String) = READ LINE        
+
+            WHILE (line is not empty and lineNum  <= shipStorage.MAXSUBCAP
+                  + shipStorage.MAXJETCAP) THEN
+                    
+                    IF (validateLine <- line ) THEN
+                        fileContents[ii] := line                        
+                        ii := ii + 1 
+                    ELSE
+                        CLOSE fileName
+                        FAIL "ERROR: "unable to process line number " +lineNum+
+                              ". Incorrect line format"
+            END WHILE 
+            
+            createShipObjcts <- none
+
+        CATCH: IOException
+            OUTPUT: "File not found"
+            IF (fileName is not empty) THEN 
+                TRY
+                    CLOSE fileName
+                CATCH IOException
+                END TRY CATCH
+        END TRY CATCH 
+
+SUBMODULE: createShipObjcts 
+    IMPORT: inArr[] 
+    EXPORT: none
+    PURPOSE: to create the ship objects from the file information once it has
+             been all validated 
+
+    ALGORITHM:
+        
+        shipType := first character of inArr[0] 
+        serialNum := validateSerialNum(inArr[1])
+        year := validateYear(inArr[2] CONVERT to interger)
+        cylinders := validateCylinders(inArr[3] CONVERT to integers)
+        fuel = validateFuel(inArr[4])
+
+        CONSTRUCT engine USING cylinders, fuel (ALTERNATE CONSTRUCTOR)
+
+        CASE (UPPERCASE)shipType
+            S:
+                hull := subMarineClass.validateHull(line[5]) 
+                maxDepth := subMarineClass.validateMaxDepth(line[6])
+
+                CONSTRUCT submarine (object) USING serialNum, year, hull, 
+                maxDepth
+                
+                add the construced object into shipStorage
+            F:
+                wingSpan := fighterJetClass.validateWingSpan(line[5])
+                ordance := fighterJetClass.validateOrdance(line[6])
+        
+                CONSTRUCT fighterJet (Object) USING serialNum, year, wingSpan,
+                ordance
+
+                add the constructed object into shipStorage 
+            DEFUALT:
+                FAIL "Invalid ship type"
+
+SUBMODULE: writeFile
+    IMPORT: fileName (String)
+    EXPORT: none
+    PURPOSE: to write the contents in the submarine object to a file
+
+    ALGORITHM
+        
+        (Object) subContents[].getSubStore
+        (Object) jetContents[].getJetStore
+
+       CREATE NEW FILE <- fileName
+        TRY
+            FOR ((interger)ii := 0 TO LENGTH of subContents - 1 CHANGEBY 1) THEN
+                OUTPUT TO FILE: subContets[ii].toString
+            END FOR 
+
+            FOR ((interger) ii := 0 TO LENGTH of jetContents - 1 CHANGEBY 1) THEN
+                OUTPUT TO FILE:  jetContents[ii].toString
+            END FOR 
+            
+            CLOSE fileName 
+        CATCH IOException
+            IF (fileName is not empty) THEN
+                TRY
+                    CLOSE fileName
+                CATCH
+                    COMMENT: there's nothing we can do here now
+                END TRY CATCH
+ 
+PRIVATE SUBMODULES:
+
+SUBMODULE: validateLine
+    IMPORT:(String) line
+    EXPORT:
+    PURPOSE:
+
+    ALGORITHM: 
+
+        isValid := FALSE
+        checkLines[] := SIZE of 7
+
+        TRY
+            checkLine := line.split(",")
+            IF (checkLines LENGTH equals 7) THEN
+                IF (line[0] LENGTH is 1) THEN
+                    isValid := TRUE
+            ELSE
+                FAIL "Ensure the file is written in the following format:
+                     <S/F>,<serial number>,<commission year>, <cylinders>, <fuel>,
+                     <hull/wingspan>,<max depth/ordance>"
+        CATCH InedexOutOfBoundsException
+            FAIL 
+
+SUMBODULE: validateFileManger
+    IMPORT: inObjct (Object)
+    EXPORT: isValid (Boolean)
+    PURPOSE: to ensure the file manger created contains the correct 
+
+    ALGORITHM:
+
+SUBMODULE: searchDir
+    IMPORT:
+    EXPORT:
+    ASSERTION:
+
+    ALGORITHM:
+
+    COMMENT: code adapted from:
+     https://www.mkyong.com/java/java-how-to-list-all-files-in-a-directory/
+
+OTHER METHODS:       
