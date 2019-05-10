@@ -410,11 +410,14 @@ SUBMODULE: displaySubDuplicates:
 
     ALGORITHM:
 
-        FOR ((integer) ii TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
-            OUTPUT: "The ships " 
-                     +shipStorage.findDuplicateSub[ii].toStringSub+ 
-                     and the ship +shipStorage.findDuplciateSub[ii+1].
-                     toStringSub are dupicates of one another.
+        OUTPUT: "The duplicates pairs are as follows"
+
+        FOR ((integer) ii := 0 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
+            OUTPUT: "SubMarine [ii] " 
+                    +shipStorage.findDUplcateSub[ii].toString
+            FOR((integer)ii := 1 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
+                OUTPUT: "SubMarine duplicate [ii-1] "
+                        +shipStorage.findDuplicateSub[ii+1]
         END FOR
 
 SUBMODULE: displayJetDuplicates: 
@@ -424,11 +427,14 @@ SUBMODULE: displayJetDuplicates:
 
     ALGORITHM:
 
-        FOR ((integer) ii TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
-            OUTPUT: "The ships " 
+        OUTPUT: "The duplicates pairs are as follows: "
+
+        FOR ((integer) ii := 0 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
+            OUTPUT: "FighterJet[ii] "
                      +shipStorage.findDuplicateJet[ii].toStringJet+ 
-                     and the ship +shipStorage.findDuplciateJet[ii+1].
-                     toStringJet are dupicates of one another.
+            FOR((integer)ii := 1 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
+                OUTPUT: "FighterJet Duplicate [ii-1] "
+                         +shipStorage.findDuplicateJet[ii+1]
         END FOR
 
 SUBMODULE: destinationCheck
@@ -440,16 +446,16 @@ SUBMODULE: destinationCheck
         
         OUTPUT: "not yet implememntededed"
 
-        OUTPUT: "Please put a rounded distance to see what 
-        shipStorage.destinationCheckSub <- distance       
-
 SUBMODULE: loadShips
     IMPORT: none
     EXPORT: none
     PURPOSE:
 
     ALGORITHM:
-
-    
+        
+        TRY:
+            OUTPUT: "Please input a fileName to laod ships from "
+            INPUT: fileName (String)
+            FileManger.openFile(fileName)
 
 SUBMODULE: saveShips

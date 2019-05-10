@@ -8,9 +8,32 @@ COSTRUCTORS:
 
 Defualt:
     
-    make a new object of shipStorage
+    make a new instances of fileMangerClass
 
-SUBMODULE: getSavedNames
+Alternate
+
+ IMPORT: inFileManger
+    EXPORT: none
+    ASSERTION: creates a fileMangerClass object which is identical to the 
+               imported filemanger
+
+    ALGORITHM:
+        IF (validateFileManger <- inFileManger) THEN
+            fileManger := inFileManger
+        END IF
+
+
+Copy:
+    IMPORT: inFileManger
+    EXPORT: none
+    ASSERTION: creates an object whihc is identical to the imported object
+
+    ALGORITHM:
+
+    shipStorage := make a copy of ship storage
+
+ACCESSORS
+    SUBMODULE: getSavedNames
     IMPORT: none
     EXPORT:
     PURPOSE: to display all saved files in the file saving directories
@@ -20,6 +43,11 @@ SUBMODULE: getSavedNames
     
     COMMENT: (reference properly later) code adapted from:
          https://www.mkyong.com/java/java-how-to-list-all-files-in-a-directory/    
+
+MUTATORS:
+    SUBMODULE: setFileName
+
+DOING METHODS:
 
 SUMBODULE: readFile
     IMPORT: fileName (String)
@@ -59,18 +87,18 @@ SUMBODULE: readFile
         END TRY CATCH 
 
 SUBMODULE: createShipObjcts 
-    IMPORT: inArr[] 
+    IMPORT: none
     EXPORT: none
     PURPOSE: to create the ship objects from the file information once it has
              been all validated 
 
     ALGORITHM:
         
-        shipType := first character of inArr[0] 
-        serialNum := validateSerialNum(inArr[1])
-        year := validateYear(inArr[2] CONVERT to interger)
-        cylinders := validateCylinders(inArr[3] CONVERT to integers)
-        fuel = validateFuel(inArr[4])
+        shipType := first character of fileContents[0] 
+        serialNum := validateSerialNum(fileContents[1])
+        year := validateYear(fileContents[2] CONVERT to interger)
+        cylinders := validateCylinders(fileContents[3] CONVERT to integers)
+        fuel = validateFuel(fileContents[4])
 
         CONSTRUCT engine USING cylinders, fuel (ALTERNATE CONSTRUCTOR)
 
