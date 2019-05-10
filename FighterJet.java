@@ -95,6 +95,12 @@ public class FighterJet
         {
             return wingSpan;
         }
+        /* not yet implemented, only doing this so I can test my calc travel */
+        
+        public int getCylinders()
+        {
+            return 6; 
+        }
 
         //MUTATORS
 

@@ -75,9 +75,7 @@ SUBMODULE: addShipSubmarine
                          vaccant index of the storeSub
 
                 countSubs := countSubs + 1
-        ELSE
-            FAIL "ERROR: Invalid Submarine"
-        END IF ELSE
+        END IF
 
 SUBMODULE: addShipFighterJet (this is the fighter jet version) -> we will 
            change this when we do inheritance) 
@@ -100,7 +98,7 @@ SUBMODULE: addShipFighterJet (this is the fighter jet version) -> we will
 
 DOING METHODS:
 
-SUBMODULE: destinationCheckSubmarine
+SUBMODULE: destinationCheckSub
     IMPORT: (integer) distance
     EXPORTS: (String) str 
     PURPOSE:
@@ -127,20 +125,20 @@ SUBMODULE: destinationCheckSubmarine
         
         str := fastestSub.toString
 
-SUBMODULE: calcTravelTimeSubMarine
+SUBMODULE: calcTravelTimeSub
     IMPORT: inShip (Submarine Object), distance (Integer)
     EXPORT: timeHours (Real) 
     PUROSE: is to calculate the travel time of submarine in hours 
     
     ALGORITHM:
        
-        (Real) ratio := ((Real)distance / (Real)(inShip.getCylinders))
-        (Real) denom := (10.00 + (inShip.getMaxDepth * -1.00))
+        (Real) ratio := ((Real)distance / (Real)(inShip.getCylinders <- none))
+        (Real) denom := (10.00 + (inShip.getMaxDepth <- none * -1.00))
         (Real) invDenom := 1.00 / denom 
         
         timeHours := ratio * invDenom
         
-SUBMODULE: destinationCheckFighterJet
+SUBMODULE: destinationCheckJet
     IMPORT: (Integer) distance
     EXPORTS: (String) str 
     PURPOSE:
@@ -167,14 +165,15 @@ SUBMODULE: destinationCheckFighterJet
         
         str := fastestJet.toString
 
-SUBMODULE: calcTravelTimeFighterJets
+SUBMODULE: calcTravelTimeJets
     IMPORT:inShip (fighterJet object), (Integer) distance
     EXPORT: timeHours (Real)
     PURPOSE: is to calculate the tracel time of the fighter jet in hours
 
     ALGORITHM:
 
-        (Real) denom := inShip.getWingSpan * (Real) inShip.getCylinders * 150.00 
+        (Real) denom := inShip.getWingSpan <- none * 
+                        (Real) inShip.getCylinders <- none * 150.00 
         timeHours := (Real)distance / denom
 
 SUBMODULE: findDuplicateSubs
@@ -252,9 +251,16 @@ SUBMODULE: validateSub
             IF (the inObjct doens't equal to null) THEN 
                 IF (checkStoreSubCapacity <- none) THEN
                     isValid := TRUE
-                END IF
-            END IF
-        END IF 
+                ELSE
+                    FAIL ("ERROR: Not enough storage in the submarine storage")
+                END IF ELSE
+            ELSE
+                FAIL ("ERROR: the class fields of the submarine object 
+                       are empty") 
+            END IF ELSE
+        ELSE
+            FAIL ("ERROR: not a submarine")
+        END IF ELSE
 
 SUBMODULE: validateJet
     IMPORT: inObjct (fighterJet object)
@@ -268,9 +274,14 @@ SUBMODULE: validateJet
             IF(inObjct does not equal to null) THEN
                 IF (checkStoreJetCapacity <- none) THEN
                     isValid := TRUE
-                END IF
-            END IF
-        END IF 
+                ELSE 
+                    FAIL ("ERROR: not enough storage") 
+                END IF ELSE
+            ELSE 
+                FAIL ("ERROR: the classfields of the objects are empty")
+            END IF ELSE
+                FAIL ("ERROR: not a fighterjet object") 
+        END IF ELSE
               
 SUBMODULE: checkStoreSubsCapacity
     IMPORT: none
@@ -282,7 +293,7 @@ SUBMODULE: checkStoreSubsCapacity
         
         spaceAvail := FALSE
         TRY 
-            IF (storeSubs([countSubs]) is equal to nothing) THEN
+            IF (storeSubs[countSubs] is equal to nothing) THEN
                 spaceAvail := TRUE
                 countSubs := countSubs + 1 
             END IF

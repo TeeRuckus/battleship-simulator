@@ -100,6 +100,12 @@ public class SubMarine
         {
             return maxDepth;
         }
+        
+        /* needs to be implemented propertly */
+        public int getCylinders()
+        {
+            return 1;
+        }
 
         //MUTATORS
 
