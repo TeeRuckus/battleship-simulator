@@ -1,16 +1,16 @@
-public class subMarineClassTestHarness
+public class SubMarineTestHarness
 {
     public static void main(String [] args)
     {
         try
         {
-            subMarineClass [] subMarine = new subMarineClass[4];
+            SubMarine [] subMarine = new SubMarine[4];
 
             // creating objects for testing
-            subMarine[0] = new subMarineClass();
-            subMarine[1] = new subMarineClass(199.666, 1969,
-                                                subMarineClass.TTNM, -250);
-            subMarine[2] = new subMarineClass(subMarine[1]);
+            subMarine[0] = new SubMarine();
+            subMarine[1] = new SubMarine(199.666, 1969,
+                                                SubMarine.TTNM, -250);
+            subMarine[2] = new SubMarine(subMarine[1]);
             subMarine[3] = subMarine[1].clone();
 
             //printing out created objects

@@ -1,16 +1,16 @@
-public class fighterJetTestHarness
+public class FighterJetTestHarness
 {
     public static void main(String [] args)
     {
         try
         {
-            fighterJetClass [] fighterJet = new fighterJetClass[4];
+            FighterJet [] fighterJet = new FighterJet[4];
 
             // creating objects for testing
-            fighterJet[0] = new fighterJetClass();
-            fighterJet[1] = new fighterJetClass(199.666, 1969,
+            fighterJet[0] = new FighterJet();
+            fighterJet[1] = new FighterJet(199.666, 1969,
                                                 "turrents", 3);
-            fighterJet[2] = new fighterJetClass(fighterJet[1]);
+            fighterJet[2] = new FighterJet(fighterJet[1]);
             fighterJet[3] = fighterJet[1].clone();
 
             //printing out created objects

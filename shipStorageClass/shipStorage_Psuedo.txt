@@ -1,4 +1,4 @@
-CLASS: shipStorage
+CLASS: ShipStorage
 
 PUBLIC CLASS CONSTANTS:
 
@@ -7,13 +7,13 @@ PUBLIC CLASS CONSTANTS:
              user to have a non 1:1 split of the capacity between submarines and
              jets.
 
-    (Integer) MAXCAP := 15
+    (Integer) MAX_CAP := 15
 
 CLASS FIELDS:
 
     (Integer) countSubs
     (Integer) countJets
-    (ARRAY OF subMarine object) storeSubs []
+    (ARRAY OF SubMarine object) storeSubs []
     (ARRAY OF fighterJet object) storeJets []
 
 COSTRUCTORS:
@@ -27,14 +27,16 @@ Defualt:
     ALGORITHM:
         countSubs := 0
         countJets := 0
-        storeSubs[] := an EMPTY array of SIZE MAXCAP
-        storeJets[] := an EMPTY array of SIZE MAXCAP
+        storeSubs[] := an EMPTY array of SIZE MAX_CAP
+        storeJets[] := an EMPTY array of SIZE MAX_CAP
 
 ACCESSORS
 
-SUBMODULE: getSub (subMarineClass object)
+
+
+SUBMODULE: getSub (SubMarine object)
     IMPORT: none
-    EXOPORT: sub (subMarine Object)
+    EXOPORT: sub (SubMarine Object)
     PURPOSE: gets the last stored submarine in the storeSub array
 
     ALGORITHM:
@@ -63,10 +65,10 @@ SUBMODULE: getjet (fighterJetClass Object)
 MUTATORS:
 
 SUBMODULE: addShipSubmarine 
-    IMPORT: inSub (subMarine object) , countSubs (Integer)
+    IMPORT: inSub (SubMarine object) , countSubs (Integer)
     EXPORT: none
     ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
-                storeSubs hasn't exceeded the MAXCAP
+                storeSubs hasn't exceeded the MAX_CAP
 
     ALGORITHM:
 
@@ -76,7 +78,7 @@ SUBMODULE: addShipSubmarine
                 COMMENT: I am incrementing countSub by 1, to go to the next
                          vaccant index of the storeSub
 
-                countSub := countSubs 
+                countSubs := countSubs + 1
         ELSE
             FAIL "ERROR: Invalid Submarine"
         END IF ELSE
@@ -86,7 +88,7 @@ SUBMODULE: addShipFighterJet (this is the fighter jet version) -> we will
     IMPORT: inJet (jetFighter object) , countJets (integer)
     EXPORT: none
     ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
-               storeSubs hasn't exceeded MAXCAP
+               storeSubs hasn't exceeded MAX_CAP
 
     ALGORITHM:
         IF (validateJet <- inJet) THEN
@@ -113,13 +115,13 @@ SUBMODULE: destinationCheckSubmarine
                  of comparison to other submarine objects withing the storeSubs
                  array. The 0 index sub is the most convient
 
-        (subMarine Object) fastestSub := calcTravelTimeSub <- storeSubs[0]
+        (SubMarine Object) fastestSub := calcTravelTimeSub <- storeSubs[0]
         
         COMMENT: I don't want the reference submarine of comparison, to comparew
                  by itself, as this is an ineffecient use of the machine's 
                  resouces.
 
-        FOR((integer)ii := 1 TO MAXCAP (exclusive) CHANGEBY 1) THEN 
+        FOR((integer)ii := 1 TO MAX_CAP (exclusive) CHANGEBY 1) THEN 
             
                 IF (calcTravelTimeSub <- storeSubs[ii],distance < 
                     fastestSub) THEN
@@ -136,11 +138,11 @@ SUBMODULE: calcTravelTimeSubMarine
     
     ALGORITHM:
        
-        (Real) ratio := ((Real)distance/(Real)(inShip.getCylinders))
+        (Real) ratio := ((Real)distance / (Real)(inShip.getCylinders))
         (Real) denom := (10.00 + (inShip.getMaxDepth * -1.00))
-        (Real) invDenom := 1.00/denom 
+        (Real) invDenom := 1.00 / denom 
         
-        timeHours := ratio*invDenom
+        timeHours := ratio * invDenom
         
 SUBMODULE: destinationCheckFighterJet
     IMPORT: (Integer) distance
@@ -153,13 +155,13 @@ SUBMODULE: destinationCheckFighterJet
                  of comparison to other jet objects withing the storeJets
                  array. The 0 index sub is the most convient
 
-        (subMarine Object) fastestJet := calcTravelTimeJet <- storeJets[0]
+        (FighterJet Object) fastestJet := calcTravelTimeJet <- storeJets[0]
         
         COMMENT: I don't want the reference jet of comparison, to comparew
                  by itself, as this is an ineffecient use of the machine's 
                  resouces.
 
-        FOR((integer)ii := 1 TO MAXCAP (exclusive) CHANGEBY 1) THEN 
+        FOR((integer)ii := 1 TO MAX_CAP (exclusive) CHANGEBY 1) THEN 
             
                 IF (calcTravelTimeJet <- storeJets[ii],distance < 
                     fastestJet) THEN
@@ -169,42 +171,19 @@ SUBMODULE: destinationCheckFighterJet
         
         str := fastestJet.toString
 
-SUBMODULE: calcTravelTimeSubMarine
-    IMPORT: inShip (Submarine Object), distance (Integer)
-    EXPORT: timeHours (Real) 
-    PUROSE: is to calculate the travel time of submarine in hours 
-    
-    ALGORITHM:
-       
-        (Real) ratio := ((Real)distance/(Real)(inShip.getCylinders))
-        (Real) denom := (10.00 + (inShip.getMaxDepth * -1.00))
-        (Real) invDenom := 1.00/denom 
-        
-        timeHours := ratio*invDenom
-    
 SUBMODULE: calcTravelTimeFighterJets
-    IMPORT: (Integer) distance, inShip (fighterJet object)
-    EXPORT: timeHours
+    IMPORT:inShip (fighterJet object), (Integer) distance
+    EXPORT: timeHours (Real)
     PURPOSE: is to calculate the tracel time of the fighter jet in hours
 
     ALGORITHM:
 
         (Real) denom := inShip.getWingSpan * (Real) inShip.getCylinders * 150.00 
-        timeHours := (Real)distance/denom
-
-SUBMODULE: calcTravelTimeFighterJets
-    IMPORT: (Integer) distance, inShip (fighterJet object)
-    EXPORT: timeHours
-    PURPOSE: is to calculate the tracel time of the fighter jet in hours
-
-    ALGORITHM:
-
-        (Real) denom := inShip.getWingSpan * (Real) inShip.getCylinders * 150.00 
-        timeHours := (Real)distance/denom
+        timeHours := (Real)distance / denom
 
 SUBMODULE: findDuplicateSubs
     IMPORTS: none
-    EXPORT: dupilicates[] (subMarineClass object)
+    EXPORT: dupilicates[] (SubMarine object)
     ASSERTION:
 
     ALGORITHM:
@@ -216,9 +195,9 @@ SUBMODULE: findDuplicateSubs
                  duplicates you can have is 15. Therefore, double the orginal
                  amount is the maxiumum amount you can have. 
 
-        (object) duplicates [] := SIZE of MAXCAP * 2
+        (object) duplicates [] := SIZE of MAX_CAP * 2
         
-        FOR ((integer) ii := 0 TO MAXCAP (exclusive) CHANGEBY 1) THEN
+        FOR ((integer) ii := 0 TO MAX_CAP (exclusive) CHANGEBY 1) THEN
 
             COMMENT: I am starting the looping variable at one because 1 don't
                      want the programme to store itself as a dupilcate, hence
@@ -240,9 +219,9 @@ SUBMODULE: findDuplicateJets
 
     ALGORITHM:
 
-    (object) duplicates [] := SIZE of MAXCAP * 2 
+    (object) duplicates [] := SIZE of MAX_CAP * 2 
         
-        FOR ((integer) ii := 0 TO MAXCAP (exclusive) CHANGEBY 1) THEN
+        FOR ((integer) ii := 0 TO MAX_CAP (exclusive) CHANGEBY 1) THEN
 
             COMMENT: I am starting the looping variable at one because I don't
                      want the programme to store itself as a dupilcate, hence
@@ -267,14 +246,14 @@ SUBMODULE: calcTolShips
 PRIVATE SUBMODULES:
 
 SUBMODULE: validateSub
-    IMPORT: inObjct (subMarine object)
+    IMPORT: inObjct (SubMarine object)
     EXPORT: isValid (Boolean)
-    ASSERTION: if inObjct is a subMarine object then it's  valid
+    ASSERTION: if inObjct is a SubMarine object then it's  valid
 
     ALGORITHM:
 
         isValid := FALSE
-        IF (inObjct ISA subMarine object) THEN
+        IF (inObjct ISA SubMarine object) THEN
             IF (the inObjct doens't equal to null) THEN 
                 IF (checkStoreSubCapacity <- none) THEN
                     isValid := TRUE
@@ -290,7 +269,7 @@ SUBMODULE: validateJet
     ALGORITHM:
 
         isValid := FALSE
-        IF (inObjct ISA subMarine object) THEN 
+        IF (inObjct ISA SubMarine object) THEN 
             IF(inObjct does not equal to null) THEN
                 IF (checkStoreSubCapacity <- none) THEN
                     isValid := TRUE
@@ -341,7 +320,7 @@ SUBMODULE: clone
         CONSTRUCT cloneShipStorage USING ALTERNATE CONSTRUCTOR withS
             -(Integer) countSubs
             -(Integer) countJets
-            -(ARRAY OF subMarine object) storeSubs []
+            -(ARRAY OF SubMarine object) storeSubs []
             -(ARRAY OF fighterJet object) storeJets []
 
 SUBODULE: equalsArray
@@ -378,9 +357,9 @@ SUBMODULE: toStringSubArr
 
     ALGORITHM:
 
-            str [] := SIZE of MAXCAP
+            str [] := SIZE of MAX_CAP
 
-            FOR ((Integer) ii := 0 TO MAXCAP (exclusive) CHNAGEBY 1) THEN
+            FOR ((Integer) ii := 0 TO MAX_CAP (exclusive) CHNAGEBY 1) THEN
                 st[ii] := storeSubs[ii].toString
             END FOR
 
@@ -391,12 +370,12 @@ SUBMODULE: toStringJetArr
 
     ALGORITHM:
 
-        str [] := SIZE of MAXCAP
+        str [] := SIZE of MAX_CAP
 
         COMMENT: I am subtracting one, so the for loop doesn't try to search
                  outside the indexs of the str array as its indes starts at 0
 
-       FOR ((Integer) ii = 0 TO MAXCAP (exclusive) CHANGEBY 1) THEN
+       FOR ((Integer) ii = 0 TO MAX_CAP (exclusive) CHANGEBY 1) THEN
             str [ii] := storeSubs[ii].toString
         END FOR
 
@@ -412,7 +391,7 @@ SUBMODULE: toStringArr
                  (i.e. how many ships they're in total. How many jets they're,
                  and how many submarines they're)
 
-        (Integer) tolShipsInfo := MAXCAP + MAXSUBJET + 1
+        (Integer) tolShipsInfo := MAX_CAP + MAXSUBJET + 1
 
         (String) strarr [] := SIZE of tolShipInfo
         
@@ -427,15 +406,15 @@ SUBMODULE: toStringArr
                  one so the for loop doesn't try to look outside the array as
                  the index of an array starts at 1
 
-        FOR ((Integer)ii:= 1 TO MAXCAP (exclusive) CHNAGEBY 1
+        FOR ((Integer)ii:= 1 TO MAX_CAP (exclusive) CHNAGEBY 1
             strarr [ii] :=  storeSubs[ii].toString
         END FOR
 
-        COMMENT: I used the starting index of (MAXCAP) becasue I want to
+        COMMENT: I used the starting index of (MAX_CAP) becasue I want to
                  start adding the information of the fighter jets, to the next
                  vaccant spot after the information of the submarines and it
-                 corresponds to MAXCAP
+                 corresponds to MAX_CAP
 
-        FOR((integer) ii:= MAXCAP TO tolShipsInfo (exclusive) CHANGEBY 1
+        FOR((integer) ii:= MAX_CAP TO tolShipsInfo (exclusive) CHANGEBY 1
             strarr [ii] :=  storeJets[ii].toString
         END FOR

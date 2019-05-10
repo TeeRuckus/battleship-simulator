@@ -1,4 +1,4 @@
-CLASS: submarineClass
+CLASS: SubMarine
 
 PUBLIC CLASS CONSTANTS:
     STEEL := "STEEL"
@@ -239,8 +239,8 @@ SUBMODULE: equals
 
     ALGORITHM:
         isSame := FALSE
-        IF (inObj ISA submarineClass) THEN
-            inSubmarine  := (Convert to submarineClass)inObjct
+        IF (inObj ISA SubMarine) THEN
+            inSubmarine  := (Convert to SubMarine)inObjct
             isSame := (hull EQUALS inSubmarine.getHull <- none) AND
                       (maxDepth EQUALS inSubmarine.getMaxDepth <- none)
         END IF

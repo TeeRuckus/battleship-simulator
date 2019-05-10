@@ -1,4 +1,4 @@
-CLASS: fighterJetClass
+CLASS: FighterJet
 
 PUBLIC CLASS CONSTANTS:
 
@@ -45,7 +45,7 @@ Alternate
         END IF ELSE
 
 Copy:
-    IMPORT: inFighterJet (fighterJetClass)
+    IMPORT: inFighterJet (FighterJet)
     EXPORT: none
     ASSERTION: creates an object which is identical to the imported object
 
@@ -219,8 +219,8 @@ SUBMODULE: equals
 
     ALGORITHM:
         isSame := FALSE
-        IF (inObj ISA fighterJetClass) THEN
-            inFighterJet  := (Convert to fighterJetClass)inObjct
+        IF (inObj ISA FighterJet) THEN
+            inFighterJet  := (Convert to FighterJet)inObjct
             isSame := (ordance EQUALS inFighterJet.getOrdance <- none) AND
                       (wingSpan EQUALS inFighterJet.getWingSpan <- none)
         END IF

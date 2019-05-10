@@ -2,54 +2,59 @@
 AUTHOR: Tawana David Kwaramaba
 STUDENT ID: 19476700
 DATE:
-PURPOSE: to create a class which will model the functionality of a real life 
-         fighter jet
+PURPOSE: to create a class which will model the functionality of a real life
+         submarine
 *******************************************************************************/
-public class fighterJetClass
+public class SubMarine
     {
+        //Class constants
+        public static final String STEEL = "STEEL";
+        public static final String ALLY = "ALLOY";
+        public static final String TTNM = "TITANIUM";
+
         //private class fields
-        private double serialNum, wingSpan; 
+        private double serialNum, maxDepth;
         private int year;
-        private String ordance;
+        private String hull;
 
         /***********************************************************************
         DEFUALT Constructor
         IMPORT: none
         EXPORT: none
-        ASSERTION: a fighter jet with a serial number of 123.250, commissioned 
-                   in 1950, with an engine ordance of titanium with a maximum 
-                   depth of 500.0 is a valid defualt state
+        ASSERTION: a submarine with a serial number of 123.456, commissioned in
+                   1950, with an engine hull of titanium with a maximum depth of
+                  500.0 is a valid defualt state
         ***********************************************************************/
-        public fighterJetClass()
+        public SubMarine()
         {
             serialNum = 123.250;
             year = 1950;
-            ordance = "machine guns";
-            wingSpan = 3.0;
+            hull = TTNM;
+            maxDepth = -500.0;
         }
         /***********************************************************************
         ALTERNATE Constructor
-        IMPORT: inSerialNum (Real), inYear (Interger), inOrdance (String), 
-                inWingSpan (Real)        
+        IMPORT: inSerialNum (Real), inYear (Interger), inHull (String),
+                inMaxDepth (Real)
         EXPORT: none
         ASSERTION: creates an object if the imports are valid, otherwise it will
                    FAIL
         ***********************************************************************/
-        public fighterJetClass(double inSerialNum, int inYear, String inOrdance, 
-                     double inWingSpan)
+        public SubMarine(double inSerialNum, int inYear, String inHull,
+                     double inMaxDepth)
         {
             if(validateSerialNum(inSerialNum))
             {
                 if(validateYear(inYear))
                 {
-                    if(validateOrdance(inOrdance))
+                    if(validateHull(inHull))
                     {
-                        if(validateWingSpan(inWingSpan))
-                        {      
+                        if(validateMaxDepth(inMaxDepth))
+                        {
                             serialNum = inSerialNum;
                             year = inYear;
-                            ordance = inOrdance; 
-                            wingSpan = inWingSpan;  
+                            hull = inHull;
+                            maxDepth = inMaxDepth;
                         }
                     }
                 }
@@ -57,28 +62,28 @@ public class fighterJetClass
             else
             {
                 throw new IllegalArgumentException("\nInvalid object import" +
-                                                   "values\n");  
+                                                   "values\n");
             }
         }
         /***********************************************************************
         COPY Constructor
-        IMPORT: inFighterJet (fighterJetClass)
+        IMPORT: inSubmarine (SubMarineClass)
         EXPORT: none
-        ASSERTION: creates an objext which is identical to the importred object
+        ASSERTION: creates an objext which is identical to the importred onkect
         ***********************************************************************/
-        public fighterJetClass(fighterJetClass inFighterJet)
+        public SubMarine(SubMarine inSubMarine)
         {
-            serialNum = inFighterJet.getSerialNum();
-            year = inFighterJet.getYear();
-            ordance = inFighterJet.getOrdance();
-            wingSpan = inFighterJet.getWingSpan();
+            serialNum = inSubMarine.getSerialNum();
+            year = inSubMarine.getYear();
+            hull = inSubMarine.getHull();
+            maxDepth = inSubMarine.getMaxDepth();
         }
-        
+
         //ACCESSORS
 
         public double getSerialNum()
         {
-            return serialNum; 
+            return serialNum;
         }
 
         public int getYear()
@@ -86,14 +91,14 @@ public class fighterJetClass
             return year;
         }
 
-        public String getOrdance()
+        public String getHull()
         {
-            return ordance;
+            return hull;
         }
 
-        public double getWingSpan()
+        public double getMaxDepth()
         {
-            return wingSpan;
+            return maxDepth;
         }
 
         //MUTATORS
@@ -102,7 +107,7 @@ public class fighterJetClass
         SUBMODULE: setSerialNum
         IMPORT: inSerialNum (Real)
         EXPORT: none
-        ASSERTION: sets the serial number to inSerialNum if it's valid, 
+        ASSERTION: sets the serial number to inSerialNum if it's valid,
                    otherwise it fails
         ***********************************************************************/
         public void setSerialNum(double inSerialNum)
@@ -110,12 +115,12 @@ public class fighterJetClass
            if(validateSerialNum(inSerialNum))
             {
                 serialNum = inSerialNum;
-            } 
+            }
             else
             {
                 throw new IllegalArgumentException("Invalid serial number");
             }
-        }        
+        }
         /***********************************************************************
         SUBMODULE: setYear
         IMPORT: inYear (Interger)
@@ -133,39 +138,38 @@ public class fighterJetClass
                 throw new IllegalArgumentException("Invalid year");
             }
         }
-        /***********************************************************************        
-        SUBMODULE: setOrdance 
-        IMPORT: inOrdance (String)
+        /***********************************************************************
+        SUBMODULE: setHull
+        IMPORT: inHull (String)
         EXPORT: none
-        ASSERTION: set ordance to to inOrdance if it's valid, otherwise it will fail
+        ASSERTION: set hull to to inHull if it's valid, otherwise it will fail
         ***********************************************************************/
-        public void setOrdance(String inOrdance)
+        public void setHull(String inHull)
         {
-            if(validateOrdance(inOrdance)) 
-                ordance = inOrdance;
+            if(validateHull(inHull))
+                hull = inHull;
             else
             {
-                throw new IllegalArgumentException("Invalid ordance");
+                throw new IllegalArgumentException("Invalid hull");
             }
         }
         /***********************************************************************
-        SUBMODULE: setWingSpan 
-        IMPORT: inWingSpan (Real)
+        SUBMODULE: setMaxDepth
+        IMPORT: inMaxDepth (Real)
         EXPORT: none
-        ASSERTION: set wingspan to inWingSpan if it's valid, otherwise fail
+        ASSERTION: set max depth to inMaxDepth if it's valid, otherwise fail
         ***********************************************************************/
-        public void setWingSpan(double inWingSpan)
+        public void setMaxDepth(double inMaxDepth)
         {
-            if(validateWingSpan(inWingSpan))
+            if(validateMaxDepth(inMaxDepth))
             {
-                wingSpan =  inWingSpan; 
+                maxDepth =  inMaxDepth;
             }
             else
             {
-                throw new IllegalArgumentException("\nInvalid wingspan," +
-                                                    "input a wingspan between"+ 
-                                                    " ranges of 2.20 and 25.6"+
-                                                    " (inclusive)");
+                throw new IllegalArgumentException("Invalid max depth," +
+                                                    "input a depth between the"+
+                                                    " ranges of -500.0 to 0");
             }
         }
 
@@ -180,26 +184,27 @@ public class fighterJetClass
         SUBMODULE: validateSerialNum
         IMPORT: inSerialNum (Real)
         EXPORT: isValid (Boolean)
-        ASSERTION: validates serial numbers as true whereby its first three 
-                   digits are between 100 to 200 (inclusive), and the last three 
+        ASSERTION: validates serial numbers as true whereby its first three
+                   digits are between 100 to 300 (inclusive), and the last three
                    digits are between 001 - 999 (inclusive), otherwise it will
                    validate them as false.
         ***********************************************************************/
         private boolean validateSerialNum(double inSerialNum)
         {
             int wholePart, decimalPart;
-            boolean isValid = false; 
+            boolean isValid = false;
 
             wholePart = (int)inSerialNum;
             decimalPart = (int)(inSerialNum * 1000) % 1000;
-            if(wholePart >= 100 && wholePart <= 300)
+            if ((wholePart >= 100) && (wholePart <= 300))
             {
-                if(decimalPart >= 1 && decimalPart <= 999)
+                if((1 <= decimalPart) && (decimalPart <= 999))
                 {
                     isValid = true;
                 }
             }
             return isValid;
+
         }
         /***********************************************************************
         SUBMODULE: validateYear
@@ -209,9 +214,9 @@ public class fighterJetClass
                        valid, otherwise an error will be thrown to the user
         **********************************************************************/
         private boolean validateYear(int inYear)
-        {  
+        {
             boolean isValid = false;
-        
+
             if (inYear >= 1950 && inYear <= 2022)
             {
                 isValid = true;
@@ -220,16 +225,18 @@ public class fighterJetClass
             return isValid;
         }
         /**********************************************************************
-        SUBMODULE: validateOrdance
-        IMPORT: inOrdance (String)
+        SUBMODULE: validateHull
+        IMPORT: inHull (String)
         EXPORT: isValid (boolean)
-        ASSERTION: it will only validate inOrdance if it has a string describing
-                   the ordance of the fighter jet
+        ASSERTION: it will only validate inHull if it's one of the following
+                   three; steel, alloym and titanium.
         ********************************************************************/
-        private boolean validateOrdance(String inOrdance)
+        private boolean validateHull(String inHull)
         {
             boolean isValid = false;
-            if (inOrdance.length() != 0)
+
+            if(inHull.equals(STEEL) || inHull.equals(ALLY) ||
+               inHull.equals(TTNM))
             {
                 isValid = true;
             }
@@ -237,23 +244,22 @@ public class fighterJetClass
             return isValid;
         }
         /*******************************************************************
-        SUBMODULE: validateWingSpan
-        IMPORT: inWingSpan (Real)
+        SUBMODULE: validateMaxDepth
+        IMPORT: inMaxDepth (Real)
         EXPORT: isValid (Boolean)
-        ASSERTION: a wingSpan of between 2.20 and 25.6 will be validate 
-                   otherwise, error will be thrown to the user
+        ASSERTION: a maxdepth of between -500 - 0 will be validate otherwise, an
+                   error will be thrown to the user
         ********************************************************************/
-        private boolean validateWingSpan(double inWingSpan)
+        private boolean validateMaxDepth(double inMaxDepth)
         {
-            /*
             boolean isValid = false;
-            if(inWingSpan >= 2.2 && inWingSpan <= 25.6)
+
+            if(inMaxDepth >= -500 && inMaxDepth <= 0)
             {
-                isValid = true;            
+                isValid = true;
             }
+
             return isValid;
-            */
-            return ((inWingSpan >= 2.2) && (inWingSpan <= 25.6));
         }
 
         //OTHER METHODS
@@ -261,32 +267,32 @@ public class fighterJetClass
         /********************************************************************
         SUBMODULE: clone
         IMPORT: none
-        EXPORT: cloneFighterJet (Object)
+        EXPORT: cloneSubmarine (Object)
         ASSERTION: returns a cloned object of the current object
         ********************************************************************/
-        public fighterJetClass clone()
+        public SubMarine clone()
         {
-            fighterJetClass cloneFighterJet;
+            SubMarine cloneSubMarine;
 
-            cloneFighterJet = new fighterJetClass(this.serialNum, this.year, 
-                                                this.ordance, this.wingSpan); 
-            return cloneFighterJet; 
+            cloneSubMarine = new SubMarine(this.serialNum, this.year,
+                                                this.hull, this.maxDepth);
+            return cloneSubMarine;
         }
         /********************************************************************
         SUBMODULE: equals
         IMPORT: inObjct (object)
         EXPORT: isSame (boolean)
-        ASSERTION: two fighter jets are interchangable if they have the same ordance, 
-                   and wingspan
+        ASSERTION: two submarines are interchangable if they have the same hull,
+                   and max depth
         ********************************************************************/
         public boolean equals(Object inObjct)
         {
             boolean isSame = false;
-            if(inObjct instanceof fighterJetClass) 
+            if(inObjct instanceof SubMarine)
             {
-                fighterJetClass inFighterJet = (fighterJetClass)inObjct;
-                isSame = ordance.equals(inFighterJet.getOrdance()) &&
-                          wingSpan == (inFighterJet.getWingSpan());
+                SubMarine inSubmarine = (SubMarine)inObjct;
+                isSame = hull.equals(inSubmarine.getHull()) &&
+                          maxDepth == (inSubmarine.getMaxDepth());
             }
 
             return isSame;
@@ -294,26 +300,26 @@ public class fighterJetClass
         /********************************************************************
         SUBMODULE: toString
         IMPORT: none
-        EXPORT: str (String)
+        EXPORT: str
         ASSERTION:
         ********************************************************************/
         public String toString()
         {
-        
-            return("The ship " +serialNum+ " was comissioned in " +year+ 
+
+            return("The ship " +serialNum+ " was comissioned in " +year+
                    " , its engine has "/* +cylinders*/+ " cylinders and runs on "
-                   /* +fuel*/+ "fuel. It is a fighter jet with a wing span of "
-                    +wingSpan+ " metres and equiped wit " +ordance+ ".");
+                   /* +fuel*/+ ". It is a submarine with a " +hull+ " hull and a" +
+                    " max depth of " +maxDepth+ ".");
         }
         /********************************************************************
         SUBMODULE: toFileString
         IMPORT: none
-        EXPORT: str (String)
-        ASSERTION: 
+        EXPORT: str
+        ASSERTION:
         ********************************************************************/
         public String toFileString()
         {
-            return("F," +serialNum+ "," +year+ "," /*+cylinders*/+ "," /*+fuel*/+ "," 
-                  +ordance+"," +wingSpan+ ".");
+            return("S," +serialNum+ "," +year+ "," /*+cylinders*/+ "," /*+fuel*/+ ","
+                  +hull+"," +maxDepth);
         }
-    } 
+    }
