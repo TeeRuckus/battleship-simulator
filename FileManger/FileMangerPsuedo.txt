@@ -4,50 +4,12 @@ CLASS FIELDS:
 
     shipStorage (shipStorage object)
     
-COSTRUCTORS:
-
-Defualt:
-    
-    make a new instances of fileMangerClass
-
-Alternate
-
- IMPORT: inFileManger
-    EXPORT: none
-    ASSERTION: creates a fileMangerClass object which is identical to the 
-               imported filemanger
-
-    ALGORITHM:
-        IF (validateFileManger <- inFileManger) THEN
-            fileManger := inFileManger
-        END IF
-
-
-Copy:
-    IMPORT: inFileManger
-    EXPORT: none
-    ASSERTION: creates an object whihc is identical to the imported object
-
-    ALGORITHM:
-
-    shipStorage := make a copy of ship storage
-
-ACCESSORS
-    SUBMODULE: getSavedNames
-    IMPORT: none
-    EXPORT:
-    PURPOSE: to display all saved files in the file saving directories
-    ASSERTION: displays all the names the user has previsouly saved.
-
-    ALGORITHM:
-    
+    COMMENT: look at this source to add a little bit of extra functionality to
+             your code, so you can see what files you have saved. 
     COMMENT: (reference properly later) code adapted from:
          https://www.mkyong.com/java/java-how-to-list-all-files-in-a-directory/    
 
-MUTATORS:
-    SUBMODULE: setFileName
-
-DOING METHODS:
+STATIC METHODS
 
 SUMBODULE: readFile
     IMPORT: fileName (String)
@@ -192,4 +154,4 @@ SUBMODULE: searchDir
     COMMENT: code adapted from:
      https://www.mkyong.com/java/java-how-to-list-all-files-in-a-directory/
 
-OTHER METHODS:       
+OTHER METHODS:      

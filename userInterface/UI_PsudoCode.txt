@@ -1,4 +1,4 @@
-CLASS: userInterfaceClass
+CLASS: UI 
 
 CLASS FIELDS: 
     
@@ -453,9 +453,15 @@ SUBMODULE: loadShips
 
     ALGORITHM:
         
-        TRY:
-            OUTPUT: "Please input a fileName to laod ships from "
-            INPUT: fileName (String)
-            FileManger.openFile(fileName)
+        OUTPUT: "Please input a fileName to laod ships from "
+        INPUT: fileName (String)
+        FileManger.writeFile(fileName) 
 
 SUBMODULE: saveShips
+    IMPORT: fileName (String)
+    EXPORT: none
+
+SUBMODULE: errorMssg
+    IMPORT: mssg(String)
+    EXPORT: errMssg (String)
+    ASSERTION: returns the error message of the specific methods been called
