@@ -2,7 +2,7 @@
 AUTHOR: Tawana David Kwaramaba
 STUDENT ID: 19476700
 DATE:
-PURPOSE: to create a class which will model the functionality of a real life 
+PURPOSE: to create a class which will model the functionality of a real life
          fighter jet
 *******************************************************************************/
 public class engineClass
@@ -10,7 +10,7 @@ public class engineClass
         //public constants
         public static final String BATRY = "BATTERY";
         public static final String DSL = "DIESEL";
-        public static final String BIO = "BIO"; 
+        public static final String BIO = "BIO";
 
         //private class fields
         private int cylinders;
@@ -20,8 +20,8 @@ public class engineClass
         DEFUALT Constructor
         IMPORT: none
         EXPORT: none
-        ASSERTION: a fighter jet with a serial number of 123.250, commissioned 
-                   in 1950, with an engine fuel of titanium with a maximum 
+        ASSERTION: a fighter jet with a serial number of 123.250, commissioned
+                   in 1950, with an engine fuel of titanium with a maximum
                    depth of 500.0 is a valid defualt state
         ***********************************************************************/
         public engineClass()
@@ -31,8 +31,8 @@ public class engineClass
         }
         /***********************************************************************
         ALTERNATE Constructor
-        IMPORT: inCylinders (Real), inYear (Interger), inFuel (String), 
-                inWingSpan (Real)        
+        IMPORT: inCylinders (Real), inYear (Interger), inFuel (String),
+                inWingSpan (Real)
         EXPORT: none
         ASSERTION: creates an object if the imports are valid, otherwise it will
                    FAIL
@@ -44,15 +44,15 @@ public class engineClass
                 if(validateFuel(inFuel))
                 {
                     cylinders = inCylinders;
-                    fuel = inFuel; 
-                        
+                    fuel = inFuel;
+
                 }
             }
-        
+
             else
             {
                 throw new IllegalArgumentException("\nInvalid object import" +
-                                                   "values\n");  
+                                                   "values\n");
             }
         }
         /***********************************************************************
@@ -66,12 +66,12 @@ public class engineClass
             cylinders = inEngine.getCylinders();
             fuel = inEngine.getFuel();
         }
-        
+
         //ACCESSORS
 
         public int getCylinders()
         {
-            return cylinders; 
+            return cylinders;
         }
         public String getFuel()
         {
@@ -84,7 +84,7 @@ public class engineClass
         SUBMODULE: setCylinders
         IMPORT: inCylinders (Real)
         EXPORT: none
-        ASSERTION: sets the serial number to inCylinders if it's valid, 
+        ASSERTION: sets the serial number to inCylinders if it's valid,
                    otherwise it fails
         ***********************************************************************/
         public void setCylinders(int inCylinders)
@@ -92,21 +92,21 @@ public class engineClass
            if(validateCylinders(inCylinders))
             {
                 cylinders = inCylinders;
-            } 
+            }
             else
             {
                 throw new IllegalArgumentException("Invalid serial number");
             }
-        }        
-        /***********************************************************************        
-        SUBMODULE: setFuel 
+        }
+        /***********************************************************************
+        SUBMODULE: setFuel
         IMPORT: inFuel (String)
         EXPORT: none
         ASSERTION: set fuel to to inFuel if it's valid, otherwise it will fail
         ***********************************************************************/
         public void setFuel(String inFuel)
         {
-            if(validateFuel(inFuel)) 
+            if(validateFuel(inFuel))
                 fuel = inFuel;
             else
             {
@@ -125,18 +125,18 @@ public class engineClass
         SUBMODULE: validateCylinders
         IMPORT: inCylinders (Real)
         EXPORT: isValid (Boolean)
-        ASSERTION: validates serial numbers as true whereby its first three 
-                   digits are between 100 to 200 (inclusive), and the last three 
+        ASSERTION: validates serial numbers as true whereby its first three
+                   digits are between 100 to 200 (inclusive), and the last three
                    digits are between 001 - 999 (inclusive), otherwise it will
                    validate them as false.
         ***********************************************************************/
         private boolean validateCylinders(int inCylinders)
         {
-            boolean isValid = false; 
+            boolean isValid = false;
 
             if(inCylinders >= 2 && inCylinders <= 20)
             {
-                isValid = true; 
+                isValid = true;
             }
             return isValid;
         }
@@ -172,7 +172,7 @@ public class engineClass
 
             cloneEngine = new engineClass(this.cylinders, this.fuel);
 
-            return cloneEngine; 
+            return cloneEngine;
         }
         /********************************************************************
         SUBMODULE: equals
@@ -184,7 +184,7 @@ public class engineClass
         public boolean equals(Object inObjct)
         {
             boolean isSame = false;
-            if(inObjct instanceof engineClass) 
+            if(inObjct instanceof engineClass)
             {
                 engineClass inEngine = (engineClass)inObjct;
                 isSame = fuel.equals(inEngine.getFuel()) &&
@@ -201,18 +201,18 @@ public class engineClass
         ********************************************************************/
         public String toString()
         {
-        
-            return("The engine has " +cylinders+ " cylinders, and it runs on " 
+
+            return("The engine has " +cylinders+ " cylinders, and it runs on "
                   +fuel+ " fuel.");
         }
         /********************************************************************
         SUBMODULE: toFileString
         IMPORT: none
         EXPORT: str (String)
-        ASSERTION: 
+        ASSERTION:
         ********************************************************************/
         public String toFileString()
         {
-            return("E, " +cylinders+ " ," +fuel+ "."); 
+            return("E, " +cylinders+ " ," +fuel+ ".");
         }
-    } 
+    }
