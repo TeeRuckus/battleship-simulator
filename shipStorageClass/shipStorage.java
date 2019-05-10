@@ -221,22 +221,22 @@ public class ShipStorage
         **********************************************************************/
         public SubMarine [] findDuplicateSubs() 
         {
-            /*this following pieces of code is going to differ from my psudo
-              code. I need to research and find out if there's such a thing as
-              dynamic sizing. So I am just going to set the maxium size of the
+            /*The multipilcation by 2 is done because it allows the 
+            duplicates array store the actual ship and it's dupilcate in 
+            the indexes next to each other and the programme only to
+            allowed to have 15 ships at time hence the maximum number of
+            duplicates you can have is 15. Therefore, double the orginal
+            amount is the maxiumum amount you can have. */
 
-              submarines and fighter jets multiplied by two because you're not
-              going to get more than that amount of duplicates */ 
-             SubMarine duplicates [] = new SubMarine 
-                                            [(MAX_CAP + MAX_CAP) * 2];
+            SubMarine duplicates [] = new SubMarine[MAX_CAP * 2];
             
-            for (int ii = 0 ;ii <  storeSubs.length ; ii++) 
+            for (int ii = 0 ;ii < MAX_CAP; ii++) 
             {
                 /*I am starting the looping variable at one because 1 don't
                  want the programme to store itself as a dupilcate, hence
                  it will search for objects after itself*/
 
-                for(int jj = 1 ; jj <  storeSubs.length() ;jj++)
+                for(int jj = 1 ; jj < MAX_CAP ;jj++)
                 {
                     if(storeSubs[ii].equals(storeSubs[jj])) 
                     {
@@ -257,16 +257,10 @@ public class ShipStorage
         **********************************************************************/
         public FighterJet[] findDuplicateJets() 
         {
-            /*this following pieces of code is going to differ from my psudo
-              code. I need to research and find out if there's such a thing as
-              dynamic sizing. So I am just going to set the maxium size of the
-              submarines and fighter jets multiplied by two because you're not
-              going to get more than that amount of duplicates */ 
 
-            FighterJet duplicates [] = new FighterJet 
-                                            [(MAX_CAP + MAX_CAP) * 2]; 
+            FighterJet duplicates [] = new FighterJet[MAX_CAP * 2]; 
             
-            for (int ii = 0 ;ii < storeJets.length() ;ii++) 
+            for (int ii = 0 ;ii < MAX_CAP; ii++) 
             {
                  /*I am starting the looping variable at one because I don't
                  want the programme to store itself as a dupilcate, hence
@@ -284,19 +278,6 @@ public class ShipStorage
                 return duplicates;
             }
         }
-
-        /**********************************************************************
-        SUBMODULE: findDuplicates
-        IMPORTS: none
-        EXPORT: dupilicates (object)
-        ASSERTION
-        **********************************************************************/
-        /*
-        ALGORITHM:
-
-        (object) duplicates [] = SIZE of DYNAMIC SIZING
-        */
-
         /**********************************************************************
         SUBMODULE: calcTolShips
         IMPORT: countSubs (integer), countJets (integer)
@@ -310,61 +291,7 @@ public class ShipStorage
 
         //PRIVATE SUBMODULES:
 
-        /**********************************************************************
-        SUBMODULE: validateStoreSubs
-        IMPORT: inStoreSub (SubMarine) 
-        EXPORT: isValid (Boolean)
-        ASSERTION: If the address of inStoreSubs is an array of MAX_CAP elements,
-                   and it's a SubMarine object it's a valid inStoreSubs
-        **********************************************************************/
-        private boolean validateStoreSubs(SubMarine inStoreSub)
-        {
-            boolean isValid = false;
-            if (inStoreSub instanceof SubMarine) 
-            {
-                if (inStoreObjct.length() == MAX_CAP)
-                {
-                    isValid = true;
-                }
-                else
-                {
-                    System.out.println("ERROR: incorrect storage capacity");
-                }
-            }
-            else
-            {
-                System.out.println("ERROR: not a submarine");
-            }
-            return isValid; 
-        }
-
-        /**********************************************************************
-        SUBMODULE: validateStoreJets
-        IMPORT: inStoreJets (FighterJet)
-        EXPORT: isValid (Boolean)
-        ASSERTION: if the address of inStoreJets is an array of MAX_CAP elements,
-                   and it's fighteJet object it's a valid inStoreJet
-        **********************************************************************/
-        private boolean validateStoreJets(FighterJet inStoreJets)
-        {
-            boolean isValid = false;
-            if (inStoreJets instanceof FighterJet) 
-            {
-                if (inStoreJets.length() == MAX_CAP) 
-                {
-                    isValid = true;
-                }
-                else
-                {
-                    System.out.println("ERROR: incorrect storage capacity");
-                }
-            }
-            else
-            {
-                System.out.println("ERROR: not a fighter jet");
-            }
-            return isValid;
-        }
+        
         /**********************************************************************
         SUBMODULE: validateSub
         IMPORT: inObjct (subMarine object)
@@ -376,11 +303,13 @@ public class ShipStorage
             boolean isValid = false;
             if (inObjct instanceof SubMarine) 
             {
-                isValid = true;
-            }
-            else
-            {
-                System.out.println("ERROR: not a submarine");
+                if (inObjct != null) 
+                {
+                    if (checkStoreSubCapactity())
+                    {
+                        isValid = true;
+                    }
+                }
             }
             return isValid;
         }
@@ -396,13 +325,60 @@ public class ShipStorage
             boolean isValid = false;
             if (inObjct instanceof FighterJet) 
             {
-                isValid = true;
-            }
-            else
-            {
-                System.out.println("ERROR: not a fighter jet");
+                if (inObjct != null)
+                {
+                    if(checkStoreJetCapacity())
+                    {
+                        isValid = true;
+                    }
+                }
             }
             return isValid;
+        }
+        /**********************************************************************
+        SUBMODULE: checkStoreSubsCapacity
+        IMPORT: none
+        EXPORT: spaceAvail (Boolean)
+        PURPOSE: to check if there's available space in the storeSub array so 
+                 another ship can be added to the array
+        **********************************************************************/
+        public boolean checkStoreSubCapacity()
+        {
+            // I don't think this part of the code is correct.
+            boolean spaceAvail = false
+            try 
+            {
+                if (storeSubs([countSubs]) == null)
+                    spaceAvail = true; 
+                    countSubs++;
+            }
+            catch(IndexOutOfBoundsException err)
+            {
+            }
+        }
+
+        /**********************************************************************
+        SUBMODULE: checkStoreJetsCapacity
+        IMPORT: none 
+        EXPORT: spaceAvail  (Boolean) 
+        PURPOS: to check if there's available sapce in the storeJets array so 
+            another ship can be added to the array 
+        **********************************************************************/
+        public boolean checkStoreJetsCapacity()
+        {         
+            boolean spaceAvail = true
+            try
+            {
+                if (storeJets[countJets] is equal to nothing) THEN
+                {
+                    spaceAvail = true; 
+                    countJets++;
+                }
+            }
+            catch(IndexOutOfBoundsException err)
+            {
+            }
+
         }
         //OTHER METHODS:
 
@@ -419,28 +395,6 @@ public class ShipStorage
             cloneShipStorage = new ShipStorage(this.countSubs, this.countJets,
                                               this.storeSubs, this.storeJets);
             return cloneShipStorage;
-        }
-
-        /**********************************************************************
-        SUBMODULE: equals
-        IMPORT: inObjct (object)
-        EXPORT: isSame (boolean)
-        ASSERTION: two ship storages are the same if they can store submarines and
-                   jets and they have the same storage capacity with the same
-                   storage distrubution
-        **********************************************************************/
-        public boolean equals(Object inObjct)
-        {
-            boolean isSame = false;
-            if (inObjct instanceof ShipStorage) 
-            {
-                ShipStorage inShipStorage = (ShipStorage)inObjct;
-                isSame = ((storeSubs.length()).equals(
-                            inShipStorage.getStoreSubs()) && 
-                            (storeJets.length()).equals(
-                            inShipStorage.getStoreJets()));
-            }
-            return isSame;
         }
         /**********************************************************************
         SUBODULE: equalsArray
@@ -474,10 +428,6 @@ public class ShipStorage
                 System.out.println("ERROR: the array objects are not the same");
             }
         }
-
-     /************************ I might move this type of code straight
-    to the user Intefac ****************************************************/
-
         /**********************************************************************
         SUBMODULE: toStringSubArr
         IMPORT: none
@@ -498,12 +448,12 @@ public class ShipStorage
                 return str;
         }
         /**********************************************************************
-        SUBMODULE: toStringJet
+        SUBMODULE: toStringJetArr
         IMPORT: none
         EXPORT: str [] (address of str in memory of the data type string)
         ASSERTION:
         **********************************************************************/
-        public String [] toStringJet()
+        public String [] toStringJetArr()
         {
             String str [] = new String [MAX_CAP];
 
@@ -516,7 +466,6 @@ public class ShipStorage
             }
             return str;
         }
-    /*************************end of useless code ****************************/
         /**********************************************************************
         SUBMODULE: toStringArr
         IMPORT: none
@@ -530,7 +479,7 @@ public class ShipStorage
              (i.e. how many ships they're in total. How many jets they're,
              and how many submarines they're)*/
 
-            int tolShipsInfo = MAX_CAP + MAX_CAP + 1;
+            int tolShipsInfo = MAX_CAP * 2 + 1;
 
             String strArr [] = new String [tolShipsInfo];
 

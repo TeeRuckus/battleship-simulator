@@ -453,13 +453,17 @@ SUBMODULE: loadShips
 
     ALGORITHM:
         
-        OUTPUT: "Please input a fileName to laod ships from "
+        OUTPUT: "Please input a fileName to load ships: "
         INPUT: fileName (String)
-        FileManger.writeFile(fileName) 
+        FileManger.readFile(fileName) 
 
 SUBMODULE: saveShips
     IMPORT: fileName (String)
     EXPORT: none
+
+    ALGORITHM:
+        
+        OUTPUT: "Please inpu  a file
 
 SUBMODULE: errorMssg
     IMPORT: mssg(String)

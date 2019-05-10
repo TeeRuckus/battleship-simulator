@@ -30,9 +30,7 @@ Defualt:
         storeSubs[] := an EMPTY array of SIZE MAX_CAP
         storeJets[] := an EMPTY array of SIZE MAX_CAP
 
-ACCESSORS
-
-
+COMMENT: I don't think you need getSub or getJet
 
 SUBMODULE: getSub (SubMarine object)
     IMPORT: none
@@ -61,8 +59,6 @@ SUBMODULE: getjet (fighterJetClass Object)
                  subtract one to get the last stored jet
 
         jet := storeJet[countJets - 1]
-
-MUTATORS:
 
 SUBMODULE: addShipSubmarine 
     IMPORT: inSub (SubMarine object) , countSubs (Integer)
@@ -203,8 +199,7 @@ SUBMODULE: findDuplicateSubs
                      want the programme to store itself as a dupilcate, hence
                      it will search for objects after itself
 
-            FOR((integer) jj := 1 TO LENGTH of storeSub (exclusive)
-                                 CHANGEBY 1) THEN
+            FOR((integer) jj := 1 TO MAX_CAP (exclusive) CHANGEBY 1) THEN
                 IF (storeSubs[ii].equals(storeSubs[jj])) THEN
                     duplicate[ii] := storeSubs[ii]
                     duplicate[jj] := storeSubs[jj]
@@ -269,9 +264,9 @@ SUBMODULE: validateJet
     ALGORITHM:
 
         isValid := FALSE
-        IF (inObjct ISA SubMarine object) THEN 
+        IF (inObjct ISA FighterJet object) THEN 
             IF(inObjct does not equal to null) THEN
-                IF (checkStoreSubCapacity <- none) THEN
+                IF (checkStoreJetCapacity <- none) THEN
                     isValid := TRUE
                 END IF
             END IF
@@ -287,7 +282,7 @@ SUBMODULE: checkStoreSubsCapacity
         
         spaceAvail := FALSE
         TRY 
-            IF (storeSubs[countSubs]) is equal to nothing) THEN
+            IF (storeSubs([countSubs]) is equal to nothing) THEN
                 spaceAvail := TRUE
                 countSubs := countSubs + 1 
             END IF
@@ -372,9 +367,6 @@ SUBMODULE: toStringJetArr
 
         str [] := SIZE of MAX_CAP
 
-        COMMENT: I am subtracting one, so the for loop doesn't try to search
-                 outside the indexs of the str array as its indes starts at 0
-
        FOR ((Integer) ii = 0 TO MAX_CAP (exclusive) CHANGEBY 1) THEN
             str [ii] := storeSubs[ii].toString
         END FOR
@@ -391,9 +383,9 @@ SUBMODULE: toStringArr
                  (i.e. how many ships they're in total. How many jets they're,
                  and how many submarines they're)
 
-        (Integer) tolShipsInfo := MAX_CAP + MAXSUBJET + 1
+        (Integer) tolShipsInfo := MAX_CAP * 2 + 1
 
-        (String) strarr [] := SIZE of tolShipInfo
+        (String) strArr [] := SIZE of tolShipInfo
         
         shipNum := calcTolShips
 
