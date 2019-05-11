@@ -23,7 +23,7 @@ SUMBODULE: readFile
             COMMENT: I am miultiplying MAXCAP by 2 because there's 2 storage 
                      units of for submarines and jets.
 
-            WHILE (NOT EOF  and lineNum <= shipStorage.MAXCAP * 2) THEN
+            WHILE (line is not empty and lineNum <= shipStorage.MAXCAP * 2) THEN
                     lineNum <- lineNum + 1 
                     processLine <- line
         
@@ -43,8 +43,7 @@ SUMBODULE: readFile
         END TRY CATCH 
 
 SUBMODULE: writeFile
-    IMPORT: fileName (String), subContents[] (SubMarine Objects),
-            jetContents[] (fighterJet object 
+    IMPORT: fileName (String)
     EXPORT: none
     PURPOSE: to write the contents in the submarine object to a file
 
@@ -52,16 +51,14 @@ SUBMODULE: writeFile
 
 
     ALGORITHM
-    
-    theFile <- OPEN fileName FOR writing
-
         TRY
-            FOR ((interger)ii := 0 TO LENGTH of subContents - 1 CHANGEBY 1) THEN
-                OUTPUT TO FILE: subContets[ii].toString
+            theFile <- OPEN fileName FOR writing
+            FOR ((interger)ii := 0 TO ShipStorage.MAX_CAP  CHANGEBY 1) THEN
+                OUTPUT TO FILE: ShipStorage.storageUnit[ii].toFileString()
             END FOR 
 
-            FOR ((interger) ii := 0 TO LENGTH of jetContents - 1 CHANGEBY 1) THEN
-                OUTPUT TO FILE:  jetContents[ii].toString
+            FOR ((interger) ii := 0 TO LENGTH ShipStorage.MAX_CAP CHANGEBY 1) THEN
+                OUTPUT TO FILE: shipStorage.storageUnit[ii].toFileString()
             END FOR 
             
             CLOSE fileName 
