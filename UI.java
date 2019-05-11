@@ -37,7 +37,7 @@ public class UI
         IMPORT: mssg (String)
         EXPORT: userOp (int)
         PURPOSE: to allow the user to select one of the options listed 
-                 in the menu using an integer.
+                 in the menu using an int.
         **********************************************************************/
         public int inputIntMenu(String mssg)
         {
@@ -54,7 +54,7 @@ public class UI
                 }
                 catch(InputMismatchException err) 
                 {
-                    System.out.println("Please input an integer");
+                    System.out.println("Please input an int");
 
                     /*I am inputing nothing to clear the buffer of the
                     probalmatic problem, and to avoid the catch loop 
@@ -174,7 +174,7 @@ public class UI
         /**********************************************************************
         SUBMODULE: getUserCylinders
         IMPORT: none
-        EXPORT: cylinders (integer) 
+        EXPORT: cylinders (int) 
         PURPOSE: to get the cylinders from the user and to validate it
         **********************************************************************/
         public int getUserCylinders()
@@ -488,93 +488,126 @@ public class UI
         EXPORT: none
         PURPOSE:
         **********************************************************************/
-        public void viewShip() 
+        /*public void viewShip() 
         {
+            int userOp;
             do
-                (int) userOp = inputIntMenu <- ("1. View all ships
-                                                      2. View submarines only
-                                                      3. View fighter jets 
-                                                        only ")
-                if (userOp doesn't equal to 1 or 2 or 3 ) THEN
-                    System.out.println( "Pleae enter an option which is in the following meanu:
-                END  if
-            while (userOp doesn't equal 1 or 2 or 3)
+            {
+                userOp = inputIntMenu("1. View all ships\n"+
+                                          "2. View submarines only\n"+
+                                          "3. View fighter jets only ");
+                if ((userOp != 1) ||(userOp != 2) || (userOp != 3)) 
+                {
+                    System.out.println("Pleae enter an option which is in "+
+                                       "the following menu.\n");
+                }
+            }while ((userOp != 1) || (userOp != 2) || (userOp != 3));
             
-            switch(userOp
-                1: 
-                    viewSubs()
-                    viewJets <-none
-                2: 
-                    viewSubs()    
-                3:
-                    viewJets()
+            switch(userOp)
+            {
+               case 1: 
+                    viewSubs();
+                    viewJets();
+                    break;
+               case 2: 
+                    viewSubs();   
+                    break;
+               case 3:
+                    viewJets();
+                    break;
+            }
+        }*/
+
+        /**********************************************************************
+        SUBMPODULE: viewSubs
+        IMPORT: none
+        EXPORT: none
+        PURPOSE:
+        **********************************************************************/
+        public void viewSubs()
+        {
+            String [] shipStrs = new String [ShipStorage.MAX_CAP];
+            shipStrs = storageUnit.toStringSubArr();
+
+            for(int ii = 0; ii < ShipStorage.MAX_CAP; ii++)  
+            {
+                System.out.println(shipStrs[ii]);
+            }
         }
+        /**********************************************************************
+        SUBMODULE: viewJets
+        IMPORT: none
+        EXPORT: none
+        PURPOSE:
+        **********************************************************************/
+        public void viewJets()
+        {
+            String [] shipStrs = new String [ShipStorage.MAX_CAP];
+            shipStrs = storageUnit.toStringJetArr();
+            for(int ii = 0; ii < ShipStorage.MAX_CAP; ii++) 
+            {
+                System.out.println(shipStrs);
+            }
+        }
+        /**********************************************************************
+        SUBMODULE: duplicatesMenu 
+        IMPORT: none
+        EXPROT: none
+        PURPOSE
+        **********************************************************************/
+        public void duplicatesMenu()
+        {
+            int userOp;
+            do 
+            {
+                userOp = inputIntMenu("1. Find all duplicates\n"+
+                                      "2. Find submarine duplicates only\n"+
+                                      "3. Find fighter Jet duplicates only");
+                if ((userOp != 1) ||(userOp != 2) ||(userOp != 3)) 
+                {
+                    System.out.println("please input what is in the "+
+                                       "menu below: ");
+                }
+            }while((userOp != 1) || (userOp != 2) || (userOp != 3));
 
-SUBMPODULE: viewSubs
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
+            switch(userOp)
+            {
+               case 1:
+                    displaySubDuplicates();
+                    displayJetDuplicates();              
+                    break;
+               case 2:
+                    displaySubDuplicates();
+                    break;
+               case 3:
+                    displayJetDuplicates();
+                    break;
+            }
+        }
+        /**********************************************************************
+        SUBMODULE: displaySubDuplicates:
+        IMPORT: none
+        EXPORT: none
+        PURPOSE:
+        **********************************************************************/
+        public void displaySubDuplicates()
+        {
+            SubMarine[] duplicates = new SubMarine[storageUnit.MAX_CAP * 2];
+            duplicates = storageUnit.findDuplicateSubs();
+            System.out.println("The duplicates pairs are as follows");
 
-    
-
-        FOR ((int)ii TO shipStorage.MAXCAP (exclusive) CHANGEBY 1) THEN 
-            System.out.println(: shipStorage.toStringSubArr[ii]
-        END FOR
-
-SUBMODULE: viewJets
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
-
-    ALGOTITHM:
-        
-        FOR ((int) ii TO shipStorage.MAXCAP (exclusive) CHANGEBY 1) THEN
-            System.out.println(: shipStorage.toStringJetArr[ii]
-        END FOR
-
-SUBMODULE: duplicatesMenu 
-    IMPORT: none
-    EXPROT: none
-    PURPOSE
-
-    
-        do 
-            (int) userOp = inputIntMenu <- ("1. Find all duplicates
-                                                  2. Find submarine 
-                                                     duplicates only
-                                                  3. Find fighter Jet
-                                                     duplicates only")
-            if (userOp doesn't equal to 1 or 2 or 3) THEN
-                System.out.println(: "please input what is in the menu below: "
-            END if
-        while (userOp doesn't equal to 1 or 2 or 3 ) 
-
-        case userOp
-            1:
-                displaySubDuplicates()
-                displayJetDuplicates()              
-            2:
-                displaySubDuplicates()
-            3:
-                displayJetDuplicates()
-
-SUBMODULE: displaySubDuplicates:
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
-
-    
-
-        System.out.println(: "The duplicates pairs are as follows"
-
-        FOR ((integer) ii = 0 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
-            System.out.println(: "SubMarine [ii] " 
-                    +shipStorage.findDUplcateSub[ii].toString
-            FOR((integer)ii = 1 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
-                System.out.println(: "SubMarine duplicate [ii-1] "
-                        +shipStorage.findDuplicateSub[ii+1]
-        END FOR
-
+            for(int ii = 0; ii < ShipStorage.MAX_CAP * 2; ii++)
+            {
+                System.out.println("SubMarine [ii]\n" +
+                                   duplicates[ii].toString());
+                for(int jj = 1; ii < ShipStorage.MAX_CAP * 2; jj++) 
+                {
+                    System.out.println("SubMarine duplicate [jj-1]\n" +
+                                        duplicates[jj+1].toString());
+                }
+            }
+        }
+/* 
 SUBMODULE: displayJetDuplicates: 
     IMPORT: none
     EXPORT: none
@@ -584,13 +617,13 @@ SUBMODULE: displayJetDuplicates:
 
         System.out.println(: "The duplicates pairs are as follows: "
 
-        FOR ((integer) ii = 0 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
+        for(((int) ii = 0; ii shipStorage.MAXCAP * 2; ii++1) 
             System.out.println(: "FighterJet[ii] "
                      +shipStorage.findDuplicateJet[ii].toStringJet+ 
-            FOR((integer)ii = 1 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
+            FOR((int)ii = 1; ii shipStorage.MAXCAP * 2; ii++1) 
                 System.out.println(: "FighterJet Duplicate [ii-1] "
                          +shipStorage.findDuplicateJet[ii+1]
-        END FOR
+        }
 
 SUBMODULE: destinationCheck
     IMPORT: none
@@ -626,7 +659,7 @@ SUBMODULE: errorMssg
     ASSERTION: returns the error message of the specific methods been called
 */
 
-    //METHODS COPIED FROM ANOTHER CLASS. THESE NEED TO BE DELETED
+    //METHODS COPIED FROM ANOTHER CLASS. THESE NEED; ii BE DELETED
  private boolean validateSerialNum(double inSerialNum)
         {
             int wholePart, decimalPart;
