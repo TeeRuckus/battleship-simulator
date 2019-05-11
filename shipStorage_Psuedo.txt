@@ -13,8 +13,8 @@ CLASS FIELDS:
 
     (Integer) countSubs
     (Integer) countJets
-    (ARRAY OF SubMarine object) storeSubs []
-    (ARRAY OF fighterJet object) storeJets []
+    (SubMarine object) storeSubs []
+    (fighterJet object) storeJets []
 
 COSTRUCTORS:
 
@@ -27,8 +27,42 @@ Defualt:
     ALGORITHM:
         countSubs := 0
         countJets := 0
-        storeSubs[] := an EMPTY array of SIZE MAX_CAP
-        storeJets[] := an EMPTY array of SIZE MAX_CAP
+        storeSubs[] := SIZE of MAX_CAP
+        storeJets[] := SIZE of MAX_CAP
+
+SUBMODULE: addShipSubmarine 
+    IMPORT: inSub (SubMarine object) , countSubs (Integer)
+    EXPORT: none
+    ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
+                storeSubs hasn't exceeded the MAX_CAP
+
+    ALGORITHM:
+
+        IF (validateSub <- inSub) THEN
+                storeSubs[countSubs] := inSub                      
+
+                COMMENT: I am incrementing countSub by 1, to go to the next
+                         vaccant index of the storeSub
+
+                countSubs := countSubs + 1
+        END IF
+
+SUBMODULE: addShipFighterJet
+    IMPORT: inJet (jetFighter object) , countJets (integer)
+    EXPORT: none
+    ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
+               storeSubs hasn't exceeded MAX_CAP
+
+    ALGORITHM:
+        IF (validateJet <- inJet) THEN
+                storeJets[countJets] := inJet
+
+                COMMENT: I am incemention countJets by 1, to go to the next
+                         vaccant index of the storeJets
+
+                countJets := countJets + 1
+        END IF 
+
 
 COMMENT: I don't think you need getSub or getJet
 
@@ -60,44 +94,6 @@ SUBMODULE: getjet (fighterJetClass Object)
 
         jet := storeJet[countJets - 1]
 
-SUBMODULE: addShipSubmarine 
-    IMPORT: inSub (SubMarine object) , countSubs (Integer)
-    EXPORT: none
-    ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
-                storeSubs hasn't exceeded the MAX_CAP
-
-    ALGORITHM:
-
-        IF (validateSub <- inSub) THEN
-                storeSubs[countSubs] := inSub                      
-
-                COMMENT: I am incrementing countSub by 1, to go to the next
-                         vaccant index of the storeSub
-
-                countSubs := countSubs + 1
-        END IF
-
-SUBMODULE: addShipFighterJet (this is the fighter jet version) -> we will 
-           change this when we do inheritance) 
-    IMPORT: inJet (jetFighter object) , countJets (integer)
-    EXPORT: none
-    ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
-               storeSubs hasn't exceeded MAX_CAP
-
-    ALGORITHM:
-        IF (validateJet <- inJet) THEN
-                storeJets[countJets] := inJet
-
-                COMMENT: I am incemention countJets by 1, to go to the next
-                         vaccant index of the storeJets
-
-                countJets := countJets + 1
-        ELSE
-            FAIL "ERROR: not a fighter jet"
-        END IF ELSE
-
-DOING METHODS:
-
 SUBMODULE: destinationCheckSub
     IMPORT: (integer) distance
     EXPORTS: (String) str 
@@ -109,21 +105,22 @@ SUBMODULE: destinationCheckSub
                  of comparison to other submarine objects withing the storeSubs
                  array. The 0 index sub is the most convient
 
-        (SubMarine Object) fastestSub := calcTravelTimeSub <- storeSubs[0]
+        (Real) fastestSubTime := calcTravelTimeSub <- (storeSubs[0],
+                                                                distance)
         
         COMMENT: I don't want the reference submarine of comparison, to comparew
                  by itself, as this is an ineffecient use of the machine's 
-                 resouces.
+                 resouces hence, I am starting the count variable at 1
 
         FOR((integer)ii := 1 TO MAX_CAP (exclusive) CHANGEBY 1) THEN 
-            
-                IF (calcTravelTimeSub <- storeSubs[ii],distance < 
-                    fastestSub) THEN
-                    fastestSub := storeSubs[ii]
+                (Real) compareSub := calcTravelTimeSub <- storeSubs[ii], 
+                                                            distance
+                IF (compareSub < fastestSubTime) THEN
+                    (SubMarine) fastestSub := storeSubs[ii]
                 END IF 
         END FOR 
         
-        str := fastestSub.toString
+        str := fastestSub.toString <- none
 
 SUBMODULE: calcTravelTimeSub
     IMPORT: inShip (Submarine Object), distance (Integer)
@@ -149,17 +146,17 @@ SUBMODULE: destinationCheckJet
                  of comparison to other jet objects withing the storeJets
                  array. The 0 index sub is the most convient
 
-        (FighterJet Object) fastestJet := calcTravelTimeJet <- storeJets[0]
-        
+        (Real) fastestJetTime := calcTravelTimeJet <- (storeJets[0],
+                                                                distance)
+
         COMMENT: I don't want the reference jet of comparison, to comparew
                  by itself, as this is an ineffecient use of the machine's 
                  resouces.
 
         FOR((integer)ii := 1 TO MAX_CAP (exclusive) CHANGEBY 1) THEN 
-            
-                IF (calcTravelTimeJet <- storeJets[ii],distance < 
-                    fastestJet) THEN
-                    fastestJet := storeJets[ii]
+                compareJet : calcTraveTimeJet <- storeJets[ii], distance
+                IF (compareJet < fastestJetTime) THEN
+                    (FighterJet) fastestJet := storeJets[ii]
                 END IF 
         END FOR 
         
@@ -229,14 +226,6 @@ SUBMODULE: findDuplicateJets
                 END IF
             END FOR
 
-SUBMODULE: calcTolShips
-    IMPORT: countSubs (integer), countJets (integer)
-    EXPORT: tolShips (integer)
-
-    ALGORITHM:
-
-        tolShips := countSubs + countJets 
-
 PRIVATE SUBMODULES:
 
 SUBMODULE: validateSub
@@ -249,7 +238,7 @@ SUBMODULE: validateSub
         isValid := FALSE
         IF (inObjct ISA SubMarine object) THEN
             IF (the inObjct doens't equal to null) THEN 
-                IF (checkStoreSubCapacity <- none) THEN
+                IF (countSubs < MAX_CAP) THEN
                     isValid := TRUE
                 ELSE
                     FAIL ("ERROR: Not enough storage in the submarine storage")
@@ -272,7 +261,7 @@ SUBMODULE: validateJet
         isValid := FALSE
         IF (inObjct ISA FighterJet object) THEN 
             IF(inObjct does not equal to null) THEN
-                IF (checkStoreJetCapacity <- none) THEN
+                IF (countJets < MAX_CAP) THEN
                     isValid := TRUE
                 ELSE 
                     FAIL ("ERROR: not enough storage") 
@@ -283,38 +272,6 @@ SUBMODULE: validateJet
                 FAIL ("ERROR: not a fighterjet object") 
         END IF ELSE
               
-SUBMODULE: checkStoreSubsCapacity
-    IMPORT: none
-    EXPORT: spaceAvail (Boolean)
-    PURPOSE: to check if there's available space in the storeSub array so 
-             another ship can be added to the array
-    
-    ALGORITHM:
-        
-        spaceAvail := FALSE
-        TRY 
-            IF (storeSubs[countSubs] is equal to nothing) THEN
-                spaceAvail := TRUE
-                countSubs := countSubs + 1 
-            END IF
-        CATCH IndexOutOfBoundsException
-
-SUBMODULE: checkStoreJetsCapacity
-    IMPORT: none 
-    EXPORT: spaceAvail  (Boolean) 
-    PURPOS: to check if there's available sapce in the storeJets array so 
-            another ship can be added to the array 
-
-    ALGORITHM: 
-        
-            spaceAvail := TRUE
-            TRY
-                IF (storeJets[countJets] is equal to nothing) THEN
-                    spaceAvail := TRUE
-                    countJets := countJets + 1 
-                END IF
-            CATCH IndexOutOfBoundsException
-
 OTHER METHODS:
 
 SUBMODULE: clone
@@ -331,13 +288,13 @@ SUBMODULE: clone
 
 SUBODULE: equalsArray
     IMPORT: arrayOne (Object), arrayTwo (object Two)
-    EXPORT: isValid (Boolean)
+    EXPORT: isSame (boolean)
     ASSERTION: if two array objects are the same class type and length, and have
                the same objects in the array and it's valid
 
     ALGORITHM:
 
-        isValid := FALSE
+        COMMENT: this algorithm was adapted from worksheet 9 of OOPD
 
         IF (length of arrayOne is EQUAL to length of arrayTwo) THEN
             isValid :=   TRUE
@@ -352,9 +309,7 @@ SUBODULE: equalsArray
                                                    (arrayTwo[compareElements])
                 compareElements := compareElements + 1
             WHILE compareElements < LENGTH of arrayOne
-        ELSE
-            OUTPUT: "ERROR: the array objects are not the same"
-        END IF ELSE
+        END IF
 
 SUBMODULE: toStringSubArr
     IMPORT: none
@@ -398,7 +353,7 @@ SUBMODULE: toStringArr
 
         (String) strArr [] := SIZE of tolShipInfo
         
-        shipNum := calcTolShips
+        shipNum := countSubs + countJets
 
         str [0] := "The hanger contains " +shipNum+ " ships. There's "
                     +countSubs+ " submarines, and there's " +countJets+

@@ -2,7 +2,7 @@ CLASS: UI
 
 CLASS FIELDS: 
     
-    shipStorage (shipStorage object)
+    storageUnit (shipStorage object)
 
 COSTRUCTORS:
 
@@ -13,7 +13,7 @@ Defualt:
 
     AGORITHM:
 
-        create a new shipStorage object 
+        create a new shipStorage object as storageUnit
 
 METHODS 
 
@@ -24,6 +24,7 @@ SUBMODULE: inputIntMenu
              using an integer.
 
     ALGORITHM:
+        (Integer) userOp := 0
         (Boolean) isValid := FALSE
         DO
             TRY
@@ -241,7 +242,7 @@ SUBMODULE: addUserShips
         cylinders := getUserCylinders <- none 
 
         CASE shipType
-            'S':'s"
+            'S':'s'
                 hull := getUserHull <- none
                 maxDepth := getUserMaxDepth <- none
                 FileManger.createShipObjcts <- shipType, year, cylinders, fuel
