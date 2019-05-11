@@ -39,43 +39,9 @@ public class ShipStorage
             storeJets = new FighterJet [MAX_CAP];
         }
     
-       //ACCESSORS
-
-       /**********************************************************************
-        SUBMODULE: getLastSub (SubMarine Object) 
-        IMPORT: none
-        EXOPORT: sub (subMarine Object)
-        **********************************************************************/
-        public SubMarine getSub()
-        {
-            /* I have subtracted one because the other constructors (i.e.
-            alternate constructor) will move the index  of the count
-            variable to the next available index, hence you have to
-            subtract one to get the last stored submarine*/
-		
-            SubMarine sub; 
-            return sub = storeSubs[countSubs - 1]; 
-        } 
+        //DOING METHODS
 
         /**********************************************************************
-        SUBMODULE: getLastjet (FighterJet Object)
-        IMPORT: none
-        EXPORT: jet (fighterJet object)
-        **********************************************************************/
-        public FighterJet getLastJet()
-        {
-
-             /*I have subtracted one because the other constructors (i.e.
-             alternate constructor) will move the index of the count
-             variable to the next available index, hence you have to
-             subtract one to get the last stored jet*/
-            FighterJet jet; 
-            return jet = storeJets[countJets - 1];
-        }
-
-        //MUTATORS:
-
-       /**********************************************************************
         SUBMODULE: addShipSub
         IMPORT: inSub (subMarine object) , countSubs (int)
         EXPORT: none
@@ -122,7 +88,38 @@ public class ShipStorage
             }
         }
 
-        //DOING METHODS:
+
+       /**********************************************************************
+        SUBMODULE: getLastSub (SubMarine Object) 
+        IMPORT: none
+        EXOPORT: sub (subMarine Object)
+        **********************************************************************/
+        public SubMarine getSub()
+        {
+            /* I have subtracted one because the other constructors (i.e.
+            alternate constructor) will move the index  of the count
+            variable to the next available index, hence you have to
+            subtract one to get the last stored submarine*/
+		
+            SubMarine sub; 
+            return sub = storeSubs[countSubs - 1]; 
+        } 
+
+        /**********************************************************************
+        SUBMODULE: getLastjet (FighterJet Object)
+        IMPORT: none
+        EXPORT: jet (fighterJet object)
+        **********************************************************************/
+        public FighterJet getLastJet()
+        {
+
+             /*I have subtracted one because the other constructors (i.e.
+             alternate constructor) will move the index of the count
+             variable to the next available index, hence you have to
+             subtract one to get the last stored jet*/
+            FighterJet jet; 
+            return jet = storeJets[countJets - 1];
+        }
 
         /**********************************************************************
         SUBMODULE: destinationCheckSub
@@ -132,13 +129,14 @@ public class ShipStorage
         
         public String destinationCheckSub(int distance) 
         {
+            double fastestSubTime, compareSub;
+            SubMarine fastestSub; 
             
              /*I am setting up a submarine object to set up a reference point
              of comparison to other submarine objects withing the storeSubs
                      array. The 0 index sub is the most convient*/
     
-            double fastestSubTime = calcTravelTimeSub(storeSubs[0]);
-            SubMarine fastestSub; 
+            fastestSubTime = calcTravelTimeSub(storeSubs[0], distance);
         
             /*I don't want the reference submarine of comparison, to comparew
             by itself, as this is an ineffecient use of the machine's 
@@ -146,13 +144,14 @@ public class ShipStorage
         
             for(int ii = 1; ii < MAX_CAP; ii++)
             {
-                if(calcTravelTimeSub(storeSubs[ii],distance) < fastestSub)
+                compareSub = calcTravelTimeSub(storeSubs[ii],distance);
+                if(compareSub < fastestSubTime)
                 {
-                    fastesSub = storeSubs[ii];
+                    fastestSub = storeSubs[ii];
                 } 
             }
             
-            return fastestSub.toString;
+            return fastestSub.toString(); 
         }
         /**********************************************************************
         SUBMODULE: calcTravelTimeSub
@@ -177,14 +176,16 @@ public class ShipStorage
         EXPORTS: (String) str 
         PURPOSE:
         **********************************************************************/
-        public int destinationCheckJet(int distance)
+        public String destinationCheckJet(int distance)
         {
+            double fastestJetTime, compareJet;
+            FighterJet fastestJet;
         
             /*I am setting up a submarine object to set up a reference point
             of comparison to other jet objects withing the storeJets
             array. The 0 index sub is the most convient*/
 
-            FighterJet fastestJet = calcTravelTimeJet(storeJets[0]);
+            fastestJetTime = calcTravelTimeJet(storeJets[0], distance);
             
             /*I don't want the reference jet of comparison, to comparew
             by itself, as this is an ineffecient use of the machine's 
@@ -192,25 +193,27 @@ public class ShipStorage
             
             for (int ii = 1; ii < MAX_CAP; ii++)                 
             {
-                    if (calcTravelTimeJet(storeJets[ii],distance) < fastestJet) 
-                    {
-                        fastestJet = storeJets[ii];
-                    }
+                compareJet = calcTravelTimeJet(storeJets[ii],distance);
+                if (compareJet < fastestJetTime) 
+                {
+                    fastestJet = storeJets[ii];
+                }
             }
-            return fastestJet.toString; 
+            return fastestJet.toString();
         }
 
         /**********************************************************************
-        SUBMODULE: calcTravelTimeJets
+        SUBMODULE: calcTravelTimeJet
         IMPORT:inShip (fighterJet object), (Integer) distance
         EXPORT: timeHours (Real) 
         PURPOSE: is to calculate the tracel time of the fighter jet in hours
         **********************************************************************/
-        public double calcTracvelTimeJets(FighterJet inShip, 
+        public double calcTravelTimeJet(FighterJet inShip, 
                                                   int distance)
         {
             double denom, timeHours;
-            denom = inShip.getWingSpan * (double)inShip.getCylinders * 150.00;
+            denom = inShip.getWingSpan() * (double)inShip.getCylinders() * 
+                                                                        150.00;
             timeHours = (double)distance / denom;
         }
 
@@ -241,13 +244,13 @@ public class ShipStorage
                 {
                     if(storeSubs[ii].equals(storeSubs[jj])) 
                     {
-                        duplicates[ii] = storeSubs;
+                        duplicates[ii] = storeSubs[ii];
                         duplicates[jj] = storeSubs[jj];
                     }
                 }
              }
             
-            return duplicate; 
+            return duplicates; 
         }
 
         /**********************************************************************
@@ -267,11 +270,11 @@ public class ShipStorage
                  want the programme to store itself as a dupilcate, hence
                  it will search for objects after itself*/
 
-                for(int jj = 1 ; jj < storeJets.length(); jj++) 
+                for(int jj = 1 ; jj < MAX_CAP; jj++) 
                 {
                     if (storeJets[ii].equals(storeJets[jj])) 
                     { 
-                        duplicates[ii] = storeJets;
+                        duplicates[ii] = storeJets[ii]; 
                         duplicates[jj] = storeJets[jj];
                     }
                 }
@@ -279,17 +282,6 @@ public class ShipStorage
                 return duplicates;
             }
         }
-        /**********************************************************************
-        SUBMODULE: calcTolShips
-        IMPORT: countSubs (integer), countJets (integer)
-        EXPORT: tolShips (integer) 
-        **********************************************************************/
-        public int calcTolShips(int countSubs, int countJets)
-        {
-            int tolShips; 
-            return tolShips = countSubs + countJets; 
-        }
-
         //PRIVATE SUBMODULES:
 
         
@@ -306,7 +298,7 @@ public class ShipStorage
             {
                 if (inObjct != null) 
                 {
-                    if (checkStoreSubCapactity())
+                    if (countSubs < MAX_CAP)
                     {
                         isValid = true;
                     }
@@ -342,7 +334,7 @@ public class ShipStorage
             {
                 if (inObjct != null)
                 {
-                    if(checkStoreJetCapacity())
+                    if(countJets < MAX_CAP)
                     {
                         isValid = true;
                     }
@@ -365,51 +357,7 @@ public class ShipStorage
             }
             return isValid;
         }
-        /**********************************************************************
-        SUBMODULE: checkStoreSubsCapacity
-        IMPORT: none
-        EXPORT: spaceAvail (Boolean)
-        PURPOSE: to check if there's available space in the storeSub array so 
-                 another ship can be added to the array
-        **********************************************************************/
-        public boolean checkStoreSubCapacity()
-        {
-            // I don't think this part of the code is correct.
-            boolean spaceAvail = false;
-            try 
-            {
-                if (storeSubs[countSubs] == null)
-                    spaceAvail = true; 
-                    countSubs++;
-            }
-            catch(IndexOutOfBoundsException err)
-            {
-            }
-        }
-
-        /**********************************************************************
-        SUBMODULE: checkStoreJetsCapacity
-        IMPORT: none 
-        EXPORT: spaceAvail  (Boolean) 
-        PURPOS: to check if there's available sapce in the storeJets array so 
-            another ship can be added to the array 
-        **********************************************************************/
-        public boolean checkStoreJetsCapacity()
-        {         
-            boolean spaceAvail = true;
-            try
-            {
-                if (storeJets[countJets] == null) 
-                {
-                    spaceAvail = true; 
-                    countJets++;
-                }
-            }
-            catch(IndexOutOfBoundsException err)
-            {
-            }
-
-        }
+        
         //OTHER METHODS:
 
         /**********************************************************************
@@ -418,29 +366,51 @@ public class ShipStorage
         EXPORT: cloneShipStorage (Object)
         ASSERTION: returns a cloned object of the current object
         **********************************************************************/
-        public ShipStorage clone()
+        /*public ShipStorage clone()
         {
             ShipStorage cloneShipStorage;
         
             cloneShipStorage = new ShipStorage(this.countSubs, this.countJets,
                                               this.storeSubs, this.storeJets);
             return cloneShipStorage;
-        }
+        }*/
+        /**********************************************************************
+        SUBMODULE: equals
+        IMPORT: inObjct (object)
+        EXPORT: isSame (boolean)
+        ASSERTION: two ship storages are the same if they can store submarines and
+                   jets and they have the same storage capacity with the same
+                   storage distrubution
+        **********************************************************************/
+        /*
+        public boolean equals (Object inObjct)
+        {
+            isSame = false;
+            if (inObj instanceof ShipStorage) 
+            {
+                inShipStorage = (ShipStorage) inObjct;
+                isSame = ((storeSubs.length()).equals(
+                            inShipStorage.getStoreSubs()) && 
+                            (storeJets.length()).equals(
+                            inShipStorage.getStoreJets()));
+            }
+            return isSame;
+        }*/
         /**********************************************************************
         SUBODULE: equalsArray
         IMPORT: arrayOne (Object), arrayTwo (object Two)
         EXPORT: isValid (Boolean)
-        ASSERTION: if two array objects are the same class type and length, and have
-                   the same objects in the array and it's valid
+        ASSERTION: if two array objects are the same class type and length, 
+                   and have the same objects in the array and it's valid.
         **********************************************************************/
         public boolean equalsArr(Object[] arrayOne, Object[] arrayTwo)
         {
-            boolean isValid = false;
 
-            if (arrayOne.length() ==  arrayTwo.length()) 
+            /* this code was adapted from worksheet 9 (REFERENCE PROPERLY) */
+            boolean isSame = false;
+
+            if (arrayOne.length ==  arrayTwo.length) 
             {
-                isValid =   true;
-
                  /*searching through both arrays to ensure that they have
                  the same contents in the array*/
 
@@ -451,12 +421,9 @@ public class ShipStorage
                     isSame = arrayOne[compareElements].equals(
                                     arrayTwo[compareElements]);
                     compareElements++;
-                }while(compareElements < arrayOne.length());
+                }while(compareElements < arrayOne.length);
             }
-            else
-            {
-                System.out.println("ERROR: the array objects are not the same");
-            }
+            return isSame; 
         }
         /**********************************************************************
         SUBMODULE: toStringSubArr
@@ -504,16 +471,17 @@ public class ShipStorage
         **********************************************************************/
         public String[] toStringArr() 
         {
+            int tolShipsInfo, shipNum;
              /*I am adding an extra 1 to tolShipsInfo. Because, I want an
              extra index to store the summary of the ship storage units
              (i.e. how many ships they're in total. How many jets they're,
              and how many submarines they're)*/
 
-            int tolShipsInfo = MAX_CAP * 2 + 1;
+            tolShipsInfo = MAX_CAP * 2 + 1;
 
             String strArr [] = new String [tolShipsInfo];
 
-            shipNum = calcTolShips(); 
+            shipNum = countSubs + countJets; 
 
             strArr [0] = "The hanger contains " +shipNum+ " ships. There's "+
                         +countSubs+ " submarines, and there's " +countJets+
