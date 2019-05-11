@@ -2,13 +2,19 @@
 AUTHOR: Tawana David Kwaramba
 FILENAME: UI.java
 STUDENT ID: 19476700
-LAST MODIFIED:
+LAST MODifIED:
 PURPOSE: A class which is reponsible for all the user input and output.
 ******************************************************************************/
 import java.util.*;
 
 public class UI
     {
+        //Class constants. COPIED FROM SubMarine NEEDS to be DELETED
+        public static final String STEEL = "STEEL";
+        public static final String ALLY = "ALLOY";
+        public static final String TTNM = "TITANIUM";
+
+
         //CLASS FIELDS: 
         ShipStorage storageUnit; 
 
@@ -94,55 +100,74 @@ public class UI
     
             return userOp;
         }
-SUBMODULE: getUserSerialNum
-    IMPORT: none
-    EXPORT: serialNum
-    PURPOSE: to ask the serial number from the user, and to validate their 
-             input
+        /**********************************************************************
+        SUBMODULE: getUserSerialNum
+        IMPORT: none
+        EXPORT: serialNum (Real)
+        PURPOSE: to ask the serial number from the user, and to validate their 
+                 input
+        **********************************************************************/
+        public double getUserSerialNum()
+        {
+            Scanner in = new Scanner(System.in);
+            double serialNum = 000.000; 
+            boolean isValid = false;
+            do
+            {   
+                try
+                {
+                    System.out.println("Please enter the serial number of "+
+                                       "the ship: ");
+                    serialNum = in.nextDouble();
+                    
+                    /*you can use either the submarine or fighterjet classes
+                    to validate the serial number as they're excatly the
+                    same*/ 
+        
+                    if (validateSerialNum(serialNum))
+                    {
+                        isValid = true;
+                    }
+                }
+                catch(InputMismatchException err)
+                {
+                    System.out.println("ERROR: please input a valid "+
+                                         "serial number: " +err.getMessage());
+                    isValid = false; 
+                }
+            }while (!isValid);
+            return serialNum;
+        }
 
-    ALGORITHM
-
-        (boolean) isValid
-        do
-            try
-                System.out.println(: "Please enter the serial number of the ship:"
-                INPUT: serialNum (String)
-                
-                COMMENT: you can use either the submarine or fighterjet classes
-                         to validate the serial number as they're excatly the
-                         same
-    
-                IF (validateSerialNum <- serialNum) THEN
-                    isValid = true
-                END IF 
-
-            catch InputMismatchException 
-                System.out.println(: "ERROR: please input a valid serial numbe" 
-                +error message
-                isValid = false
-        while ((is not equal to isValid)
-
-SUBMODULE: getUserShipType
-    IMPORT: none 
-    EXPORT: shipType 
-    PURPOSE: to get the ship type from the user and validate it 
-    
-    
-        (boolean) isValid 
-        do
-            try       
-                isValid = true
-                System.out.println(: "Press the followng to enter ship type:
-                         S - Submarine
-                         F- - Fighter Jet "
-                INPUT: shipType (character)
-            catch InputMismatchException
-                System.out.println( "ERROR: please input a single character 
-                        +complier message
-                isValid = false 
-            END try catch
-        while ((shipType doesn't equal to 'f' or 'F' or 'S' or 's') AND (
+        /**********************************************************************
+        SUBMODULE: getUserShipType
+        IMPORT: none 
+        EXPORT: shipType (Character)
+        PURPOSE: to get the ship type from the user and validate it 
+        **********************************************************************/
+        public char getUserShipType()
+        {
+            char shipType; 
+            boolean isValid = false; 
+            do
+            {
+                try       
+                {
+                    isValid = true; 
+                    inputCharMenu("Press the followng to enter "+
+                                   "ship type:\nS - Submarine\n"+
+                                       " F- - Fighter Jet "); 
+                }
+                catch(InputMismatchException err)
+                {
+                    System.out.println( "ERROR: please input a single character 
+                            +complier message
+                    isValid = false 
+                }
+            }
+            while ((shipType doesn't equal to 'f' or 'F' or 'S' or 's') AND (
                 not equal to isValid)
+        }
 
 SUBMODULE: getUserCylinders
     IMPORT: none
@@ -159,9 +184,9 @@ SUBMODULE: getUserCylinders
                 COMMENT: You can use either the submarine or fighterejet class
                          to validate the number of cylinders 
 
-                IF (validateCylinders <- cylinders) THEN
+                if (validateCylinders <- cylinders) THEN
                     isValid = true
-                END IF 
+                END if 
 
             catch InputMismatchException
                 System.out.println(: "ERROR: please input an interger" +complier message
@@ -181,9 +206,9 @@ SUBMODULES: getUserHull
                 System.out.println(: "Enter hull of the ship: "
                 INPUT: hull (Stirng)
 
-                IF (ValidateHull <- hull) THEN
+                if (ValidateHull <- hull) THEN
                     isValid = true
-                END IF
+                END if
 
             catch InputMismatchException
                 System.out.println(: "ERROR: please input a string" +complier message
@@ -203,9 +228,9 @@ SUBMODULES: getUserMaxDepth
                 System.out.println(: "Please enter the max depth of the ship"
                 INPUT: depth (real)
 
-                IF (validateMaxDepth <- depth) THEN
+                if (validateMaxDepth <- depth) THEN
                     isValid = true 
-                END IF
+                END if
     
             catch InputMismatchException
                 System.out.println(: "ERROR: please input a real number: "  
@@ -226,9 +251,9 @@ SUBMODULES: getUserWingSpan
                 System.out.println(: "Please enter the wingspan of the ship"
                 INPUT: wingSpan (Real)
                 
-                IF (validateWingSpan <- wingSpan) THEN 
+                if (validateWingSpan <- wingSpan) THEN 
                     isValid = true
-                END IF
+                END if
             
             catch InputMismatchException
                 System.out.println(: "ERROR: please input a real number: " +complier message
@@ -248,9 +273,9 @@ SUBMODULES: getUserOrdance
                 System.out.println(: "Please enter the ordance of the ship: "
                 INPUT: ordance (String)
 
-                IF (validateOrdance <- ordance) THEN
+                if (validateOrdance <- ordance) THEN
                     isValid = true
-                END IF
+                END if
 
             catch InputMismatchException
                 System.out.println(: "ERROR:"  +complier message
@@ -313,9 +338,9 @@ SUBMODULE: mainMenu
                                          6. Save Ships
                                          7. Exit")
     
-            IF (userOP doesn't equal to 1 or 2 or 3 or 4 or 5 or 6 or 7) THEN
+            if (userOP doesn't equal to 1 or 2 or 3 or 4 or 5 or 6 or 7) THEN
                 System.out.println(: "Please enter an option which is in the menu below: "
-            END IF 
+            END if 
 
         while userOP doesn't equal to 1 or 2 or 3 or 4 or 5 or 6 or 7
 
@@ -348,9 +373,9 @@ SUBMODULE: addShipsMenu
             (int) userOp = inputIntMenu <- ("1. Add ships manually
                                                   2. Add ships from file"
 
-            IF (userOp doesn't equal to 1 or 2) THEN
+            if (userOp doesn't equal to 1 or 2) THEN
                 System.out.println(: "Please enter an option which is in the menu below: "
-            END IF 
+            END if 
         while (userOp doesn't equal 1 or 2)
 
         CASE userOp
@@ -372,9 +397,9 @@ SUBMODULE: viewShips
                                                   2. View submarines only
                                                   3. View fighter jets 
                                                     only ")
-            IF (userOp doesn't equal to 1 or 2 or 3 ) THEN
+            if (userOp doesn't equal to 1 or 2 or 3 ) THEN
                 System.out.println( "Pleae enter an option which is in the following meanu:
-            END  IF
+            END  if
         while (userOp doesn't equal 1 or 2 or 3)
         
         CASE userOp
@@ -420,9 +445,9 @@ SUBMODULE: duplicatesMenu
                                                      duplicates only
                                                   3. Find fighter Jet
                                                      duplicates only")
-            IF (userOp doesn't equal to 1 or 2 or 3) THEN
+            if (userOp doesn't equal to 1 or 2 or 3) THEN
                 System.out.println(: "please input what is in the menu below: "
-            END IF
+            END if
         while (userOp doesn't equal to 1 or 2 or 3 ) 
 
         case userOp
@@ -500,3 +525,81 @@ SUBMODULE: errorMssg
     IMPORT: mssg(String)
     EXPORT: errMssg (String)
     ASSERTION: returns the error message of the specific methods been called
+*/
+
+    //METHODS COPIED FROM ANOTHER CLASS. THESE NEED TO BE DELETED
+ private boolean validateSerialNum(double inSerialNum)
+        {
+            int wholePart, decimalPart;
+            boolean isValid = false;
+
+            wholePart = (int)inSerialNum;
+            decimalPart = (int)(inSerialNum * 1000) % 1000;
+            if ((wholePart >= 100) && (wholePart <= 300))
+            {
+                if((1 <= decimalPart) && (decimalPart <= 999))
+                {
+                    isValid = true;
+                }
+            }
+            return isValid;
+
+        }
+ private boolean validateYear(int inYear)
+        {
+            boolean isValid = false;
+
+            if (inYear >= 1950 && inYear <= 2022)
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+private boolean validateHull(String inHull)
+        {
+            boolean isValid = false;
+
+            if(inHull.equals(STEEL) || inHull.equals(ALLY) ||
+               inHull.equals(TTNM))
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+private boolean validateMaxDepth(double inMaxDepth)
+        {
+            boolean isValid = false;
+
+            if(inMaxDepth >= -500 && inMaxDepth <= 0)
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+private boolean validateOrdance(String inOrdance)
+        {
+            boolean isValid = false;
+            if (inOrdance.length() != 0)
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+ private boolean validateWingSpan(double inWingSpan)
+        {
+            /*
+            boolean isValid = false;
+            if(inWingSpan >= 2.2 && inWingSpan <= 25.6)
+            {
+                isValid = true;            
+            }
+            return isValid;
+            */
+            return ((inWingSpan >= 2.2) && (inWingSpan <= 25.6));
+        }
+
+    }

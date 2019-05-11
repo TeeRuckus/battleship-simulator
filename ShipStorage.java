@@ -13,6 +13,7 @@ public class ShipStorage
             user to have a non 1:1 split of the capacity between submarines an
             jets. */
         
+        
         public static final int MAX_CAP = 15; 
 
         //CLASS FIELDS:

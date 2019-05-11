@@ -71,8 +71,9 @@ SUBMODULE: getUserSerialNum
              input
 
     ALGORITHM
-
-        (Boolean) isValid
+        
+        serialNum := 000.000
+        (Boolean) isValid := FALSE
         DO
             TRY
                 OUTPUT: "Please enter the serial number of the ship:"
@@ -94,18 +95,17 @@ SUBMODULE: getUserSerialNum
 
 SUBMODULE: getUserShipType
     IMPORT: none 
-    EXPORT: shipType 
+    EXPORT: shipType (Character)
     PURPOSE: to get the ship type from the user and validate it 
     
     ALGORITHM:
-        (Boolean) isValid 
+        (Boolean) isValid := FALSE
         DO
             TRY       
                 isValid := TRUE
-                OUTPUT: "Press the followng to enter ship type:
+                inputCharMenu <-  "Press the followng to enter ship type:
                          S - Submarine
                          F- - Fighter Jet "
-                INPUT: shipType (character)
             CATCH InputMismatchException
                 OUTPUT "ERROR: please input a single character 
                         +complier message
