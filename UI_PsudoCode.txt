@@ -301,7 +301,7 @@ SUBMODULE: mainMenu
             5:
                 loadShips <- none
             6: 
-                saveShips <- exit
+                saveShips <- none
             7:
                 OUTPUT: "Goodbye friend"
             DEFUALT: OUTPUT: "Invalid option" 
