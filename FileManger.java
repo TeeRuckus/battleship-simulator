@@ -43,7 +43,7 @@ public class FileManger
             {
                 lineNum++;
                 line = buffRdr.readLine();
-                processLine(line);
+                //processLine(line);
             } 
             strm.close();
         }
@@ -67,54 +67,61 @@ public class FileManger
     EXPORT: none
     PURPOSE: to write the contents in the submarine object to a file
     **************************************************************************/
-    public static void writeFile(String fileName) 
-    COMMENT: psudo code adapted from lecture 5 of OOPD
-
-
-    
+    public static void writeFile(String fileName, String line)
+    {
+        //psudo code adapted from lecture 5 of OOPD     
+        FileOutputStream strm = null;
+        PrintWriter pw; 
         try
-            theFile <- OPEN fileName for(writing
-            for(((interger)ii = 0 TO ShipStorage.MAX_CAP  CHANGEBY 1) 
-                OUTPUT TO FILE: ShipStorage.storageUnit[ii].toFileString()
+        {
+            strm = new FileOutputStream(fileName);
+            pw = new PrintWriter(strm);
+            for(int ii = 0; ii < ShipStorage.MAX_CAP; ii++) 
+            {
+                pw.println(line);
             } 
-
-            for(((interger) ii = 0 TO LENGTH ShipStorage.MAX_CAP CHANGEBY 1) 
-                OUTPUT TO FILE: ShipStorage.storageUnit[ii].toFileString()
-            } 
-            
-            CLOSE fileName 
-        catch( IOException
-            if((fileName is not empty) 
+            pw.close();           
+        }
+        catch( IOException err)
+        {
+            if(strm != null) 
+            {
                 try
-                    CLOSE fileName
-                catch(
-                    System.out.println("ERROR: unable to writw to file" 
-                    COMMENT: there's nothing we can do here now
-                 try catch(
-
-SUBMODULE: processLine
+                {
+                    strm.close();
+                }
+                catch(IOException err2)
+                {} //nothing we can do about it
+            }
+        }
+    }
+    /**************************************************************************
+    SUBMODULE: processLine
     IMPORT: line (String)
     EXPORT: none 
-    
-    :
-        
-        COMMENT: this was adapted from OOPD worksheet 8: REFERENCE THIS LATER
-        
-        line = READ LINE
-        lineContents [] = SIZE of 7 elements 
-        lineContents [] = line.split(",") 
+    **************************************************************************/
+    public static void processLine() 
+    {
+        //`this was adapted from OOPD worksheet 8: REFERENCE THIS LATER
+        String[] lineContents = new String[7]; 
+        lineContents = line.split(",");
+        //lineContents [] = line.split(",") ;
 
-        if((validateLine <- lineContents) 
-            createShipObjcts <- lineContents
+        if(validateLine(lineContents))
+        {
+            createShipObjcts(lineContents);
+        }
+    }
          
-
-SUBMODULE: createShipObjcts 
+    /**************************************************************************
+    SUBMODULE: createShipObjcts 
     IMPORT: lineContents [] (Strings) 
     EXPORT: none
     PURPOSE: to create the ship objects from the file information once it has
              been all validated 
+    **************************************************************************/
+    public static void createShipObjcts(String[] lineContents)
 
-    :
         
         shipType = first character of fileContents[0] 
         serialNum = validateSerialNum(fileContents[1])
@@ -124,7 +131,7 @@ SUBMODULE: createShipObjcts
         cylinders = validateCylinders(fileContents[3] CONVERT to integers)
         fuel = validateFuel(fileContents[4])
 
-        CONSTRUCT engine USING cylinders, fuel (ALTERNATE CONSTRUCTOR)
+        CONSTRUCT engine USING cylinders, fuel (ALTERNATE CONSTRUC;R)
 
         CASE (UPPERCASE)shipType
             S:
