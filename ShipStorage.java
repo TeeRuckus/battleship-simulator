@@ -130,7 +130,7 @@ public class ShipStorage
         public String destinationCheckSub(int distance) 
         {
             double fastestSubTime, compareSub;
-            SubMarine fastestSub; 
+            SubMarine fastestSub = null; 
             
              /*I am setting up a submarine object to set up a reference point
              of comparison to other submarine objects withing the storeSubs
@@ -179,7 +179,7 @@ public class ShipStorage
         public String destinationCheckJet(int distance)
         {
             double fastestJetTime, compareJet;
-            FighterJet fastestJet;
+            FighterJet fastestJet = null;
         
             /*I am setting up a submarine object to set up a reference point
             of comparison to other jet objects withing the storeJets
@@ -215,6 +215,8 @@ public class ShipStorage
             denom = inShip.getWingSpan() * (double)inShip.getCylinders() * 
                                                                         150.00;
             timeHours = (double)distance / denom;
+            
+            return timeHours;
         }
 
         /**********************************************************************
@@ -277,10 +279,9 @@ public class ShipStorage
                         duplicates[ii] = storeJets[ii]; 
                         duplicates[jj] = storeJets[jj];
                     }
-                }
-                
-                return duplicates;
+                }   
             }
+            return duplicates;
         }
         //PRIVATE SUBMODULES:
 
