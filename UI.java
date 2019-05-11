@@ -73,7 +73,7 @@ public class UI
         PURPOSE: to allow the user to select one of the options listed in the 
                  menu using a single character. 
         **********************************************************************/
-        public char InputCharMenu(String mssg)
+        public char inputCharMenu(String mssg)
         {    
             Scanner in = new Scanner(System.in);
             char userOp = ' ';
@@ -154,21 +154,23 @@ public class UI
                 try       
                 {
                     isValid = true; 
-                    inputCharMenu("Press the followng to enter "+
-                                   "ship type:\nS - Submarine\n"+
-                                       " F- - Fighter Jet "); 
+                    shipType = inputCharMenu("Press the followng to enter "+
+                                             "ship type:\nS - Submarine\n"+
+                                              " F- - Fighter Jet "); 
                 }
                 catch(InputMismatchException err)
                 {
-                    System.out.println( "ERROR: please input a single character 
-                            +complier message
-                    isValid = false 
+                    System.out.println("ERROR: please input a single "+
+                                        "character" +err.getMessage());
+                    isValid = false;
                 }
             }
-            while ((shipType doesn't equal to 'f' or 'F' or 'S' or 's') AND (
-                not equal to isValid)
+            while ((shipType != 'f') && (shipType != 'F') &&
+                     (shipType !=  'S') && (shipType != 's') && (!isValid));
+            
+            return shipType;
         }
-
+/*
 SUBMODULE: getUserCylinders
     IMPORT: none
     EXPORT: cylinders (integer) 
