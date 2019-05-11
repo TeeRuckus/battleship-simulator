@@ -526,10 +526,10 @@ public class UI
         **********************************************************************/
         public void viewSubs()
         {
-            String [] shipStrs = new String [ShipStorage.MAX_CAP];
+            String [] shipStrs = new String [storageUnit.MAX_CAP];
             shipStrs = storageUnit.toStringSubArr();
 
-            for(int ii = 0; ii < ShipStorage.MAX_CAP; ii++)  
+            for(int ii = 0; ii < storageUnit.MAX_CAP; ii++)  
             {
                 System.out.println(shipStrs[ii]);
             }
@@ -542,9 +542,9 @@ public class UI
         **********************************************************************/
         public void viewJets()
         {
-            String [] shipStrs = new String [ShipStorage.MAX_CAP];
+            String [] shipStrs = new String [storageUnit.MAX_CAP];
             shipStrs = storageUnit.toStringJetArr();
-            for(int ii = 0; ii < ShipStorage.MAX_CAP; ii++) 
+            for(int ii = 0; ii < storageUnit.MAX_CAP; ii++) 
             {
                 System.out.println(shipStrs);
             }
@@ -596,44 +596,51 @@ public class UI
             duplicates = storageUnit.findDuplicateSubs();
             System.out.println("The duplicates pairs are as follows");
 
-            for(int ii = 0; ii < ShipStorage.MAX_CAP * 2; ii++)
+            for(int ii = 0; ii < storageUnit.MAX_CAP * 2; ii++)
             {
                 System.out.println("SubMarine [ii]\n" +
                                    duplicates[ii].toString());
-                for(int jj = 1; ii < ShipStorage.MAX_CAP * 2; jj++) 
+                for(int jj = 1; ii < storageUnit.MAX_CAP * 2; jj++) 
                 {
                     System.out.println("SubMarine duplicate [jj-1]\n" +
-                                        duplicates[jj+1].toString());
+                                        duplicates[jj].toString());
                 }
             }
         }
-/* 
-SUBMODULE: displayJetDuplicates: 
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
+        /**********************************************************************
+        SUBMODULE: displayJetDuplicates: 
+        IMPORT: none
+        EXPORT: none
+        PURPOSE:
+        **********************************************************************/
+        public void displayJetDuplicates()
+        {
+            FighterJet[] duplicates = new FighterJet[storageUnit.MAX_CAP * 2];
+            duplicates = storageUnit.findDuplicateJets();
+            System.out.println("The duplicates pairs are as follows: ");
 
-    
-
-        System.out.println(: "The duplicates pairs are as follows: "
-
-        for(((int) ii = 0; ii shipStorage.MAXCAP * 2; ii++1) 
-            System.out.println(: "FighterJet[ii] "
-                     +shipStorage.findDuplicateJet[ii].toStringJet+ 
-            FOR((int)ii = 1; ii shipStorage.MAXCAP * 2; ii++1) 
-                System.out.println(: "FighterJet Duplicate [ii-1] "
-                         +shipStorage.findDuplicateJet[ii+1]
+            for(int ii = 0; ii < storageUnit.MAX_CAP * 2; ii++) 
+            {
+                System.out.println("FighterJet [ii]\n" +
+                                   duplicates[ii].toString()); 
+                for(int jj = 1; jj < storageUnit.MAX_CAP * 2; jj++) 
+                {
+                    System.out.println("FighterJet Duplicate [jj-1] "+
+                                          duplicates[jj].toString());
+                }
+            }
         }
-
-SUBMODULE: destinationCheck
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
-
-    
-        
-        System.out.println(: "not yet implememntededed"
-
+        /**********************************************************************
+        SUBMODULE: destinationCheck
+        IMPORT: none
+        EXPORT: none
+        PURPOSE:
+        **********************************************************************/
+        public void destinationCheck()
+        {
+            System.out.println("not yet implememntededed");
+        }
+/*
 SUBMODULE: loadShips
     IMPORT: none
     EXPORT: none
