@@ -147,7 +147,7 @@ public class UI
         **********************************************************************/
         public char getUserShipType()
         {
-            char shipType; 
+            char shipType = ' '; 
             boolean isValid = false; 
             do
             {
@@ -170,11 +170,13 @@ public class UI
             
             return shipType;
         }
-/*
-SUBMODULE: getUserCylinders
-    IMPORT: none
-    EXPORT: cylinders (integer) 
-    PURPOSE: to get the cylinders from the user and to validate it
+
+        /**********************************************************************
+        SUBMODULE: getUserCylinders
+        IMPORT: none
+        EXPORT: cylinders (integer) 
+        PURPOSE: to get the cylinders from the user and to validate it
+        **********************************************************************/
 
     
         (boolean) isValid
