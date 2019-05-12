@@ -24,7 +24,7 @@ public class FileManger
     EXPORT: none
     PURPOSE: to read and prcess the contents of a file
     **************************************************************************/
-    public static void readFile(String fileName)
+    public static void readFile(String fileName, ShipStorage storageUnit)
     {
         //Psudo code adapted from lecture 5 of OOPD 
     
@@ -49,7 +49,7 @@ public class FileManger
             {
                 lineNum++;
                 line = buffRdr.readLine();
-                processLine(line);
+                processLine(line, storageUnit);
             } 
             strm.close();
         }

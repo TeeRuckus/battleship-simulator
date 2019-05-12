@@ -349,24 +349,31 @@ public class UI
         **********************************************************************/
         public void addUserShips()
         {
-            shipType = getUserShipType();      
+            /*shipType = getUserShipType();      
             serialNum = getUserSerialNum();
             year = getUserYear();
-            cylinders = getUserCylinders(); 
-
+            cylinders = getUserCylinders(); */
+            String[] shipDetails = new String[7];
+            shipDetails[0] = getUserShipType();
+            shipDetails[1] = getUserSerialNum();
+            shipDetails[2] = getUserYear();
+            shipDetails[3] = getUserCylinders();
+            shipDetails[4] = getUserFuel();
             switch(shipType)
             {
                 case 'S': case 's':
-                    hull = getUserHull();
-                    maxDepth = getUserMaxDepth();
-                    FileManger.createShipObjcts(shipType, year, cylinders, fuel
-                                                    hull, maxDepth);
+                   /* hull = getUserHull();
+                    maxDepth = getUserMaxDepth();*/
+                    shipDetails[5] = getUserHull();
+                    shipDetails[6] = getUserMaxDepth();
+                    FileManger.createShipObjcts(shipDetails, storageUnit); 
                     break;
                 case 'F': case'f':
-                    wingSpan = getUserWingSpan();
-                    ordance = getUserOrdance();
-                    FileManger.createUserObjcts(shipType, year, cylinders, fuel
-                                                    wingSpan, ordance);
+                   /* wingSpan = getUserWingSpan();
+                    ordance = getUserOrdance();*/
+                    shipDetails[5] = getUserWingSpan();
+                    shipDetails[6] = getUserOrdance(); 
+                    FileManger.createUserObjcts(shipDetails, storageUnit);
                     break;
             }
         }
