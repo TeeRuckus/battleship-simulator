@@ -348,7 +348,30 @@ public class UI
         **********************************************************************/
         public int getUserYear()
         {
-            Scanner in = new 
+            Scanner in = new Scanner(System.in);
+            int year = 0;
+            boolean isValid = false;
+            do
+            {
+                try
+                { 
+                    System.out.print("Please enter the manfacture year of "+
+                                     "the ship");
+                    year = in.nextInt();
+                    if(validateYear(year))
+                    {
+                        isValid = true;
+                    }
+                }
+                catch(InputMismatchException err)
+                {
+                    Sytstem.out.println("ERROR: please enter a integer: "+
+                                        err.getMessage());
+                    isValid = false;
+                }
+            }while(!isValid)
+        
+            return year;
         }
         /**********************************************************************
         SUBMODULE: getUserFuel
