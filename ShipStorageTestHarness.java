@@ -2,6 +2,6 @@ public class ShipStorageTestHarness
 {
     public static void main(String [] args)
     {
-        System.out.println("Hello world");
+        ShipStorage [] shipStorage = new shipStorage[4];
     } 
 }

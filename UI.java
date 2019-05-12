@@ -488,37 +488,37 @@ public class UI
                     System.out.println("Please enter an option which is in "+
                                        "the menu below:\n ");
                 }
+                switch(userOp)
+                {
+                    case 1:
+                        addShipsMenu();
+                        break;
+                    case 2: 
+                        viewShipsMenu();
+                        break;
+                    case 3: 
+                        findDuplicatesMenu();
+                        break;
+                    case 4:
+                        destinationCheck();
+                        break;
+                    case 5:
+                        loadShips();
+                        break;
+                    case 6: 
+                        saveShips();
+                        break;
+                    case 7:
+                        System.out.println("Goodbye friend\n");
+                        break;
+                    default:
+                        System.out.println("Invalid option");
+                        break;
+                }
             }while((userOp != 1) ||(userOp != 2) || (userOp != 3) || 
                    (userOp != 4) || (userOp != 5) || (userOp != 6) || 
                    (userOp != 7));
 
-            switch(userOp)
-            {
-                case 1:
-                    addShipsMenu();
-                    break;
-                case 2: 
-                    viewShipsMenu();
-                    break;
-                case 3: 
-                    findDuplicatesMenu();
-                    break;
-                case 4:
-                    destinationCheck();
-                    break;
-                case 5:
-                    loadShips();
-                    break;
-                case 6: 
-                    saveShips();
-                    break;
-                case 7:
-                    System.out.println("Goodbye friend");
-                    break;
-                default:
-                    System.out.println("Invalid option");
-                    break;
-            }
         }
         /**********************************************************************
         SUBMODULE: addShipsMenu
