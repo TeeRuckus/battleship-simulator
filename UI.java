@@ -354,26 +354,26 @@ public class UI
             year = getUserYear();
             cylinders = getUserCylinders(); */
             String[] shipDetails = new String[7];
-            shipDetails[0] = getUserShipType();
-            shipDetails[1] = getUserSerialNum();
-            shipDetails[2] = getUserYear();
-            shipDetails[3] = getUserCylinders();
+            shipDetails[0] = Character.toString(getUserShipType());
+            shipDetails[1] = Double.toString(getUserSerialNum());
+            shipDetails[2] = Integer.toString(getUserYear());
+            shipDetails[3] = Integer.toString(getUserCylinders());
             shipDetails[4] = getUserFuel();
-            switch(shipType)
+            switch(shipDetails[0].charAt(0))
             {
                 case 'S': case 's':
                    /* hull = getUserHull();
                     maxDepth = getUserMaxDepth();*/
                     shipDetails[5] = getUserHull();
-                    shipDetails[6] = getUserMaxDepth();
+                    shipDetails[6] = Double.toString(getUserMaxDepth());
                     FileManger.createShipObjcts(shipDetails, storageUnit); 
                     break;
                 case 'F': case'f':
                    /* wingSpan = getUserWingSpan();
                     ordance = getUserOrdance();*/
-                    shipDetails[5] = getUserWingSpan();
+                    shipDetails[5] = Double.toString(getUserWingSpan());
                     shipDetails[6] = getUserOrdance(); 
-                    FileManger.createUserObjcts(shipDetails, storageUnit);
+                    FileManger.createShipObjcts(shipDetails, storageUnit);
                     break;
             }
         }
@@ -383,13 +383,13 @@ public class UI
         NONE:
         PURPOSE:
         **********************************************************************/
-        public void ShipsFile()
+        public void addShipsFile()
         {
             Scanner in = new Scanner(System.in);
             String fileName;
             System.out.print("Please enter file name to read ships from: ");
-            fileName = nextLine();
-            FileManger.readFile(fileName);
+            fileName = in.nextLine();
+            FileManger.readFile(fileName, storageUnit);
         }
 
         //OTHER METHODS
@@ -479,7 +479,7 @@ public class UI
                         addUserShips();
                         break;
                case 2:
-                        addShipFile();
+                        addShipsFile();
                         break;
                 defualt:
                     System.out.println("Invalid option");
@@ -492,7 +492,7 @@ public class UI
         EXPORT: none
         PURPOSE:
         **********************************************************************/
-        public void viewShips() 
+        public void viewShipsMenu() 
         {
             int userOp;
             do
@@ -672,7 +672,7 @@ public class UI
 
             System.out.print("Please input a file name to save ships: "); 
             fileName = in.nextLine();
-            FileManger.witeFile(fileName, storageUnit);
+            FileManger.writeFile(fileName, storageUnit);
         }
     
         //METHODS COPIED FROM ANOTHER CLASS. THESE NEED; ii BE DELETED
