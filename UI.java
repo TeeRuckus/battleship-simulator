@@ -341,6 +341,22 @@ public class UI
             return ordance; 
         }
         /**********************************************************************
+        SUBMODULE: getUserYear
+        IMPORT: none
+        EXPORT: year (Integer)
+        
+        **********************************************************************/
+        public int getUserYear()
+        {
+            Scanner in = new 
+        }
+        /**********************************************************************
+        SUBMODULE: getUserFuel
+        IMPORT: none
+        EXPORT: year (Integer)
+        
+        **********************************************************************/
+        /**********************************************************************
         SUBMODULE: addUserShips
         IMPORT: none 
         EXPORT: none
