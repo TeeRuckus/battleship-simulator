@@ -49,7 +49,7 @@ public class ShipStorage
         ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
                     storeSubs hasn't exceeded the MAX_CAP
         **********************************************************************/
-        public void addShipSub(SubMarine inSub, int countSubs)
+        public void addShipSub(SubMarine inSub)
         {
             if (validateSub(inSub))
             {
@@ -74,7 +74,7 @@ public class ShipStorage
         ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
                    storeSubs hasn't exceeded MAX_CAP
         **********************************************************************/
-        public void addJet(FighterJet inJet, int countJets)
+        public void addShipJet(FighterJet inJet)
         {
             if(validateJet(inJet))
             {

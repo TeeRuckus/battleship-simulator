@@ -347,7 +347,6 @@ public class UI
         PURPOSE: to allow the user to add ships manually to the programme, and the
                  appopriate eror handling and validation. 
         **********************************************************************/
-        /*
         public void addUserShips()
         {
             shipType = getUserShipType();      
@@ -370,15 +369,14 @@ public class UI
                                                     wingSpan, ordance);
                     break;
             }
-        }*/
+        }
         /**********************************************************************
         SUBMODULE: addShipsFile
         IMPORT:
         NONE:
         PURPOSE:
         **********************************************************************/
-        /*
-        public voi addShipsFile()
+        public void ShipsFile()
         {
             Scanner in = new Scanner(System.in);
             String fileName;
@@ -386,7 +384,6 @@ public class UI
             fileName = nextLine();
             FileManger.readFile(fileName);
         }
-        */
 
         //OTHER METHODS
         /**********************************************************************
@@ -396,7 +393,7 @@ public class UI
         PURPOSE: to control the structure of the main menu and to invoke the 
                  appropriate methods
         **********************************************************************/
-        /*public void mainMenu()
+        public void mainMenu()
         {
             int userOp;
             do
@@ -447,14 +444,14 @@ public class UI
                     System.out.println("Invalid option");
                     break;
             }
-        }*/
+        }
         /**********************************************************************
         SUBMODULE: addShipsMenu
         IMPORT: none
         EXPORT: none
         PURPOSE: to invoke the appropriate methods to add ships to the programme
         **********************************************************************/
-        /*public void addShipsMenu()
+        public void addShipsMenu()
         {
             int userOp;
             do
@@ -481,14 +478,14 @@ public class UI
                     System.out.println("Invalid option");
                     break;
             }
-        }*/
+        }
         /**********************************************************************
         SUBMODULE: viewShips
         IMPORT: none
         EXPORT: none
         PURPOSE:
         **********************************************************************/
-        /*public void viewShip() 
+        public void viewShips() 
         {
             int userOp;
             do
@@ -516,7 +513,7 @@ public class UI
                     viewJets();
                     break;
             }
-        }*/
+        }
 
         /**********************************************************************
         SUBMPODULE: viewSubs
@@ -555,7 +552,7 @@ public class UI
         EXPROT: none
         PURPOSE
         **********************************************************************/
-        public void duplicatesMenu()
+        public void findDuplicatesMenu()
         {
             int userOp;
             do 
@@ -640,34 +637,39 @@ public class UI
         {
             System.out.println("not yet implememntededed");
         }
-/*
-SUBMODULE: loadShips
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
+        /**********************************************************************
+        SUBMODULE: loadShips
+        IMPORT: none
+        EXPORT: none
+        PURPOSE:
+        **********************************************************************/
+        public void loadShips()
+        {  
+            Scanner in = new Scanner(System.in);
+            String fileName;
 
+            System.out.print("Please input a file name to load ships: ");
+            fileName = in.nextLine();
+            FileManger.readFile(fileName, storageUnit); 
+        }
+
+        /**********************************************************************
+        SUBMODULE: saveShips
+        IMPORT: fileName (String)
+        EXPORT: none
+        **********************************************************************/
+        public void saveShips()
+        {
+            Scanner in = new Scanner(System.in);
+            String fileName;
+
+            System.out.print("Please input a file name to save ships: "); 
+            fileName = in.nextLine();
+            FileManger.witeFile(fileName, storageUnit);
+        }
     
-        
-        System.out.println(: "Please input a fileName to load ships: "
-        INPUT: fileName (String)
-        FileManger.readFile(fileName) 
-
-SUBMODULE: saveShips
-    IMPORT: fileName (String)
-    EXPORT: none
-
-    
-        
-        System.out.println(: "Please inpu  a file
-
-SUBMODULE: errorMssg
-    IMPORT: mssg(String)
-    EXPORT: errMssg (String)
-    ASSERTION: returns the error message of the specific methods been called
-*/
-
-    //METHODS COPIED FROM ANOTHER CLASS. THESE NEED; ii BE DELETED
- private boolean validateSerialNum(double inSerialNum)
+        //METHODS COPIED FROM ANOTHER CLASS. THESE NEED; ii BE DELETED
+        private boolean validateSerialNum(double inSerialNum)
         {
             int wholePart, decimalPart;
             boolean isValid = false;
