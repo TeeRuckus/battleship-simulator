@@ -368,8 +368,8 @@ public class UI
                 }
                 catch(InputMismatchException err)
                 {
-                    Sytstem.out.println("ERROR: please enter a integer: "+
-                                        err.getMessage() "\n");
+                    System.out.println("ERROR: please enter a integer: "+
+                                        err.getMessage()+ "\n");
                     isValid = false;
                 }
             }while(!isValid);
@@ -382,10 +382,10 @@ public class UI
         EXPORT: fuel
         
         **********************************************************************/
-        public String fuel()
+        public String getUserFuel()
         {
             Scanner in = new Scanner(System.in);
-            String fuel;
+            String fuel = null;
             boolean isValid = false;
             do
             {
@@ -401,12 +401,12 @@ public class UI
                 catch(InputMismatchException err)
                 {
                     System.out.println("ERROR: please enter a valid string: "+
-                                        err.getMessage() "\n");
+                                        err.getMessage()+ "\n");
                     isValid = false;
                 }
             }while(!isValid);
             
-            return isValid;
+            return fuel;
         }
         /**********************************************************************
         SUBMODULE: addUserShips
@@ -515,7 +515,7 @@ public class UI
                 case 7:
                     System.out.println("Goodbye friend");
                     break;
-                defualt: 
+                default:
                     System.out.println("Invalid option");
                     break;
             }
@@ -549,7 +549,7 @@ public class UI
                case 2:
                         addShipsFile();
                         break;
-                defualt:
+                default:
                     System.out.println("Invalid option");
                     break;
             }
