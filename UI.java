@@ -13,6 +13,9 @@ public class UI
         public static final String STEEL = "STEEL";
         public static final String ALLY = "ALLOY";
         public static final String TTNM = "TITANIUM";
+        public static final String BATRY = "BATTERY";
+        public static final String DSL = "DIESEL";
+        public static final String BIO = "BIO";
 
 
         //CLASS FIELDS: 
@@ -366,19 +369,45 @@ public class UI
                 catch(InputMismatchException err)
                 {
                     Sytstem.out.println("ERROR: please enter a integer: "+
-                                        err.getMessage());
+                                        err.getMessage() "\n");
                     isValid = false;
                 }
-            }while(!isValid)
+            }while(!isValid);
         
             return year;
         }
         /**********************************************************************
         SUBMODULE: getUserFuel
         IMPORT: none
-        EXPORT: year (Integer)
+        EXPORT: fuel
         
         **********************************************************************/
+        public String fuel()
+        {
+            Scanner in = new Scanner(System.in);
+            String fuel;
+            boolean isValid = false;
+            do
+            {
+                try
+                {
+                    System.out.print("Please enter the fuel of the ship: ");
+                    fuel = in.nextLine();
+                    if(validateFuel(fuel))
+                    {
+                        isValid = true;
+                    }
+                }
+                catch(InputMismatchException err)
+                {
+                    System.out.println("ERROR: please enter a valid string: "+
+                                        err.getMessage() "\n");
+                    isValid = false;
+                }
+            }while(!isValid);
+            
+            return isValid;
+        }
         /**********************************************************************
         SUBMODULE: addUserShips
         IMPORT: none 
@@ -798,4 +827,14 @@ private boolean validateOrdance(String inOrdance)
             }
             return isValid;
         }
+private boolean validateFuel(String inFuel)
+{
+    boolean isValid = false;
+    if (inFuel.equals(BATRY) || inFuel.equals(DSL) || inFuel.equals(BIO))
+    {
+        isValid = true;
+    }
+
+    return isValid;
+}
     }
