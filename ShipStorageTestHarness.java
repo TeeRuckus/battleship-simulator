@@ -20,17 +20,28 @@ public class ShipStorageTestHarness
             jets[2] = new FighterJet(199.666, 1969, "ninjas", 4);
             jets[3] = new FighterJet(100.300, 1955, "OOPD is insane", 5);
 
-            System.out.println("\n ADD SHIPS TEST \n");
-            System.out.println("\n SUBMARINE OBJECTS \n");
-            for(int = 0; ii < 4; ii++)
+            //ADD SHIPS TESTING
+            for(int ii = 0; ii < 4; ii++)
             {
                 shipStorage.addShipSub(subs[ii]);
             }
-            System.out.println("\n FIGHTERJET OBJECTS \n");
-            for(int = 0; ii < 4; ii++)
+            for(int ii = 0; ii < 4; ii++)
             {
                 shipStorage.addShipJet(jets[ii]);
             }
+
+            System.out.println("\n GET LAST SHIP STORED TEST \n");
+
+            System.out.println("\nlast sub stored: \n\n" 
+                                +subs[3].toString()+"\n");
+            System.out.println("\nget sub method: \n"+
+                               "\n"+shipStorage.getSub().toString()+"\n");
+
+            System.out.println("\nlast jet stored: \n\n" 
+                                +jets[3].toString()+"\n");
+            System.out.println("\nget jet method: \n"+
+                               "\n" +shipStorage.getLastJet().toString()+"\n");
+            
         }
         catch(IllegalArgumentException err)
         {
