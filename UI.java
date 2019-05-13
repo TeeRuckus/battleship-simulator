@@ -533,7 +533,21 @@ public class UI
             {
                 userOp = inputIntMenu("1. Add ships manually\n"+
                                           "2. Add ships from file");
-
+                if((userOp == 1) || (userOp == 2))
+                {
+                    switch(userOp)
+                    {
+                       case 1:
+                                addUserShips();
+                                break;
+                       case 2:
+                                addShipsFile();
+                                break;
+                        default:
+                            System.out.println("Invalid option");
+                            break;
+                    }
+                }
                 if ((userOp != 1) || (userOp !=  2)) 
                 {
                     System.out.println("Please enter an option which is in "+
@@ -541,18 +555,6 @@ public class UI
                 }
             }while ((userOp !=  1) || (userOp != 2));
 
-            switch(userOp)
-            {
-               case 1:
-                        addUserShips();
-                        break;
-               case 2:
-                        addShipsFile();
-                        break;
-                default:
-                    System.out.println("Invalid option");
-                    break;
-            }
         }
         /**********************************************************************
         SUBMODULE: viewShips
