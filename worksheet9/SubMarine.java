@@ -321,7 +321,7 @@ public class SubMarine
                 SubMarine inSubmarine = (SubMarine)inObjct;
                 isSame = hull.equals(inSubmarine.getHull()) &&
                           maxDepth == (inSubmarine.getMaxDepth()) &&
-                          engine.equals(inEngine); 
+                          engine.equals(getEngine()); 
             }
 
             return isSame;

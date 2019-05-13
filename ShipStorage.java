@@ -49,11 +49,11 @@ public class ShipStorage
         ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
                     storeSubs hasn't exceeded the MAX_CAP
         **********************************************************************/
-        public void addShipSub(SubMarine inSub)
+        public void addShip(SubMarine inSub)
         {
             if (validateSub(inSub))
             {
-                storeSubs[countSubs] = inSub; 
+                storeSubs[countSubs] = inSub.clone();
 
                 /*I am incrementing countSub by 1, to go to the next
                 vaccant index of the storeSub*/
@@ -74,7 +74,7 @@ public class ShipStorage
         ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
                    storeSubs hasn't exceeded MAX_CAP
         **********************************************************************/
-        public void addShipJet(FighterJet inJet)
+        public void addShip(FighterJet inJet)
         {
             if(validateJet(inJet))
             {
@@ -238,13 +238,13 @@ public class ShipStorage
 
             SubMarine duplicates [] = new SubMarine[MAX_CAP * 2];
             
-            for (int ii = 0 ;ii < MAX_CAP; ii++) 
+            for (int ii = 0 ;ii < countSubs; ii++) 
             {
                 /*I am starting the looping variable at one because 1 don't
                  want the programme to store itself as a dupilcate, hence
                  it will search for objects after itself*/
 
-                for(int jj = 1 ; jj < MAX_CAP ;jj++)
+                for(int jj = 1 ; jj < countSubs;jj++)
                 {
                     if(storeSubs[ii].equals(storeSubs[jj])) 
                     {

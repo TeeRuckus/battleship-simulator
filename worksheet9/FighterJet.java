@@ -2,61 +2,56 @@
 AUTHOR: Tawana David Kwaramaba
 STUDENT ID: 19476700
 DATE:
-PURPOSE: to create a class which will model the functionality of a real life
-         submarine
+PURPOSE: to create a class which will model the functionality of a real life 
+         fighter jet
 *******************************************************************************/
-public class SubMarine
+public class FighterJet
     {
-        //Class constants
-        public static final String STEEL = "STEEL";
-        public static final String ALLY = "ALLOY";
-        public static final String TTNM = "TITANIUM";
-
         //private class fields
-        private double serialNum, maxDepth;
+        private double serialNum, wingSpan; 
         private int year;
-        private String hull;
+        private String ordance;
         private Engine engine;
 
         /***********************************************************************
         DEFUALT Constructor
         IMPORT: none
         EXPORT: none
-        ASSERTION: a submarine with a serial number of 123.456, commissioned in
-                   1950, with an engine hull of titanium with a maximum depth of
-                  500.0 is a valid defualt state
+        ASSERTION: a fighter jet with a serial number of 123.250, commissioned 
+                   in 1950, with an engine ordance of titanium with a maximum 
+                   depth of 500.0 is a valid defualt state
         ***********************************************************************/
-        public SubMarine()
+        public FighterJet()
         {
             serialNum = 123.250;
             year = 1950;
-            hull = TTNM;
-            maxDepth = -500.0;
+            ordance = "machine guns";
+            wingSpan = 3.0;
             engine = new Engine();
         }
         /***********************************************************************
         ALTERNATE Constructor
-        IMPORT: inSerialNum (Real), inYear (Interger), inHull (String),
-                inMaxDepth (Real)
+        IMPORT: inSerialNum (Real), inYear (Interger), inOrdance (String), 
+                inWingSpan (Real)        
         EXPORT: none
         ASSERTION: creates an object if the imports are valid, otherwise it will
                    FAIL
         ***********************************************************************/
-        public SubMarine(double inSerialNum, int inYear, String inHull,
-                     double inMaxDepth, Engine inEngine)
+        public FighterJet(double inSerialNum, int inYear, String inOrdance, 
+                     double inWingSpan, Engine inEngine)
         {
             if(validateSerialNum(inSerialNum))
             {
                 if(validateYear(inYear))
                 {
-                    if(validateHull(inHull))
+                    if(validateOrdance(inOrdance))
                     {
-                        if(validateMaxDepth(inMaxDepth))
-                        {
+                        if(validateWingSpan(inWingSpan))
+                        {      
                             serialNum = inSerialNum;
                             year = inYear;
-                            hull = inHull;
-                            maxDepth = inMaxDepth;
+                            ordance = inOrdance; 
+                            wingSpan = inWingSpan;  
                             engine = inEngine;
                         }
                     }
@@ -65,29 +60,29 @@ public class SubMarine
             else
             {
                 throw new IllegalArgumentException("\nInvalid object import" +
-                                                   "values\n");
+                                                   "values\n");  
             }
         }
         /***********************************************************************
         COPY Constructor
-        IMPORT: inSubmarine (SubMarineClass)
+        IMPORT: inFighterJet (FighterJet)
         EXPORT: none
-        ASSERTION: creates an objext which is identical to the importred onkect
+        ASSERTION: creates an objext which is identical to the importred object
         ***********************************************************************/
-        public SubMarine(SubMarine inSubMarine, Engine inEngine)
+        public FighterJet(FighterJet inFighterJet)
         {
-            serialNum = inSubMarine.getSerialNum();
-            year = inSubMarine.getYear();
-            hull = inSubMarine.getHull();
-            maxDepth = inSubMarine.getMaxDepth();
-            engine = getEngine();
+            serialNum = inFighterJet.getSerialNum();
+            year = inFighterJet.getYear();
+            ordance = inFighterJet.getOrdance();
+            wingSpan = inFighterJet.getWingSpan();
+            engine = getEngine(); 
         }
-
+        
         //ACCESSORS
 
         public double getSerialNum()
         {
-            return serialNum;
+            return serialNum; 
         }
 
         public int getYear()
@@ -95,14 +90,14 @@ public class SubMarine
             return year;
         }
 
-        public String getHull()
+        public String getOrdance()
         {
-            return hull;
+            return ordance;
         }
 
-        public double getMaxDepth()
+        public double getWingSpan()
         {
-            return maxDepth;
+            return wingSpan;
         }
         public Engine getEngine()
         {
@@ -116,7 +111,7 @@ public class SubMarine
         SUBMODULE: setSerialNum
         IMPORT: inSerialNum (Real)
         EXPORT: none
-        ASSERTION: sets the serial number to inSerialNum if it's valid,
+        ASSERTION: sets the serial number to inSerialNum if it's valid, 
                    otherwise it fails
         ***********************************************************************/
         public void setSerialNum(double inSerialNum)
@@ -124,12 +119,12 @@ public class SubMarine
            if(validateSerialNum(inSerialNum))
             {
                 serialNum = inSerialNum;
-            }
+            } 
             else
             {
                 throw new IllegalArgumentException("Invalid serial number");
             }
-        }
+        }        
         /***********************************************************************
         SUBMODULE: setYear
         IMPORT: inYear (Interger)
@@ -147,38 +142,39 @@ public class SubMarine
                 throw new IllegalArgumentException("Invalid year");
             }
         }
-        /***********************************************************************
-        SUBMODULE: setHull
-        IMPORT: inHull (String)
+        /***********************************************************************        
+        SUBMODULE: setOrdance 
+        IMPORT: inOrdance (String)
         EXPORT: none
-        ASSERTION: set hull to to inHull if it's valid, otherwise it will fail
+        ASSERTION: set ordance to to inOrdance if it's valid, otherwise it will fail
         ***********************************************************************/
-        public void setHull(String inHull)
+        public void setOrdance(String inOrdance)
         {
-            if(validateHull(inHull))
-                hull = inHull;
+            if(validateOrdance(inOrdance)) 
+                ordance = inOrdance;
             else
             {
-                throw new IllegalArgumentException("Invalid hull");
+                throw new IllegalArgumentException("Invalid ordance");
             }
         }
         /***********************************************************************
-        SUBMODULE: setMaxDepth
-        IMPORT: inMaxDepth (Real)
+        SUBMODULE: setWingSpan 
+        IMPORT: inWingSpan (Real)
         EXPORT: none
-        ASSERTION: set max depth to inMaxDepth if it's valid, otherwise fail
+        ASSERTION: set wingspan to inWingSpan if it's valid, otherwise fail
         ***********************************************************************/
-        public void setMaxDepth(double inMaxDepth)
+        public void setWingSpan(double inWingSpan)
         {
-            if(validateMaxDepth(inMaxDepth))
+            if(validateWingSpan(inWingSpan))
             {
-                maxDepth =  inMaxDepth;
+                wingSpan =  inWingSpan; 
             }
             else
             {
-                throw new IllegalArgumentException("Invalid max depth," +
-                                                    "input a depth between the"+
-                                                    " ranges of -500.0 to 0");
+                throw new IllegalArgumentException("\nInvalid wingspan," +
+                                                    "input a wingspan between"+ 
+                                                    " ranges of 2.20 and 25.6"+
+                                                    " (inclusive)");
             }
         }
         /***********************************************************************
@@ -187,7 +183,7 @@ public class SubMarine
         EXPORT: none
         ASSERTION: set engine to inEngine if it's valid, otherwise fail
         ***********************************************************************/
-        public void  setEngine(Engine inEngine) 
+        public void setEngine(Engine inEngine) 
         {
             if(!(inEngine instanceof Engine))
             {
@@ -200,7 +196,7 @@ public class SubMarine
             }
             
         }
-
+    
         //DOING METHODS:
 
        /* SUBMODULE: calcTravel (*** I cannot impliment this yet, as my knowledge on
@@ -212,27 +208,26 @@ public class SubMarine
         SUBMODULE: validateSerialNum
         IMPORT: inSerialNum (Real)
         EXPORT: isValid (Boolean)
-        ASSERTION: validates serial numbers as true whereby its first three
-                   digits are between 100 to 300 (inclusive), and the last three
+        ASSERTION: validates serial numbers as true whereby its first three 
+                   digits are between 100 to 200 (inclusive), and the last three 
                    digits are between 001 - 999 (inclusive), otherwise it will
                    validate them as false.
         ***********************************************************************/
         private boolean validateSerialNum(double inSerialNum)
         {
             int wholePart, decimalPart;
-            boolean isValid = false;
+            boolean isValid = false; 
 
             wholePart = (int)inSerialNum;
             decimalPart = (int)(inSerialNum * 1000) % 1000;
-            if ((wholePart >= 100) && (wholePart <= 300))
+            if(wholePart >= 100 && wholePart <= 300)
             {
-                if((1 <= decimalPart) && (decimalPart <= 999))
+                if(decimalPart >= 1 && decimalPart <= 999)
                 {
                     isValid = true;
                 }
             }
             return isValid;
-
         }
         /***********************************************************************
         SUBMODULE: validateYear
@@ -242,9 +237,9 @@ public class SubMarine
                        valid, otherwise an error will be thrown to the user
         **********************************************************************/
         private boolean validateYear(int inYear)
-        {
+        {  
             boolean isValid = false;
-
+        
             if (inYear >= 1950 && inYear <= 2022)
             {
                 isValid = true;
@@ -253,18 +248,16 @@ public class SubMarine
             return isValid;
         }
         /**********************************************************************
-        SUBMODULE: validateHull
-        IMPORT: inHull (String)
+        SUBMODULE: validateOrdance
+        IMPORT: inOrdance (String)
         EXPORT: isValid (boolean)
-        ASSERTION: it will only validate inHull if it's one of the following
-                   three; steel, alloym and titanium.
+        ASSERTION: it will only validate inOrdance if it has a string describing
+                   the ordance of the fighter jet
         ********************************************************************/
-        private boolean validateHull(String inHull)
+        private boolean validateOrdance(String inOrdance)
         {
             boolean isValid = false;
-
-            if(inHull.equals(STEEL) || inHull.equals(ALLY) ||
-               inHull.equals(TTNM))
+            if (inOrdance.length() != 0)
             {
                 isValid = true;
             }
@@ -272,22 +265,23 @@ public class SubMarine
             return isValid;
         }
         /*******************************************************************
-        SUBMODULE: validateMaxDepth
-        IMPORT: inMaxDepth (Real)
+        SUBMODULE: validateWingSpan
+        IMPORT: inWingSpan (Real)
         EXPORT: isValid (Boolean)
-        ASSERTION: a maxdepth of between -500 - 0 will be validate otherwise, an
-                   error will be thrown to the user
+        ASSERTION: a wingSpan of between 2.20 and 25.6 will be validate 
+                   otherwise, error will be thrown to the user
         ********************************************************************/
-        private boolean validateMaxDepth(double inMaxDepth)
+        private boolean validateWingSpan(double inWingSpan)
         {
+            /*
             boolean isValid = false;
-
-            if(inMaxDepth >= -500 && inMaxDepth <= 0)
+            if(inWingSpan >= 2.2 && inWingSpan <= 25.6)
             {
-                isValid = true;
+                isValid = true;            
             }
-
             return isValid;
+            */
+            return ((inWingSpan >= 2.2) && (inWingSpan <= 25.6));
         }
 
         //OTHER METHODS
@@ -295,33 +289,33 @@ public class SubMarine
         /********************************************************************
         SUBMODULE: clone
         IMPORT: none
-        EXPORT: cloneSubmarine (Object)
+        EXPORT: cloneFighterJet (Object)
         ASSERTION: returns a cloned object of the current object
         ********************************************************************/
-        public SubMarine clone()
+        public FighterJet clone()
         {
-            SubMarine cloneSubMarine;
+            FighterJet cloneFighterJet;
 
-            cloneSubMarine = new SubMarine(this.serialNum, this.year,
-                                        this.hull, this.maxDepth, this.engine);
-            return cloneSubMarine;
+            cloneFighterJet = new FighterJet(this.serialNum, this.year, 
+                                    this.ordance, this.wingSpan, this.engine);
+            return cloneFighterJet; 
         }
         /********************************************************************
         SUBMODULE: equals
         IMPORT: inObjct (object)
         EXPORT: isSame (boolean)
-        ASSERTION: two submarines are interchangable if they have the same hull,
-                   and max depth
+        ASSERTION: two fighter jets are interchangable if they have the same 
+                   ordance and wingspan
         ********************************************************************/
-        public boolean equals(Object inObjct, Engine inEngine)
+        public boolean equals(Object inObjct)
         {
             boolean isSame = false;
-            if(inObjct instanceof SubMarine)
+            if(inObjct instanceof FighterJet) 
             {
-                SubMarine inSubmarine = (SubMarine)inObjct;
-                isSame = hull.equals(inSubmarine.getHull()) &&
-                          maxDepth == (inSubmarine.getMaxDepth()) &&
-                          engine.equals(inEngine); 
+                FighterJet inFighterJet = (FighterJet)inObjct;
+                isSame = ordance.equals(inFighterJet.getOrdance()) &&
+                          wingSpan == (inFighterJet.getWingSpan()) &&
+                          engine.equals(getEngine());
             }
 
             return isSame;
@@ -329,29 +323,29 @@ public class SubMarine
         /********************************************************************
         SUBMODULE: toString
         IMPORT: none
-        EXPORT: str
+        EXPORT: str (String)
         ASSERTION:
         ********************************************************************/
         public String toString()
         {
             int cylinders = engine.getCylinders();
             String fuel = engine.getFuel();
-            return("The ship " +serialNum+ " was comissioned in " +year+
+            return("The ship " +serialNum+ " was comissioned in " +year+ 
                    " , its engine has " +cylinders+ " cylinders and runs on "
-                    +fuel+ ". It is a submarine with a " +hull+ " hull and a" +
-                    " max depth of " +maxDepth+ ".");
+                    +fuel+ "fuel. It is a fighter jet with a wing span of "
+                    +wingSpan+ " metres and equiped wit " +ordance+ ".");
         }
         /********************************************************************
         SUBMODULE: toFileString
         IMPORT: none
-        EXPORT: str
-        ASSERTION:
+        EXPORT: str (String)
+        ASSERTION: 
         ********************************************************************/
         public String toFileString()
         {
             int cylinders = engine.getCylinders();
-            String fuel = engine.getFuel(); 
-            return("S," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ ","
-                  +hull+"," +maxDepth);
+            String fuel = engine.getFuel();
+            return("F," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ "," 
+                  +ordance+"," +wingSpan+ ".");
         }
-    }
+    } 

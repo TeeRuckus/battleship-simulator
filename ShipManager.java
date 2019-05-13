@@ -9,8 +9,14 @@ public class ShipManager
 {
     public static void main(String [] args)
     {
-        UI userInterface = new UI();
-        userInterface.mainMenu();
+        try
+        {
+            UI userInterface = new UI();
+            userInterface.mainMenu();
+        }
+        catch() //figure out what you need to catch here
+        {
+        }
     }
 }
 /*
