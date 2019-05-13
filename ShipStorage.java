@@ -78,7 +78,7 @@ public class ShipStorage
         {
             if(validateJet(inJet))
             {
-
+                storeJets[countJets] = inJet;
                 /*I am incemention countJets by 1, to go to the next
                 vaccant index of the storeJets*/
                 countJets++;

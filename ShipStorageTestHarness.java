@@ -36,9 +36,8 @@ public class ShipStorageTestHarness
                                 +subs[3].toString()+"\n");
             System.out.println("\nget sub method: \n"+
                                "\n"+shipStorage.getSub().toString()+"\n");
-            /* something is going wrong here 
             System.out.println("\nlast jet stored: \n\n" 
-                                +jets[3].toString()+"\n");*/
+                                +jets[3].toString()+"\n");
             System.out.println("\nget jet method: \n"+
                                "\n" +shipStorage.getLastJet().toString()+"\n");
 
