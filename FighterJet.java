@@ -11,6 +11,7 @@ public class FighterJet
         private double serialNum, wingSpan; 
         private int year;
         private String ordance;
+        private Engine engine;
 
         /***********************************************************************
         DEFUALT Constructor
@@ -26,6 +27,7 @@ public class FighterJet
             year = 1950;
             ordance = "machine guns";
             wingSpan = 3.0;
+            engine = new Engine();
         }
         /***********************************************************************
         ALTERNATE Constructor
@@ -36,7 +38,7 @@ public class FighterJet
                    FAIL
         ***********************************************************************/
         public FighterJet(double inSerialNum, int inYear, String inOrdance, 
-                     double inWingSpan)
+                     double inWingSpan, Engine inEngine)
         {
             if(validateSerialNum(inSerialNum))
             {
@@ -50,6 +52,7 @@ public class FighterJet
                             year = inYear;
                             ordance = inOrdance; 
                             wingSpan = inWingSpan;  
+                            engine = inEngine;
                         }
                     }
                 }
@@ -72,6 +75,7 @@ public class FighterJet
             year = inFighterJet.getYear();
             ordance = inFighterJet.getOrdance();
             wingSpan = inFighterJet.getWingSpan();
+            engine = getEngine(); 
         }
         
         //ACCESSORS
@@ -95,12 +99,11 @@ public class FighterJet
         {
             return wingSpan;
         }
-        /* not yet implemented, only doing this so I can test my calc travel */
-        
-        public int getCylinders()
+        public Engine getEngine()
         {
-            return 6; 
+            return new Engine(engine);
         }
+        
 
         //MUTATORS
 
@@ -174,7 +177,27 @@ public class FighterJet
                                                     " (inclusive)");
             }
         }
-
+        /***********************************************************************
+        SUBMODULE: setEngine
+        IMPORT: inEngine (Engine object)
+        EXPORT: none
+        ASSERTION: set engine to inEngine if it's valid, otherwise fail
+        ***********************************************************************/
+        public Engine setEngine(Engine inEngine) 
+        {
+            if(!(inEngine instanceof Engine))
+            {
+                throw new IllegalArgumentException("ERROR: not a valid "+
+                                                   "engine");
+            }
+            else
+            {
+                engine = inEngine;
+            }
+            
+            return engine;
+        }
+    
         //DOING METHODS:
 
        /* SUBMODULE: calcTravel (*** I cannot impliment this yet, as my knowledge on
@@ -275,15 +298,15 @@ public class FighterJet
             FighterJet cloneFighterJet;
 
             cloneFighterJet = new FighterJet(this.serialNum, this.year, 
-                                                this.ordance, this.wingSpan); 
+                                    this.ordance, this.wingSpan, this.engine);
             return cloneFighterJet; 
         }
         /********************************************************************
         SUBMODULE: equals
         IMPORT: inObjct (object)
         EXPORT: isSame (boolean)
-        ASSERTION: two fighter jets are interchangable if they have the same ordance
-                   and wingspan
+        ASSERTION: two fighter jets are interchangable if they have the same 
+                   ordance and wingspan
         ********************************************************************/
         public boolean equals(Object inObjct)
         {
@@ -292,7 +315,8 @@ public class FighterJet
             {
                 FighterJet inFighterJet = (FighterJet)inObjct;
                 isSame = ordance.equals(inFighterJet.getOrdance()) &&
-                          wingSpan == (inFighterJet.getWingSpan());
+                          wingSpan == (inFighterJet.getWingSpan()) &&
+                          engine.equals(getEngine());
             }
 
             return isSame;
@@ -305,10 +329,11 @@ public class FighterJet
         ********************************************************************/
         public String toString()
         {
-        
+            int cylinders = engine.getCylinders();
+            String fuel = engine.getFuel();
             return("The ship " +serialNum+ " was comissioned in " +year+ 
-                   " , its engine has "/* +cylinders*/+ " cylinders and runs on "
-                   /* +fuel*/+ "fuel. It is a fighter jet with a wing span of "
+                   " , its engine has " +cylinders+ " cylinders and runs on "
+                    +fuel+ "fuel. It is a fighter jet with a wing span of "
                     +wingSpan+ " metres and equiped wit " +ordance+ ".");
         }
         /********************************************************************
@@ -319,7 +344,9 @@ public class FighterJet
         ********************************************************************/
         public String toFileString()
         {
-            return("F," +serialNum+ "," +year+ "," /*+cylinders*/+ "," /*+fuel*/+ "," 
+            int cylinders = engine.getCylinders();
+            String fuel = engine.getFuel();
+            return("F," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ "," 
                   +ordance+"," +wingSpan+ ".");
         }
     } 

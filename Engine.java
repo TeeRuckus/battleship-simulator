@@ -113,9 +113,6 @@ public class Engine
                 throw new IllegalArgumentException("Invalid fuel");
             }
         }
-
-        //DOING METHODS:
-
        /* SUBMODULE: calcTravel (*** I cannot impliment this yet, as my knowledge on
                             how to is limited ***) */
 

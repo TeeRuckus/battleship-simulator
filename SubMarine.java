@@ -16,6 +16,7 @@ public class SubMarine
         private double serialNum, maxDepth;
         private int year;
         private String hull;
+        private Engine engine;
 
         /***********************************************************************
         DEFUALT Constructor
@@ -31,6 +32,7 @@ public class SubMarine
             year = 1950;
             hull = TTNM;
             maxDepth = -500.0;
+            engine = new Engine();
         }
         /***********************************************************************
         ALTERNATE Constructor
@@ -41,7 +43,7 @@ public class SubMarine
                    FAIL
         ***********************************************************************/
         public SubMarine(double inSerialNum, int inYear, String inHull,
-                     double inMaxDepth)
+                     double inMaxDepth, Engine inEngine)
         {
             if(validateSerialNum(inSerialNum))
             {
@@ -55,6 +57,7 @@ public class SubMarine
                             year = inYear;
                             hull = inHull;
                             maxDepth = inMaxDepth;
+                            engine = inEngine;
                         }
                     }
                 }
@@ -71,12 +74,13 @@ public class SubMarine
         EXPORT: none
         ASSERTION: creates an objext which is identical to the importred onkect
         ***********************************************************************/
-        public SubMarine(SubMarine inSubMarine)
+        public SubMarine(SubMarine inSubMarine, Engine inEngine)
         {
             serialNum = inSubMarine.getSerialNum();
             year = inSubMarine.getYear();
             hull = inSubMarine.getHull();
             maxDepth = inSubMarine.getMaxDepth();
+            engine = getEngine();
         }
 
         //ACCESSORS
@@ -100,12 +104,11 @@ public class SubMarine
         {
             return maxDepth;
         }
-        
-        /* needs to be implemented propertly */
-        public int getCylinders()
+        public Engine getEngine()
         {
-            return 1;
+            return new Engine(engine);
         }
+        
 
         //MUTATORS
 
@@ -177,6 +180,26 @@ public class SubMarine
                                                     "input a depth between the"+
                                                     " ranges of -500.0 to 0");
             }
+        }
+        /***********************************************************************
+        SUBMODULE: setEngine
+        IMPORT: inEngine (Engine object)
+        EXPORT: none
+        ASSERTION: set engine to inEngine if it's valid, otherwise fail
+        ***********************************************************************/
+        public Engine setEngine(Engine inEngine) 
+        {
+            if(!(inEngine instanceof Engine))
+            {
+                throw new IllegalArgumentException("ERROR: not a valid "+
+                                                   "engine");
+            }
+            else
+            {
+                engine = inEngine;
+            }
+            
+            return engine;
         }
 
         //DOING METHODS:
@@ -281,7 +304,7 @@ public class SubMarine
             SubMarine cloneSubMarine;
 
             cloneSubMarine = new SubMarine(this.serialNum, this.year,
-                                                this.hull, this.maxDepth);
+                                        this.hull, this.maxDepth, this.engine);
             return cloneSubMarine;
         }
         /********************************************************************
@@ -291,14 +314,15 @@ public class SubMarine
         ASSERTION: two submarines are interchangable if they have the same hull,
                    and max depth
         ********************************************************************/
-        public boolean equals(Object inObjct)
+        public boolean equals(Object inObjct, Engine inEngine)
         {
             boolean isSame = false;
             if(inObjct instanceof SubMarine)
             {
                 SubMarine inSubmarine = (SubMarine)inObjct;
                 isSame = hull.equals(inSubmarine.getHull()) &&
-                          maxDepth == (inSubmarine.getMaxDepth());
+                          maxDepth == (inSubmarine.getMaxDepth()) &&
+                          engine.equals(getEngine()); 
             }
 
             return isSame;
@@ -311,10 +335,11 @@ public class SubMarine
         ********************************************************************/
         public String toString()
         {
-
+            int cylinders = engine.getCylinders();
+            String fuel = engine.getFuel();
             return("The ship " +serialNum+ " was comissioned in " +year+
-                   " , its engine has "/* +cylinders*/+ " cylinders and runs on "
-                   /* +fuel*/+ ". It is a submarine with a " +hull+ " hull and a" +
+                   " , its engine has " +cylinders+ " cylinders and runs on "
+                    +fuel+ ". It is a submarine with a " +hull+ " hull and a" +
                     " max depth of " +maxDepth+ ".");
         }
         /********************************************************************
@@ -325,7 +350,9 @@ public class SubMarine
         ********************************************************************/
         public String toFileString()
         {
-            return("S," +serialNum+ "," +year+ "," /*+cylinders*/+ "," /*+fuel*/+ ","
+            int cylinders = engine.getCylinders();
+            String fuel = engine.getFuel(); 
+            return("S," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ ","
                   +hull+"," +maxDepth);
         }
     }
