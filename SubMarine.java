@@ -187,7 +187,7 @@ public class SubMarine
         EXPORT: none
         ASSERTION: set engine to inEngine if it's valid, otherwise fail
         ***********************************************************************/
-        public Engine setEngine(Engine inEngine) 
+        public void  setEngine(Engine inEngine) 
         {
             if(!(inEngine instanceof Engine))
             {
@@ -199,7 +199,6 @@ public class SubMarine
                 engine = inEngine;
             }
             
-            return engine;
         }
 
         //DOING METHODS:

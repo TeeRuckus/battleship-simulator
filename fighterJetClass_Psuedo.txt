@@ -7,6 +7,7 @@ CLASS FIELDS:
     year (Interger)
     ordance (string)
     wingSpan (Real)
+    engine (Engine)
 
 COSTRUCTORS:
 
@@ -22,10 +23,11 @@ Defualt:
         year := 1950
         ordance := "machine guns"
         wingSpan := 3.0
+        enigine = default Engine
 
 Alternate
     IMPORT: inSerialNum (Real), inYear (Interger), inOrdance (String),
-            inWingSpan (Real)
+            inWingSpan (Real), inEngine (Engine) 
     EXPORT: none
     ASSERTIONS: creates an object if the imports are valid, otherwise it will
                 FAIL
@@ -40,6 +42,7 @@ Alternate
                         year := inYear
                         ordance := inOrdance
                         wingSpan := inWingSpan
+                        engine := inEngine
         ELSE
             FAIL
         END IF ELSE
@@ -54,6 +57,7 @@ Copy:
         year := inFighterJet.getYear <- none
         ordance := inFighterJet.getOrdance <- none
         wingSpan := inFighterJet.getWingSpan <- none
+        engine := getEngine <- none
 
 ACCESSORS
 
@@ -76,6 +80,11 @@ SUBMODULE: getWingSpan
     IMPORT: none
     EXPORT: wingSpan
     ASSERTION: returns the last set wingspan
+
+SUBMODULE: getEngine 
+    IMPORT: none
+    EXPORT: new Engine object
+    ASSERTION: returns the last created engine object
 
 MUTATORS:
 
@@ -127,6 +136,19 @@ SUBMODULE: setWingSpan
             wingSpan :=  inWingSpan
         ELSE
             FAIL
+        END IF ELSE
+
+SUBMODULE: setEngine
+    IMPORT: inEngine (Engine object) 
+    EXPORT: engine (Engine ObjectA
+    ASSERTION: sets engine to inEngine it it's valid, otherwise fail
+
+    ALGORITHM:
+
+        IF(NOT(inEngine ISA Engine)) THEN
+            FAIL
+        ELSE
+            engine := inEngine
         END IF ELSE
 
 DOING METHODS:
@@ -210,19 +232,21 @@ SUBMODULE: clone
             -year
             -ordance
             -wingSpan
+            -engine
 
 SUBMODULE: equals
     IMPORT: inObjct (object)
     EXPORT: isSame (boolean)
-    ASSERTION: two fighter jets are interchangable if they have the same ordance, and
-                wingspan
+    ASSERTION: two fighter jets are interchangable if they have the same 
+               ordance, and wingspan
 
     ALGORITHM:
         isSame := FALSE
         IF (inObj ISA FighterJet) THEN
             inFighterJet  := (Convert to FighterJet)inObjct
             isSame := (ordance EQUALS inFighterJet.getOrdance <- none) AND
-                      (wingSpan EQUALS inFighterJet.getWingSpan <- none)
+                      (wingSpan EQUALS inFighterJet.getWingSpan <- none) AND
+                      engine EQUALS getEngine <- none
         END IF
 
 

@@ -11,6 +11,7 @@ CLASS FIELDS:
     year (Interger)
     hull (string)
     maxDepth (Real)
+    engine (Engine)
 
 COSTRUCTORS:
 
@@ -26,6 +27,7 @@ Defualt:
         year := 1950
         hull := TTNM
         maxDepth := 500.0
+        enigine = defualt Engine
 
 Alternate
     IMPORT: inSerialNum (Real), inYear (Interger), inHull (String),
@@ -44,6 +46,7 @@ Alternate
                         year := inYear
                         hull := inHull
                         maxDepth := inMaxDepth
+                        engine := inEngine
         ELSE
             FAIL
         END IF ELSE
@@ -58,6 +61,7 @@ Copy:
         year := inSubMarine.getYear <- none
         hull := inSubMarine.getHull <- none
         maxDepth := inSubMarine.getMaxDepth <- none
+        engine := getEngine <- none 
 
 ACCESSORS
 
@@ -80,6 +84,11 @@ SUBMODULE: getMaxDepth
     IMPORT: none
     EXPORT: maxDepth
     ASSERTION: returns the last set max depth
+
+SUBMODULE: getEngine 
+    IMPORT: none 
+    EXPORT: new Engine object
+    ASSERTION: returns the last created engine object
 
 MUTATORS:
 
@@ -132,6 +141,17 @@ SUBMODULE: setMaxDepth
         ELSE
             FAIL
         END IF ELSE
+
+SUBMODULE: setEngine
+    IMPORT: inEngine (Engine object) 
+    EXPORT: engine (Engine ObjectA
+    ASSERTION: sets engine to inEngine it it's valid, otherwise fail
+
+    ALGORITHM:
+
+        IF(NOT(inEngine ISA Engine)) THEN
+            FAIL
+        ELSE
 
 DOING METHODS:
 
@@ -230,6 +250,7 @@ SUBMODULE: clone
             -year
             -hull
             -maxDepth
+            -engine
 
 SUBMODULE: equals
     IMPORT: inObjct (object)
@@ -242,7 +263,8 @@ SUBMODULE: equals
         IF (inObj ISA SubMarine) THEN
             inSubmarine  := (Convert to SubMarine)inObjct
             isSame := (hull EQUALS inSubmarine.getHull <- none) AND
-                      (maxDepth EQUALS inSubmarine.getMaxDepth <- none)
+                      (maxDepth EQUALS inSubmarine.getMaxDepth <- none) AND
+                      engine EQUALS getEngine <- none
         END IF
 
 

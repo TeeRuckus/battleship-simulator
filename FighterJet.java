@@ -183,7 +183,7 @@ public class FighterJet
         EXPORT: none
         ASSERTION: set engine to inEngine if it's valid, otherwise fail
         ***********************************************************************/
-        public Engine setEngine(Engine inEngine) 
+        public void setEngine(Engine inEngine) 
         {
             if(!(inEngine instanceof Engine))
             {
@@ -195,7 +195,6 @@ public class FighterJet
                 engine = inEngine;
             }
             
-            return engine;
         }
     
         //DOING METHODS:
