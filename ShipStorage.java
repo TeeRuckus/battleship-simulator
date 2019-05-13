@@ -164,7 +164,8 @@ public class ShipStorage
         {
             double ratio, denom, invDenom;
        
-            ratio = ((double)distance / (double)(inShip.getCylinders()));
+            ratio = ((double)distance / 
+                    (double)(inShip.getEngine().getCylinders()));
             denom = (10.00 + (inShip.getMaxDepth() * -1.00));
             invDenom = 1.00 / denom;
         
@@ -213,8 +214,8 @@ public class ShipStorage
                                                   int distance)
         {
             double denom, timeHours;
-            denom = inShip.getWingSpan() * (double)inShip.getCylinders() * 
-                                                                        150.00;
+            denom = inShip.getWingSpan() * 
+                    (double)inShip.getEngine().getCylinders() * 150.00;
             timeHours = (double)distance / denom;
             
             return timeHours;
