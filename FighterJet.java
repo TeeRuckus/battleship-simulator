@@ -282,7 +282,7 @@ public class FighterJet
         SUBMODULE: equals
         IMPORT: inObjct (object)
         EXPORT: isSame (boolean)
-        ASSERTION: two fighter jets are interchangable if they have the same ordance, 
+        ASSERTION: two fighter jets are interchangable if they have the same ordance
                    and wingspan
         ********************************************************************/
         public boolean equals(Object inObjct)

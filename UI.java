@@ -670,11 +670,11 @@ public class UI
 
             for(int ii = 0; ii < storageUnit.MAX_CAP * 2; ii++)
             {
-                System.out.println("SubMarine [ii]\n" +
+                System.out.println("SubMarine["+ii+"]\n" +
                                    duplicates[ii].toString());
-                for(int jj = 1; ii < storageUnit.MAX_CAP * 2; jj++) 
+                for(int jj = 1; jj < storageUnit.MAX_CAP * 2; jj++) 
                 {
-                    System.out.println("SubMarine duplicate [jj-1]\n" +
+                    System.out.println("SubMarine duplicate ["+(jj-1)+"]\n" +
                                         duplicates[jj].toString());
                 }
             }

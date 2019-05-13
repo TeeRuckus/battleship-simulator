@@ -7,7 +7,7 @@ public class ShipStorageTestHarness
             ShipStorage shipStorage;
             SubMarine [] subs = new SubMarine[4];
             FighterJet [] jets = new FighterJet[4];
-            
+        
             //creating objects for testing
             shipStorage = new ShipStorage();
             subs[0] = new SubMarine(101.301, 2000, SubMarine.STEEL, -300);
@@ -19,6 +19,10 @@ public class ShipStorageTestHarness
             jets[1] = jets[0].clone();
             jets[2] = new FighterJet(199.666, 1969, "ninjas", 4);
             jets[3] = new FighterJet(100.300, 1955, "OOPD is insane", 5);
+            SubMarine[] duplicatesSubs = new 
+                                         SubMarine[shipStorage.MAX_CAP * 2];
+            FighterJet[] duplicatesJets = new 
+                                          FighterJet[shipStorage.MAX_CAP * 2];
 
             //ADD SHIPS TESTING
             for(int ii = 0; ii < 4; ii++)
@@ -42,6 +46,23 @@ public class ShipStorageTestHarness
                                "\n" +shipStorage.getLastJet().toString()+"\n");
 
             System.out.println("\n FIND DUPLICATES TEST \n");
+            
+            shipStorage.findDuplicateSubs();
+            System.out.println("\n Submarine duplicates \n"); 
+            for(int ii = 0; ii < shipStorage.MAX_CAP * 2; ii++)
+            {
+                System.out.println("Submarine["+ii+"]\n"+ 
+                                    duplicatesSubs[ii].toString());
+                for(int jj = 1; jj < shipStorage.MAX_CAP * 2; ii++)
+                {
+                    System.out.println("Submarine duplicate ["+(jj-1)+"]\n"+
+                                        duplicatesSubs[jj].toString());
+                }
+            }
+
+            System.out.println("\n FighterJet duplicates \n");
+            
+            
 
             
             
