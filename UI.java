@@ -131,11 +131,21 @@ public class UI
                     {
                         isValid = true;
                     }
+                    else
+                    {
+                        System.out.println("\nPlease input a valid serial "+
+                                           "number\n-The whole part of the "+
+                                           "serial number must be between 100"+
+                                           " - 300 (Inclusive)\n-the decimal"+
+                                           " part must be between 001 to 999"+
+                                           " (inclusive).\n");
+                    }
                 }
                 catch(InputMismatchException err)
                 {
                     System.out.println("ERROR: please input a valid "+
                                          "serial number: " +err.getMessage());
+                    in.nextLine();
                     isValid = false; 
                 }
             }while (!isValid);
@@ -291,7 +301,7 @@ public class UI
             {
                 try
                 {
-                    System.out.print("Please enter the wingspan of the "+
+                    System.out.print("\nPlease enter the wingspan of the "+
                                         "ship: ");
                     wingSpan = in.nextDouble();
                     if (validateWingSpan(wingSpan))
@@ -325,7 +335,7 @@ public class UI
             {
                 try
                 {
-                    System.out.print("Please enter the ordance of the "+
+                    System.out.print("\nPlease enter the ordance of the "+
                                        "ship: ");
                     ordance = in.nextLine();
                     if (validateOrdance(ordance))
@@ -358,7 +368,7 @@ public class UI
             {
                 try
                 { 
-                    System.out.print("Please enter the manfacture year of "+
+                    System.out.print("\nPlease enter the manfacture year of "+
                                      "the ship: ");
                     year = in.nextInt();
                     if(validateYear(year))
@@ -391,7 +401,7 @@ public class UI
             {
                 try
                 {
-                    System.out.print("Please enter the fuel of the ship: ");
+                    System.out.print("\nPlease enter the fuel of the ship: ");
                     fuel = in.nextLine();
                     if(validateFuel(fuel))
                     {
