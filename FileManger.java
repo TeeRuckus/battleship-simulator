@@ -175,7 +175,7 @@ public class FileManger
                         maxDepth = Double.parseDouble(lineContents[6]); 
                         SubMarine sub = new SubMarine(serialNum, year, hull, 
                                                                     maxDepth);
-                        storageUnit.addShipSub(sub); 
+                        storageUnit.addShip(sub); 
                     }
                 }
                 
@@ -189,7 +189,7 @@ public class FileManger
                         ordance = lineContents[6];
                         FighterJet jet = new FighterJet(serialNum, year,
                                                         ordance, wingSpan);
-                        storageUnit.addShipJet(jet); 
+                        storageUnit.addShip(jet); 
                     }
                 }
         
