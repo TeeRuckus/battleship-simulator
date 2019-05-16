@@ -9,8 +9,18 @@ public class ShipManager
 {
     public static void main(String [] args)
     {
-        UI userInterface = new UI();
-        userInterface.mainMenu();
+        /* placing the try and catch blocks to handle errors which may have 
+           crept to the class. This is error handling, just in case if
+           something goes horribily wrong */
+        try
+        {
+            UI userInterface = new UI();
+            userInterface.mainMenu();
+        }
+        catch(IllegalArgumentException err)
+        {
+            System.out.println(err.getMessage());
+        }
     }
 }
 /*

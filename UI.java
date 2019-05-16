@@ -119,8 +119,8 @@ public class UI
             {   
                 try
                 {
-                    System.out.println("Please enter the serial number of "+
-                                       "the ship:\n");
+                    System.out.print("\nEnter the serial number of "+
+                                       "the ship: ");
                     serialNum = in.nextDouble();
                     
                     /*you can use either the submarine or fighterjet classes
@@ -157,7 +157,7 @@ public class UI
                 try       
                 {
                     isValid = true; 
-                    shipType = inputCharMenu("Press the followng to enter "+
+                    shipType = inputCharMenu("\nPress the followng to enter "+
                                              "ship type:\nS - Submarine\n"+
                                               "F- - Fighter Jet "); 
                 }
@@ -189,7 +189,7 @@ public class UI
             {
                 try
                 {
-                    System.out.print("Number of cylinders of the ships:\n");
+                    System.out.print("\nNumber of cylinders of the ships: ");
                     cylinders = in.nextInt();
 
                     /*You can use either the submarine or fighterejet class
@@ -220,13 +220,13 @@ public class UI
         public String getUserHull()
         {    
             Scanner in = new Scanner(System.in);
-            String hull = null;
+            String hull = "";
             boolean isValid = false;
             do
             {
                 try
                 {
-                    System.out.print("Enter hull of the ship:\n");
+                    System.out.print("\nEnter hull of the ship: ");
                     hull = in.nextLine();
                     if (validateHull(hull))
                     {
@@ -235,7 +235,7 @@ public class UI
                 }
                 catch(InputMismatchException err) 
                 {
-                    System.out.println("ERROR: please input a string: "+
+                    System.out.print("ERROR: please input valid hull: "+
                                         err.getMessage());
                     isValid = false; 
                 }
@@ -258,8 +258,8 @@ public class UI
             {
                 try
                 {
-                    System.out.println("Please enter the max depth of "+
-                                        "the ship\n");
+                    System.out.print("\nPlease enter the max depth of "+
+                                        "the ship: ");
                     depth = in.nextDouble();
                     if (validateMaxDepth(depth))
                     {
@@ -268,7 +268,7 @@ public class UI
                 }
                 catch(InputMismatchException err)
                 {
-                    System.out.println("ERROR: please input a real number: "+
+                    System.out.print("ERROR: please input a valid max depth: "+
                                         err.getMessage());
                     isValid = false;
                 }
@@ -291,8 +291,8 @@ public class UI
             {
                 try
                 {
-                    System.out.println("Please enter the wingspan of the "+
-                                        "ship\n");
+                    System.out.print("Please enter the wingspan of the "+
+                                        "ship: ");
                     wingSpan = in.nextDouble();
                     if (validateWingSpan(wingSpan))
                     {
@@ -301,7 +301,7 @@ public class UI
                 }
                 catch(InputMismatchException err)
                 {
-                    System.out.println("ERROR: please input a real number: "+
+                    System.out.print("ERROR: please input a valid wingspan: "+
                                         err.getMessage());
                     isValid = false; 
                 }
@@ -319,14 +319,14 @@ public class UI
         public String getUserOrdance()
         {
             Scanner in = new Scanner(System.in);
-            String ordance = null; 
+            String ordance = "";
             boolean isValid = false;
             do
             {
                 try
                 {
                     System.out.print("Please enter the ordance of the "+
-                                       "ship:\n ");
+                                       "ship: ");
                     ordance = in.nextLine();
                     if (validateOrdance(ordance))
                     {
@@ -335,7 +335,7 @@ public class UI
                 }
                 catch(InputMismatchException err)
                 {
-                    System.out.println("ERROR: please enter an ordance: "+
+                    System.out.println("ERROR: please enter a valid ordance: "+
                                        err.getMessage()); 
                     isValid = false; 
                 }
@@ -359,7 +359,7 @@ public class UI
                 try
                 { 
                     System.out.print("Please enter the manfacture year of "+
-                                     "the ship\n");
+                                     "the ship: ");
                     year = in.nextInt();
                     if(validateYear(year))
                     {
@@ -368,7 +368,7 @@ public class UI
                 }
                 catch(InputMismatchException err)
                 {
-                    System.out.println("ERROR: please enter a integer: "+
+                    System.out.print("ERROR: please enter a integer: "+
                                         err.getMessage()+ "\n");
                     isValid = false;
                 }
@@ -385,13 +385,13 @@ public class UI
         public String getUserFuel()
         {
             Scanner in = new Scanner(System.in);
-            String fuel = null;
+            String fuel = "";
             boolean isValid = false;
             do
             {
                 try
                 {
-                    System.out.print("Please enter the fuel of the ship:\n");
+                    System.out.print("Please enter the fuel of the ship: ");
                     fuel = in.nextLine();
                     if(validateFuel(fuel))
                     {
@@ -400,7 +400,7 @@ public class UI
                 }
                 catch(InputMismatchException err)
                 {
-                    System.out.println("ERROR: please enter a valid string: "+
+                    System.out.print("ERROR: please enter a valid string: "+
                                         err.getMessage()+ "\n");
                     isValid = false;
                 }
@@ -417,11 +417,8 @@ public class UI
         **********************************************************************/
         public void addUserShips()
         {
-            /*shipType = getUserShipType();      
-            serialNum = getUserSerialNum();
-            year = getUserYear();
-            cylinders = getUserCylinders(); */
             String[] shipDetails = new String[7];
+
             shipDetails[0] = Character.toString(getUserShipType());
             shipDetails[1] = Double.toString(getUserSerialNum());
             shipDetails[2] = Integer.toString(getUserYear());
@@ -430,15 +427,11 @@ public class UI
             switch(shipDetails[0].charAt(0))
             {
                 case 'S': case 's':
-                   /* hull = getUserHull();
-                    maxDepth = getUserMaxDepth();*/
                     shipDetails[5] = getUserHull();
                     shipDetails[6] = Double.toString(getUserMaxDepth());
                     FileManger.createShipObjcts(shipDetails, storageUnit); 
                     break;
                 case 'F': case'f':
-                   /* wingSpan = getUserWingSpan();
-                    ordance = getUserOrdance();*/
                     shipDetails[5] = Double.toString(getUserWingSpan());
                     shipDetails[6] = getUserOrdance(); 
                     FileManger.createShipObjcts(shipDetails, storageUnit);
@@ -455,7 +448,7 @@ public class UI
         {
             Scanner in = new Scanner(System.in);
             String fileName;
-            System.out.print("Please enter file name to read ships from:\n");
+            System.out.print("\nPlease enter file name to read ships from:\n");
             fileName = in.nextLine();
             FileManger.readFile(fileName, storageUnit);
         }
@@ -473,7 +466,7 @@ public class UI
             int userOp;
             do
             {
-                userOp = inputIntMenu(" 1. Add Ships\n"+
+                userOp = inputIntMenu("\n 1. Add Ships\n"+
                                       " 2. View Ships\n"+
                                       " 3. find duplicates\n"+
                                       " 4. destination Check\n"+
@@ -534,7 +527,7 @@ public class UI
             int userOp;
             do
             {
-                userOp = inputIntMenu("1. Add ships manually\n"+
+                userOp = inputIntMenu("\n1. Add ships manually\n"+
                                           "2. Add ships from file");
                 if((userOp == 1) || (userOp == 2))
                 {
