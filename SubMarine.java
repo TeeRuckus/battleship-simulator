@@ -128,7 +128,7 @@ public class SubMarine
             }
             else
             {
-                throw new IllegalArgumentException("Invalid serial number");
+                throw new IllegalArgumentException("\nInvalid serial number\n");
             }
         }
         /***********************************************************************
@@ -218,7 +218,7 @@ public class SubMarine
                    digits are between 001 - 999 (inclusive), otherwise it will
                    validate them as false.
         ***********************************************************************/
-        private boolean validateSerialNum(double inSerialNum)
+        /*private boolean validateSerialNum(double inSerialNum)
         {
             int wholePart, decimalPart;
             boolean isValid = false;
@@ -234,6 +234,10 @@ public class SubMarine
             }
             return isValid;
 
+        }*/
+        private boolean validateSerialNum(String inSerialNum)
+        {
+            
         }
         /***********************************************************************
         SUBMODULE: validateYear
