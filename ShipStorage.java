@@ -29,8 +29,8 @@ public class ShipStorage
         Defualt:
         IMPORT: none
         EXPORT: none
-        ASSERTION: count varibales of zero and empty arrays of the maximum capacity
-                    variables is valid defualt sate.
+        ASSERTION: count varibales of zero and empty arrays of the maximum 
+                   capacity variables is valid defualt sate.
         **********************************************************************/
         public ShipStorage()
         {
@@ -49,7 +49,7 @@ public class ShipStorage
         ASSERTION: a sub will be added to storeSubs if the inSub is valid, and
                     storeSubs hasn't exceeded the MAX_CAP
         **********************************************************************/
-        public void addShipSub(SubMarine inSub)
+        public void addShip(SubMarine inSub)
         {
             if (validateSub(inSub))
             {
@@ -74,11 +74,12 @@ public class ShipStorage
         ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
                    storeSubs hasn't exceeded MAX_CAP
         **********************************************************************/
-        public void addShipJet(FighterJet inJet)
+        public void addShip(FighterJet inJet)
         {
             if(validateJet(inJet))
             {
                 storeJets[countJets] = inJet;
+
                 /*I am incemention countJets by 1, to go to the next
                 vaccant index of the storeJets*/
                 countJets++;
@@ -210,8 +211,7 @@ public class ShipStorage
         EXPORT: timeHours (Real) 
         PURPOSE: is to calculate the tracel time of the fighter jet in hours
         **********************************************************************/
-        public double calcTravelTimeJet(FighterJet inShip, 
-                                                  int distance)
+        public double calcTravelTimeJet(FighterJet inShip, int distance)
         {
             double denom, timeHours;
             denom = inShip.getWingSpan() * 
@@ -434,6 +434,8 @@ public class ShipStorage
         EXPORT: str [] (address of str in memory of the data type string)
         ASSERTION:
         **********************************************************************/
+        /* make these a variable overload, so you can use the same name when
+           you call them */
         public String [] toStringSubArr()
         {
                 String str [] = new String [MAX_CAP];
@@ -453,6 +455,7 @@ public class ShipStorage
         EXPORT: str [] (address of str in memory of the data type string)
         ASSERTION:
         **********************************************************************/
+        /*variable overload here */
         public String [] toStringJetArr()
         {
             String str [] = new String [MAX_CAP];

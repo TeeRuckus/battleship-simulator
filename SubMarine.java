@@ -64,6 +64,7 @@ public class SubMarine
             }
             else
             {
+                //get rid of this and make the validate modules care for this
                 throw new IllegalArgumentException("\nInvalid object import" +
                                                    "values\n");
             }
@@ -353,5 +354,7 @@ public class SubMarine
             String fuel = engine.getFuel(); 
             return("S," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ ","
                   +hull+"," +maxDepth);
+            /* make this method just return the engine toString method,
+               so it's a little bit easier to do everything */
         }
     }
