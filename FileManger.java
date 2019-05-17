@@ -134,13 +134,14 @@ public class FileManger
                                         storageUnit)
     {   
         char shipType;
-        double serialNum, maxDepth, wingSpan;
+        String serialNum;
+        double maxDepth, wingSpan;
         int year, cylinders;
         String fuel, hull, ordance; 
         shipType = lineContents[0].charAt(0);
         //intiliasing the variables to 0 or nothing, to allow java to compile    
         shipType = '\0'; //is this the correct way to set it to nothing
-        serialNum = 0.0;
+        serialNum = "";
         maxDepth = 0.0;
         wingSpan = 0.0;
         year = 0;

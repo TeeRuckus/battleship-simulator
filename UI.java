@@ -508,21 +508,22 @@ public class UI
                         saveShips();
                         break;
                     case 7:
-                        System.out.println("Goodbye friend\n");
+                        System.out.println("\nGoodbye friend\n");
                         break;
                     default:
                         System.out.println("Invalid option");
                         break;
                 }
-                if ((userOp != 1) ||(userOp != 2) || (userOp != 3) || 
-                    (userOp != 4) || (userOp != 5) || (userOp != 6) || 
-                    (userOp !=7))
+                if ((userOp != 1) && (userOp != 2) && (userOp != 3) && 
+                    (userOp != 4) && (userOp != 5) && (userOp != 6) &&
+                    (userOp != 7))
                 {
-                    System.out.println("Please enter an option which is in "+
-                                       "the menu below:\n ");
+                    System.out.println("\nERROR:Please enter an option which "+
+                                        "is in the menu below:\n ");
                 }
-            }while((userOp != 1) ||(userOp != 2) || (userOp != 3) || 
-                   (userOp != 4) || (userOp != 5) || (userOp != 6) || 
+
+            }while((userOp != 1) && (userOp != 2) && (userOp != 3) && 
+                   (userOp != 4) && (userOp != 5) && (userOp != 6) &&
                    (userOp != 7));
 
         }

@@ -73,7 +73,7 @@ public class ShipStorage
         {
             if(validateJet(inJet))
             {
-                storeJets[countJets] = inJet.clone;
+                storeJets[countJets] = inJet.clone();
                 /*I am incemention countJets by 1, to go to the next
                 vaccant index of the storeJets*/
                 countJets++;

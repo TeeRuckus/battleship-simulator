@@ -13,9 +13,9 @@ public class SubMarine
         public static final String TTNM = "TITANIUM";
 
         //private class fields
-        private double serialNum, maxDepth;
+        private double maxDepth;
         private int year;
-        private String hull;
+        private String hull, serialNum;
         private Engine engine;
 
         /***********************************************************************
@@ -28,7 +28,7 @@ public class SubMarine
         ***********************************************************************/
         public SubMarine()
         {
-            serialNum = 123.250;
+            serialNum = "123.250";
             year = 1950;
             hull = TTNM;
             maxDepth = -500.0;
@@ -42,7 +42,7 @@ public class SubMarine
         ASSERTION: creates an object if the imports are valid, otherwise it will
                    FAIL
         ***********************************************************************/
-        public SubMarine(double inSerialNum, int inYear, String inHull,
+        public SubMarine(String inSerialNum, int inYear, String inHull,
                      double inMaxDepth, Engine inEngine)
         {
             if(validateSerialNum(inSerialNum))
@@ -86,7 +86,7 @@ public class SubMarine
 
         //ACCESSORS
 
-        public double getSerialNum()
+        public String getSerialNum()
         {
             return serialNum;
         }
@@ -120,7 +120,7 @@ public class SubMarine
         ASSERTION: sets the serial number to inSerialNum if it's valid,
                    otherwise it fails
         ***********************************************************************/
-        public void setSerialNum(double inSerialNum)
+        public void setSerialNum(String inSerialNum)
         {
            if(validateSerialNum(inSerialNum))
             {
@@ -218,29 +218,115 @@ public class SubMarine
                    digits are between 001 - 999 (inclusive), otherwise it will
                    validate them as false.
         ***********************************************************************/
-        /*private boolean validateSerialNum(double inSerialNum)
-        {
-            int wholePart, decimalPart;
-            boolean isValid = false;
-
-            wholePart = (int)inSerialNum;
-            decimalPart = (int)(inSerialNum * 1000) % 1000;
-            if ((wholePart >= 100) && (wholePart <= 300))
-            {
-                if((1 <= decimalPart) && (decimalPart <= 999))
-                {
-                    isValid = true;
-                }
-            }
-            return isValid;
-
-        }*/
         private boolean validateSerialNum(String inSerialNum)
         {
-            boolean isValid = true;
+            boolean isValid = false;
             /* don't forget to check the length of the string, to make sure
                it conforms to this follwoing length XXX.YYY */
+            String [] parts = new String[2];
+            parts = inSerialNum.split("\\.");
+            
+            if(validateSerialNumLength(inSerialNum))
+            {
+                if(validateWholePart(parts[0]))
+                {
+                    if(validateDecimalPart(parts[1]))
+                    {
+                        isValid = true;
+                    }
+                }
+            }
+        
+            return isValid; 
+        }
+        /***********************************************************************
+        SUBMODULE: validateSerialNumLength
+        IMPORT: serialNum (String) 
+        EXPORT: isValid (Boolean)
+        ASSERTION: validates the serialNum as true if it has a length of 7 
+                   "XXX.YYY"
+        **********************************************************************/
+        private boolean validateSerialNumLength(String serialNum)
+        {
+            boolean isValid = false;
 
+            if(serialNum.length() == 7)
+            {
+                isValid = true;
+            }
+            else 
+            {
+                throw new IllegalArgumentException("ERROR: The serial number"+
+                                                   "  must a length of 7");
+            }
+        
+            return isValid;
+            
+        }
+
+
+        /***********************************************************************
+        SUBMODULE: validateWholePart
+        IMPORT: wholePart (String)
+        EXPORT: isValid (Boolean)
+        ASSERTION: validates the wholepart of the serial number as true if it's
+                   between 100 to 300 (inclusive)
+        ***********************************************************************/
+        private boolean validateWholePart(String wholePart)
+        {
+            int wholePartInt;
+            boolean isValid; 
+    
+            
+            /* we need to convert wholePart into an integer so we can check 
+               if it's in the valid range og 100 to 300 */
+            wholePartInt = Integer.parseInt(wholePart);
+            isValid = false;
+
+            if(wholePartInt >= 100 && wholePartInt <= 300)
+            {
+                isValid = true;
+            }
+            else
+            {
+                throw new IllegalArgumentException("ERROR: invalid whole "+
+                                             "part of the decimal number");
+            }
+        
+            return isValid; 
+        }
+
+        /***********************************************************************
+        SUBMODULE: validaDecimalPart
+        IMPORT: decimalPart (string)
+        EXPORT: isValid (Boolean)
+        ASSERTION: validates the decimal part of the serial number if it's
+                   it's between 001 to 999 (inclusive)
+        ***********************************************************************/
+        private boolean validateDecimalPart(String decimalPart)
+        {
+            int decimalPartInt;
+            boolean isValid;
+    
+            /* we need to convert decimalPart to an integer so we can check if 
+               it's in the valid range of 001 to 999. However we don't need to
+               check if it has 3 numbers places as another method handles 
+               that */
+            
+            decimalPartInt = Integer.parseInt(decimalPart); 
+            isValid = false;
+
+            if(decimalPartInt >= 1 && decimalPartInt <= 999)
+            {
+                isValid = true;
+            }
+            else
+            {
+                throw new IllegalArgumentException("ERROR: invalid "+
+                                      "decimal part of serial number");
+            }
+
+            return isValid;
         }
         /***********************************************************************
         SUBMODULE: validateYear
