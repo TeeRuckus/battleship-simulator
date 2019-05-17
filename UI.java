@@ -57,7 +57,8 @@ public class UI
                 }
                 catch(InputMismatchException err) 
                 {
-                    System.out.println("Please input an int");
+                    System.out.println("\nPlease input a number which is the "+
+                                       "menu below\n");
 
                     /*I am inputing nothing to clear the buffer of the
                     probalmatic problem, and to avoid the catch loop 
@@ -68,6 +69,35 @@ public class UI
             while (!isValid);
 
             return userOp; 
+        }
+        /**********************************************************************
+        SUBMODULE: inputStringMenu
+        IMPORT: mssg (String)
+        EXPORT: userOp (String)
+        PURPOSE: to allow the user to select one of the options listed 
+                 in the menu using an int.
+        **********************************************************************/
+        public String inputStringMenu(String mssg)
+        {
+            Scanner in = new Scanner(System.in);
+            boolean isValid = false;
+            String userOp = "";
+            do
+            {
+                try 
+                {
+                    System.out.print(mssg);
+                    userOp = in.nextLine();
+                    isValid = true;
+                }
+                catch(InputMismatchException err)
+                {
+                    System.out.println("\nERROR: please input a valid "+
+                                       "string\n");
+                }
+            }while(!isValid);
+
+            return userOp;
         }
         /**********************************************************************
         SUBMODULE: inputCharMenu
@@ -91,9 +121,10 @@ public class UI
                 }
                 catch(InputMismatchException err)
                 {
-                    System.out.println("Please enter a single character");
+                    System.out.println("\nPlease enter a character in the "+
+                                       "menu below\n");
                 
-                    /*I am inputing nothing yo clear the buffer of the 
+                    /*I am inputing nothing to clear the buffer of the 
                     probalmatic problem. and to avoid the catch loop running 
                     an infinte loop*/
                     in.nextLine(); 
@@ -161,25 +192,21 @@ public class UI
         public char getUserShipType()
         {
             char shipType = ' '; 
-            boolean isValid = false; 
             do
             {
-                try       
+                shipType = inputCharMenu("\nPress the followng to enter "+
+                                         "ship type:\nS - Submarine\n"+
+                                          "F- - Fighter Jet "); 
+                
+                if((shipType != 'f') && (shipType != 'F') && (shipType !=  'S') 
+                    && (shipType != 's'))
                 {
-                    isValid = true; 
-                    shipType = inputCharMenu("\nPress the followng to enter "+
-                                             "ship type:\nS - Submarine\n"+
-                                              "F- - Fighter Jet "); 
-                }
-                catch(InputMismatchException err)
-                {
-                    System.out.println("ERROR: please input a single "+
-                                        "character" +err.getMessage());
-                    isValid = false;
+                    System.out.println("\nERROR: please input an option which"+
+                                       " is in the menu below\n");
                 }
             }
             while ((shipType != 'f') && (shipType != 'F') &&
-                     (shipType !=  'S') && (shipType != 's') && (!isValid));
+                     (shipType !=  'S') && (shipType != 's'));
             
             return shipType;
         }
@@ -194,29 +221,18 @@ public class UI
         {    
             Scanner in = new Scanner(System.in);
             int cylinders = 0;
-            boolean isValid = false;
             do 
             {
-                try
-                {
                     System.out.print("\nNumber of cylinders of the ships: ");
                     cylinders = in.nextInt();
-
-                    /*You can use either the submarine or fighterejet class
-                    to validate the number of cylinders */
-
-                    if (validateCylinders(cylinders))
+            
+                    if(!(validateCylinders(cylinders)))
                     {
-                        isValid = true; 
+                        System.out.println("\nERROR:Please ensure cylinders "+
+                                           "is between 2 and 20 (inclusive)");
                     }
-                }
-                catch(InputMismatchException err)
-                {
-                    System.out.println("ERROR: please input an interger: "+
-                                         err.getMessage());
-                    isValid = false;
-                }
-            }while (!isValid);
+
+            }while (!(validateCylinders(cylinders)));
             
             return cylinders;
         }
@@ -229,27 +245,17 @@ public class UI
         **********************************************************************/
         public String getUserHull()
         {    
-            Scanner in = new Scanner(System.in);
             String hull = "";
-            boolean isValid = false;
             do
             {
-                try
-                {
-                    System.out.print("\nEnter hull of the ship: ");
-                    hull = in.nextLine();
-                    if (validateHull(hull))
+                    hull = inputStringMenu("\nEnter hull of the ship: ");
+                    if (!(validateHull(hull)))
                     {
-                        isValid = true; 
+                        System.out.println("\nERROR: please enter one of the "+
+                                           "following hull's\n-steel\n-alloy"+
+                                           "\n-titanium");
                     }
-                }
-                catch(InputMismatchException err) 
-                {
-                    System.out.print("ERROR: please input valid hull: "+
-                                        err.getMessage());
-                    isValid = false; 
-                }
-            }while(!isValid); 
+            }while(!(validateHull(hull)));
             
             return hull;
         }
@@ -274,6 +280,8 @@ public class UI
                     if (validateMaxDepth(depth))
                     {
                         isValid = true;
+                        System.out.println("ERROR: Please entet a max depth "+
+                                        "between -500 to 0 meters (inclusive");
                     }
                 }
                 catch(InputMismatchException err)
@@ -446,6 +454,9 @@ public class UI
                     shipDetails[6] = getUserOrdance(); 
                     FileManger.createShipObjcts(shipDetails, storageUnit);
                     break;
+                default:
+                    
+                    break;
             }
         }
         /**********************************************************************
@@ -483,10 +494,6 @@ public class UI
                                       " 5. Load ships\n"+
                                       " 6. Save Ships\n"+
                                       " 7. Exit");
-        
-                if ((userOp == 1) ||(userOp == 2) || (userOp == 3) || 
-                    (userOp == 4) || (userOp == 5) || (userOp == 6) || 
-                    (userOp ==7))
                 switch(userOp)
                 {
                     case 1:
@@ -511,15 +518,9 @@ public class UI
                         System.out.println("\nGoodbye friend\n");
                         break;
                     default:
-                        System.out.println("Invalid option");
+                        System.out.println("\nERROR: Please enter an option "+
+                                           "which is in the menu below:\n ");
                         break;
-                }
-                if ((userOp != 1) && (userOp != 2) && (userOp != 3) && 
-                    (userOp != 4) && (userOp != 5) && (userOp != 6) &&
-                    (userOp != 7))
-                {
-                    System.out.println("\nERROR:Please enter an option which "+
-                                        "is in the menu below:\n ");
                 }
 
             }while((userOp != 1) && (userOp != 2) && (userOp != 3) && 
@@ -538,10 +539,8 @@ public class UI
             int userOp;
             do
             {
-                userOp = inputIntMenu("\n1. Add ships manually\n"+
+                userOp = inputIntMenu("\n1.Add ships manually\n"+
                                           "2. Add ships from file");
-                if((userOp == 1) || (userOp == 2))
-                {
                     switch(userOp)
                     {
                        case 1:
@@ -551,16 +550,12 @@ public class UI
                                 addShipsFile();
                                 break;
                         default:
-                            System.out.println("Invalid option");
+                            System.out.println("\nPlease enter an option "+
+                                            " which is in the menu below:\n");
                             break;
                     }
-                }
-                if ((userOp != 1) || (userOp !=  2)) 
-                {
-                    System.out.println("Please enter an option which is in "+
-                                       "the menu below:\n ");
-                }
-            }while ((userOp !=  1) || (userOp != 2));
+
+            }while ((userOp !=  1) && (userOp != 2));
 
         }
         /**********************************************************************
@@ -577,26 +572,25 @@ public class UI
                 userOp = inputIntMenu("1. View all ships\n"+
                                           "2. View submarines only\n"+
                                           "3. View fighter jets only ");
-                if ((userOp != 1) ||(userOp != 2) || (userOp != 3)) 
+                switch(userOp)
                 {
-                    System.out.println("Pleae enter an option which is in "+
-                                       "the following menu.\n");
+                   case 1: 
+                        viewSubs();
+                        viewJets();
+                        break;
+                   case 2: 
+                        viewSubs();   
+                        break;
+                   case 3:
+                        viewJets();
+                        break;
+                    default:
+                        System.out.println("\nPleae enter an option which is "+
+                                            "in the following menu.\n");
+                        break; 
                 }
-            }while ((userOp != 1) || (userOp != 2) || (userOp != 3));
+            }while ((userOp != 1) && (userOp != 2) && (userOp != 3));
             
-            switch(userOp)
-            {
-               case 1: 
-                    viewSubs();
-                    viewJets();
-                    break;
-               case 2: 
-                    viewSubs();   
-                    break;
-               case 3:
-                    viewJets();
-                    break;
-            }
         }
 
         /**********************************************************************
@@ -644,26 +638,25 @@ public class UI
                 userOp = inputIntMenu("1. Find all duplicates\n"+
                                       "2. Find submarine duplicates only\n"+
                                       "3. Find fighter Jet duplicates only");
-                if ((userOp != 1) ||(userOp != 2) ||(userOp != 3)) 
+                switch(userOp)
                 {
-                    System.out.println("please input what is in the "+
-                                       "menu below: ");
+                   case 1:
+                        displaySubDuplicates();
+                        displayJetDuplicates();              
+                        break;
+                   case 2:
+                        displaySubDuplicates();
+                        break;
+                   case 3:
+                        displayJetDuplicates();
+                        break;
+                    default:
+                        System.out.println("\nplease input what is in the "+
+                                           "menu below\n");
+                        break; 
                 }
-            }while((userOp != 1) || (userOp != 2) || (userOp != 3));
+            }while((userOp != 1) && (userOp != 2) && (userOp != 3));
 
-            switch(userOp)
-            {
-               case 1:
-                    displaySubDuplicates();
-                    displayJetDuplicates();              
-                    break;
-               case 2:
-                    displaySubDuplicates();
-                    break;
-               case 3:
-                    displayJetDuplicates();
-                    break;
-            }
         }
         /**********************************************************************
         SUBMODULE: displaySubDuplicates:
