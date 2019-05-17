@@ -141,7 +141,7 @@ public class UI
         PURPOSE: to allow the user to select one of the options listed in the 
                  menu using a single character. 
         **********************************************************************/
-        public double iputDoubleMenu(String mssg)
+        public double inputDoubleMenu(String mssg)
         {
             Scanner in = new Scanner(System.in);
             double userOp = 0;
@@ -156,8 +156,8 @@ public class UI
                 }
                 catch(InputMismatchException err)
                 {
-                    Sytem.out.println("\nPlease enter a valid real number\n");
-                    in.nexLine();
+                    System.out.println("\nPlease enter a valid real number\n");
+                    in.nextLine();
                 }
             }while(!isValid);
             return userOp;
@@ -169,7 +169,7 @@ public class UI
         PURPOSE: to ask the serial number from the user, and to validate their 
                  input
         **********************************************************************/
-        public double getUserSerialNum()
+        public String getUserSerialNum()
         {
             String serialNum = "";
             boolean isValid = false;
@@ -290,7 +290,7 @@ public class UI
                                     "between -500 to 0 meters (inclusive");
                 }
 
-            }while(!(validateMaxDepth(depth)))
+            }while(!(validateMaxDepth(depth)));
             
             return depth;
         }
@@ -309,8 +309,8 @@ public class UI
                                            "ship: ");
                 if (!(validateWingSpan(wingSpan)))
                 {
-                    System.out.ptrintln("\nERROR: please enter a wingspan "+
-                                        "2.20 and 25.6 metres (inclusive)")'
+                    System.out.println("\nERROR: please enter a wingspan "+
+                                        "2.20 and 25.6 metres (inclusive)");
                 }
             }while (!(validateWingSpan(wingSpan)));
 
@@ -331,7 +331,7 @@ public class UI
             {
                 ordance = inputStringMenu("\nPlease enter the ordance of the "+
                                           "ship: ");
-            }while (!(validateOrdance));
+            }while (!(validateOrdance(ordance)));
 
             return ordance; 
         }
@@ -351,11 +351,11 @@ public class UI
                                         "the ship: ");
                     if(!(validateYear(year)))
                     {
-                        Sytem.out.println("please enter a commission year between "+
-                                          "1950 and 2022 (inclusive)");
+                        System.out.println("please enter a commission year "+
+                                        "between 1950 and 2022 (inclusive)");
                     }
 
-            }while(!(vaslidateYear(year)));
+            }while(!(validateYear(year)));
         
             return year;
         }
@@ -372,7 +372,8 @@ public class UI
             boolean isValid = false;
             do
             {
-                fuel = iputStringMenu("\nPlease enter the fuel of the ship: ");
+                fuel = inputStringMenu("\nPlease enter the fuel of the "+
+                                       "ship: ");
 
                 if(!(validateFuel(fuel)))
                 {
@@ -388,15 +389,15 @@ public class UI
         SUBMODULE: addUserShips
         IMPORT: none 
         EXPORT: none
-        PURPOSE: to allow the user to add ships manually to the programme, and the
-                 appopriate eror handling and validation. 
+        PURPOSE: to allow the user to add ships manually to the programme, and 
+                 the appopriate eror handling and validation. 
         **********************************************************************/
         public void addUserShips()
         {
             String[] shipDetails = new String[7];
 
             shipDetails[0] = Character.toString(getUserShipType());
-            shipDetails[1] = Double.toString(getUserSerialNum());
+            shipDetails[1] = getUserSerialNum(); 
             shipDetails[2] = Integer.toString(getUserYear());
             shipDetails[3] = Integer.toString(getUserCylinders());
             shipDetails[4] = getUserFuel();
@@ -449,7 +450,7 @@ public class UI
                                       " 4. destination Check\n"+
                                       " 5. Load ships\n"+
                                       " 6. Save Ships\n"+
-                                      " 7. Exit");
+                                      " 7. Exit\n");
                 switch(userOp)
                 {
                     case 1:
@@ -668,7 +669,15 @@ public class UI
         **********************************************************************/
         public void destinationCheck()
         {
-            System.out.println("not yet implememntededed");
+            /*double distance; 
+            int roundDisrance;
+            distance = inputDoublemenu("\nPlease input a distance: ");
+            roundDistance = (int) Math.round(distance);
+
+            destinationCheckS*/
+            System.out.println("not yet implementeded");
+            
+            
         }
         /**********************************************************************
         SUBMODULE: loadShips
