@@ -237,7 +237,10 @@ public class SubMarine
         }*/
         private boolean validateSerialNum(String inSerialNum)
         {
-            
+            boolean isValid = true;
+            /* don't forget to check the length of the string, to make sure
+               it conforms to this follwoing length XXX.YYY */
+
         }
         /***********************************************************************
         SUBMODULE: validateYear
