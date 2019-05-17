@@ -139,14 +139,14 @@ public class FileManger
         String fuel, hull, ordance; 
         shipType = lineContents[0].charAt(0);
         //intiliasing the variables to 0 or nothing, to allow java to compile    
-        shipType = ' ';
+        shipType = '\0'; //is this the correct way to set it to nothing
         serialNum = 0.0;
         maxDepth = 0.0;
         wingSpan = 0.0;
         year = 0;
         cylinders = 0;
-        fuel = null;
-        ordance = null;
+        fuel = ""; 
+        ordance = "";
         
         /*this is not an integer anymore, it's a string which you're 
         parsing to a double number*/
@@ -174,8 +174,8 @@ public class FileManger
                         hull = lineContents[5];
                         maxDepth = Double.parseDouble(lineContents[6]); 
                         SubMarine sub = new SubMarine(serialNum, year, hull, 
-                                                                    maxDepth);
-                        storageUnit.addShipSub(sub); 
+                                        maxDepth, new Engine(cylinders, fuel));
+                        storageUnit.addShip(sub); 
                     }
                 }
                 
@@ -188,8 +188,8 @@ public class FileManger
                         wingSpan = Double.parseDouble(lineContents[5]);
                         ordance = lineContents[6];
                         FighterJet jet = new FighterJet(serialNum, year,
-                                                        ordance, wingSpan);
-                        storageUnit.addShipJet(jet); 
+                               ordance, wingSpan, new Engine(cylinders, fuel));
+                        storageUnit.addShip(jet); 
                     }
                 }
         

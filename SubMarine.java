@@ -64,6 +64,7 @@ public class SubMarine
             }
             else
             {
+                //get rid of this and make the validate modules care for this
                 throw new IllegalArgumentException("\nInvalid object import" +
                                                    "values\n");
             }
@@ -127,7 +128,7 @@ public class SubMarine
             }
             else
             {
-                throw new IllegalArgumentException("Invalid serial number");
+                throw new IllegalArgumentException("\nInvalid serial number\n");
             }
         }
         /***********************************************************************
@@ -217,7 +218,7 @@ public class SubMarine
                    digits are between 001 - 999 (inclusive), otherwise it will
                    validate them as false.
         ***********************************************************************/
-        private boolean validateSerialNum(double inSerialNum)
+        /*private boolean validateSerialNum(double inSerialNum)
         {
             int wholePart, decimalPart;
             boolean isValid = false;
@@ -232,6 +233,13 @@ public class SubMarine
                 }
             }
             return isValid;
+
+        }*/
+        private boolean validateSerialNum(String inSerialNum)
+        {
+            boolean isValid = true;
+            /* don't forget to check the length of the string, to make sure
+               it conforms to this follwoing length XXX.YYY */
 
         }
         /***********************************************************************
@@ -353,5 +361,7 @@ public class SubMarine
             String fuel = engine.getFuel(); 
             return("S," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ ","
                   +hull+"," +maxDepth);
+            /* make this method just return the engine toString method,
+               so it's a little bit easier to do everything */
         }
     }

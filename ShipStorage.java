@@ -8,16 +8,11 @@ public class ShipStorage
     {
         //PUBLIC CLASS CONSTANTS:
 
-          /*I have made two maxiumum capcity to make refactoring and
-            expandibility of the code easier in the future, and to allow the
-            user to have a non 1:1 split of the capacity between submarines an
-            jets. */
-        
-        
         public static final int MAX_CAP = 15; 
 
         //CLASS FIELDS:
-
+        
+        //refactor this to have a method overlaod of the strings. same name
         private int countSubs;
         private int countJets;
         SubMarine storeSubs [];
@@ -29,8 +24,8 @@ public class ShipStorage
         Defualt:
         IMPORT: none
         EXPORT: none
-        ASSERTION: count varibales of zero and empty arrays of the maximum capacity
-                    variables is valid defualt sate.
+        ASSERTION: count varibales of zero and empty arrays of the maximum 
+                   capacity variables is valid defualt sate.
         **********************************************************************/
         public ShipStorage()
         {
@@ -78,7 +73,7 @@ public class ShipStorage
         {
             if(validateJet(inJet))
             {
-                storeJets[countJets] = inJet.clone();
+                storeJets[countJets] = inJet.clone;
                 /*I am incemention countJets by 1, to go to the next
                 vaccant index of the storeJets*/
                 countJets++;
@@ -137,7 +132,7 @@ public class ShipStorage
              of comparison to other submarine objects withing the storeSubs
                      array. The 0 index sub is the most convient*/
     
-            fastestSubTime = calcTravelTimeSub(storeSubs[0], distance);
+            fastestSubTime = calcTravelTime(storeSubs[0], distance);
         
             /*I don't want the reference submarine of comparison, to comparew
             by itself, as this is an ineffecient use of the machine's 
@@ -145,7 +140,7 @@ public class ShipStorage
         
             for(int ii = 1; ii < MAX_CAP; ii++)
             {
-                compareSub = calcTravelTimeSub(storeSubs[ii],distance);
+                compareSub = calcTravelTime(storeSubs[ii],distance);
                 if(compareSub < fastestSubTime)
                 {
                     fastestSub = storeSubs[ii];
@@ -160,7 +155,7 @@ public class ShipStorage
         EXPORT: timeHours (Real) 
         PUROSE: is to calculate the travel time of submarine in hours 
         **********************************************************************/
-        public double calcTravelTimeSub(SubMarine inShip, int distance)
+        public double calcTravelTime(SubMarine inShip, int distance)
         {
             double ratio, denom, invDenom;
        
@@ -187,7 +182,7 @@ public class ShipStorage
             of comparison to other jet objects withing the storeJets
             array. The 0 index sub is the most convient*/
 
-            fastestJetTime = calcTravelTimeJet(storeJets[0], distance);
+            fastestJetTime = calcTravelTime(storeJets[0], distance);
             
             /*I don't want the reference jet of comparison, to comparew
             by itself, as this is an ineffecient use of the machine's 
@@ -195,7 +190,7 @@ public class ShipStorage
             
             for (int ii = 1; ii < MAX_CAP; ii++)                 
             {
-                compareJet = calcTravelTimeJet(storeJets[ii],distance);
+                compareJet = calcTravelTime(storeJets[ii],distance);
                 if (compareJet < fastestJetTime) 
                 {
                     fastestJet = storeJets[ii];
@@ -210,8 +205,7 @@ public class ShipStorage
         EXPORT: timeHours (Real) 
         PURPOSE: is to calculate the tracel time of the fighter jet in hours
         **********************************************************************/
-        public double calcTravelTimeJet(FighterJet inShip, 
-                                                  int distance)
+        public double calcTravelTime(FighterJet inShip, int distance)
         {
             double denom, timeHours;
             denom = inShip.getWingSpan() * 
@@ -432,8 +426,11 @@ public class ShipStorage
         SUBMODULE: toStringSubArr
         IMPORT: none
         EXPORT: str [] (address of str in memory of the data type string)
-        ASSERTION:
+        ASSERTION: str will return the strings stored in storeSubs 
+                   array
         **********************************************************************/
+        /* make these a variable overload, so you can use the same name when
+           you call them */
         public String [] toStringSubArr()
         {
                 String str [] = new String [MAX_CAP];
@@ -451,7 +448,8 @@ public class ShipStorage
         SUBMODULE: toStringJetArr
         IMPORT: none
         EXPORT: str [] (address of str in memory of the data type string)
-        ASSERTION:
+        ASSERTION: str will return the strings of the fighter jets stored in
+                   storeJets.
         **********************************************************************/
         public String [] toStringJetArr()
         {
@@ -511,4 +509,4 @@ public class ShipStorage
             }
             return strArr;
         }
-    }
+    };
