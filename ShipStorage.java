@@ -78,7 +78,7 @@ public class ShipStorage
         {
             if(validateJet(inJet))
             {
-                storeJets[countJets] = inJet;
+                storeJets[countJets] = inJet.clone();
                 /*I am incemention countJets by 1, to go to the next
                 vaccant index of the storeJets*/
                 countJets++;
@@ -244,7 +244,7 @@ public class ShipStorage
                  want the programme to store itself as a dupilcate, hence
                  it will search for objects after itself*/
 
-                for(int jj = 1 ; jj < countSubs;jj++)
+                for(int jj = ii+1 ; jj < countSubs;jj++)
                 {
                     if(storeSubs[ii].equals(storeSubs[jj])) 
                     {
