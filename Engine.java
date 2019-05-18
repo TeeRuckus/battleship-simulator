@@ -210,6 +210,6 @@ public class Engine
         ********************************************************************/
         public String toFileString()
         {
-            return("E, " +cylinders+ " ," +fuel+ ".");
+            return(cylinders+ " ," +fuel+ ".");
         }
     }

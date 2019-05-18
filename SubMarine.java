@@ -38,10 +38,10 @@ public class SubMarine extends Ship
     ASSERTION: creates a submarine object if the imports are valid, otherwise 
                it will FAIL
     ***********************************************************************/
-    public SubMarine(String inSerialNum, int inYear, String inHull,
-                     double inMaxDepth)
+    public SubMarine(String inSerialNum, int inYear, Engine inEngine,
+                     String inHull,double inMaxDepth)
     {
-        super(inSerialNum, inYear);
+        super(inSerialNum, inYear, inEngine);
         if(validateHull(inHull))
         {
             if(validateMaxDepth(inMaxDepth))
@@ -117,14 +117,12 @@ public class SubMarine extends Ship
     EXPORT: timeHours (Real) 
     PUROSE: is to calculate the travel time of submarine in hours 
     **********************************************************************/
-    public double calcTravelTime(SubMarine inSubMarine, int distance)
+    @Override
+    public double calcTravelTime(Object inSubMarine, int distance)
     {
-        // complier to check and to tell you what is excatly wrong
-        @Override
-        super(inSubMarine);
         double ratio, denom, invDenom;
    
-        ratio = ( (double) distance / (double) getCylinders());
+        ratio = ( (double) distance / (double) getEngine().getCylinders());
         denom = (10.00 + getMaxDepth() * -1.00);
         invDenom = 1.00 / denom;
     
@@ -188,9 +186,9 @@ public class SubMarine extends Ship
     EXPORT: an identical object to the current object which has been made
     ASSERTION: returns a cloned object of the current object
     ********************************************************************/
+    @Override
     public SubMarine clone()
     {
-        @Override
         return new SubMarine(this);
     }
 
@@ -201,16 +199,16 @@ public class SubMarine extends Ship
     ASSERTION: two submarines are interchangable if they have the same hull,
                and max depth
     ********************************************************************/
+    @Override
     public boolean equals(Object inObjct, Engine inEngine)
     {
-        @Override
         boolean isSame = false;
         if(inObjct instanceof SubMarine)
         {
             SubMarine inSubmarine = (SubMarine)inObjct;
             isSame = hull.equals(inSubmarine.getHull()) &&
                       maxDepth == (inSubmarine.getMaxDepth()) &&
-                      engine.equals(inEngine); 
+                      getEngine().equals(inEngine); 
         }
 
         return isSame;
@@ -222,11 +220,11 @@ public class SubMarine extends Ship
     EXPORT: str
     ASSERTION:
     ********************************************************************/
+    @Override
     public String toString()
     {
-        @Override
         String str;
-        str = super.toString() + engine.toString()+ 
+        str = super.toString() + getEngine().toString()+ 
               "It is a submarine with a " +hull+ " hull and a  max depth of " 
                +maxDepth+ ".";
 
@@ -239,12 +237,12 @@ public class SubMarine extends Ship
     EXPORT: str
     ASSERTION:
     ********************************************************************/
+    @Override
     public String toFileString()
     {
-        @Override
         String str;
-        str = "S," + super.toFileString() +","+ engine.toFileString() + "," +
-              +hull+ "," +maxDepth;
+        str = "S," + super.toFileString() +","+ getEngine().toFileString() + 
+              "," + hull + "," +maxDepth;
         return str;
     }
 }

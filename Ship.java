@@ -131,9 +131,7 @@ public abstract class Ship
     EXPORT: timeHours (Real) 
     PUROSE: is to calculate the travel time of submarine in hours 
     **********************************************************************/
-    public abstract double calcTravelTime(Object inShip, int distance) 
-    {
-    }
+    public abstract double calcTravelTime(Object inShip, int distance);
     
     //PRIVATE METHODS
 
@@ -272,7 +270,7 @@ public abstract class Ship
         }
         else
         {
-            throw new IllgalArgumentException("Invalid year");
+            throw new IllegalArgumentException("Invalid year");
         }
 
         return isValid;
@@ -286,9 +284,7 @@ public abstract class Ship
     EXPORT: an identical object to the current object which has been made
     ASSERTION: returns a cloned object of the current object
     ********************************************************************/
-    public abstract Object clone()
-    {
-    }
+    public abstract Object clone();
 
     /********************************************************************
     ABSTRACT SUBMODULE: equals
@@ -297,9 +293,7 @@ public abstract class Ship
     ASSERTION: two submarines are interchangable if they have the same hull,
                and max depth
     ********************************************************************/
-    public abstract boolean equals(Object inObject, Engine inEngine)
-    {
-    }
+    public abstract boolean equals(Object inObject, Engine inEngine);
       
     /********************************************************************
     SUBMODULE: toString
