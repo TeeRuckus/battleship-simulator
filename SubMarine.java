@@ -67,7 +67,6 @@ public class SubMarine extends Ship
 
     //ACCESSORS
 
-   
     public String getHull()
     {
         return hull;
@@ -78,8 +77,6 @@ public class SubMarine extends Ship
         return maxDepth;
     }
     
-    
-
     //MUTATORS
 
    /***********************************************************************
@@ -119,142 +116,7 @@ public class SubMarine extends Ship
 
     //PRIVATE SUBMODULES:
 
-    /***********************************************************************
-    SUBMODULE: validateSerialNum
-    IMPORT: inSerialNum (Real)
-    EXPORT: isValid (Boolean)
-    ASSERTION: validates serial numbers as true whereby its first three
-               digits are between 100 to 300 (inclusive), and the last three
-               digits are between 001 - 999 (inclusive), otherwise it will
-               validate them as false.
-    ***********************************************************************/
-    private boolean validateSerialNum(String inSerialNum)
-    {
-        boolean isValid = false;
-        String [] parts = new String[2];
-        parts = inSerialNum.split("\\.");
-        
-        if(validateSerialNumLength(inSerialNum))
-        {
-            if(validateWholePart(parts[0]))
-            {
-                if(validateDecimalPart(parts[1]))
-                {
-                    isValid = true;
-                }
-            }
-        }
-    
-        return isValid; 
-    }
-    /***********************************************************************
-    SUBMODULE: validateSerialNumLength
-    IMPORT: serialNum (String) 
-    EXPORT: isValid (Boolean)
-    ASSERTION: validates the serialNum as true if it has a length of 7 
-               "XXX.YYY"
-    **********************************************************************/
-    private boolean validateSerialNumLength(String serialNum)
-    {
-        boolean isValid = false;
-
-        if(serialNum.length() == 7)
-        {
-            isValid = true;
-        }
-        else 
-        {
-            throw new IllegalArgumentException("ERROR: The serial number"+
-                                               "  must a length of 7");
-        }
-    
-        return isValid;
-        
-    }
-
-
-    /***********************************************************************
-    SUBMODULE: validateWholePart
-    IMPORT: wholePart (String)
-    EXPORT: isValid (Boolean)
-    ASSERTION: validates the wholepart of the serial number as true if it's
-               between 100 to 300 (inclusive)
-    ***********************************************************************/
-    private boolean validateWholePart(String wholePart)
-    {
-        int wholePartInt;
-        boolean isValid; 
-
-        
-        /* we need to convert wholePart into an integer so we can check 
-           if it's in the valid range og 100 to 300 */
-        wholePartInt = Integer.parseInt(wholePart);
-        isValid = false;
-
-        if(wholePartInt >= 100 && wholePartInt <= 300)
-        {
-            isValid = true;
-        }
-        else
-        {
-            throw new IllegalArgumentException("ERROR: invalid whole "+
-                                         "part of the decimal number");
-        }
-    
-        return isValid; 
-    }
-
-    /***********************************************************************
-    SUBMODULE: validaDecimalPart
-    IMPORT: decimalPart (string)
-    EXPORT: isValid (Boolean)
-    ASSERTION: validates the decimal part of the serial number if it's
-               it's between 001 to 999 (inclusive)
-    ***********************************************************************/
-    private boolean validateDecimalPart(String decimalPart)
-    {
-        int decimalPartInt;
-        boolean isValid;
-
-        /* we need to convert decimalPart to an integer so we can check if 
-           it's in the valid range of 001 to 999. However we don't need to
-           check if it has 3 numbers places as another method handles 
-           that */
-        
-        decimalPartInt = Integer.parseInt(decimalPart); 
-        isValid = false;
-
-        if(decimalPartInt >= 1 && decimalPartInt <= 999)
-        {
-            isValid = true;
-        }
-        else
-        {
-            throw new IllegalArgumentException("ERROR: invalid "+
-                                  "decimal part of serial number");
-        }
-
-        return isValid;
-    }
-    /***********************************************************************
-    SUBMODULE: validateYear
-    IMPORT: inYear (intergers)
-    EXPORT: isValid (Boolean)
-    ASSERTION: A commission year between 1950 to 2022 (interger) will be
-                   valid, otherwise an error will be thrown to the user
-    **********************************************************************/
-    private boolean validateYear(int inYear)
-    {
-        boolean isValid = false;
-
-        if (inYear >= 1950 && inYear <= 2022)
-        {
-            isValid = true;
-        }
-
-        return isValid;
-    }
-    /**********************************************************************
+   /**********************************************************************
     SUBMODULE: validateHull
     IMPORT: inHull (String)
     EXPORT: isValid (boolean)
@@ -269,6 +131,10 @@ public class SubMarine extends Ship
            inHull.equals(TTNM))
         {
             isValid = true;
+        }
+        else
+        {
+            throw new IllegalArgumentException("\nInvalid hull\n");
         }
 
         return isValid;
@@ -288,6 +154,10 @@ public class SubMarine extends Ship
         {
             isValid = true;
         }
+        else
+        {
+            throw new IllegalArgumentException("\nInvalid max  depth\n");
+        }
 
         return isValid;
     }
@@ -297,17 +167,14 @@ public class SubMarine extends Ship
     /********************************************************************
     SUBMODULE: clone
     IMPORT: none
-    EXPORT: cloneSubmarine (Object)
+    EXPORT: an identical object to the current object which has been made
     ASSERTION: returns a cloned object of the current object
     ********************************************************************/
     public SubMarine clone()
     {
-        SubMarine cloneSubMarine;
-
-        cloneSubMarine = new SubMarine(this.serialNum, this.year,
-                                    this.hull, this.maxDepth, this.engine);
-        return cloneSubMarine;
+        return new SubMarine(this);
     }
+
     /********************************************************************
     SUBMODULE: equals
     IMPORT: inObjct (object)
@@ -328,6 +195,7 @@ public class SubMarine extends Ship
 
         return isSame;
     }
+
     /********************************************************************
     SUBMODULE: toString
     IMPORT: none
@@ -336,13 +204,14 @@ public class SubMarine extends Ship
     ********************************************************************/
     public String toString()
     {
-        int cylinders = engine.getCylinders();
-        String fuel = engine.getFuel();
-        return("The ship " +serialNum+ " was comissioned in " +year+
-               " , its engine has " +cylinders+ " cylinders and runs on "
-                +fuel+ ". It is a submarine with a " +hull+ " hull and a" +
-                " max depth of " +maxDepth+ ".");
+        String str;
+        str = super.toString() + engine.toString()+ 
+              "It is a submarine with a " +hull+ " hull and a  max depth of " 
+               +maxDepth+ ".";
+
+        return str;
     }
+
     /********************************************************************
     SUBMODULE: toFileString
     IMPORT: none
@@ -351,11 +220,9 @@ public class SubMarine extends Ship
     ********************************************************************/
     public String toFileString()
     {
-        int cylinders = engine.getCylinders();
-        String fuel = engine.getFuel(); 
-        return("S," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ ","
-              +hull+"," +maxDepth);
-        /* make this method just return the engine toString method,
-           so it's a little bit easier to do everything */
+        String str;
+        str = "S," + super.toFileString() +","+ engine.toFileString() + "," +
+              +hull+ "," +maxDepth;
+        return str;
     }
 }
