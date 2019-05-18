@@ -118,7 +118,7 @@ public class SubMarine extends Ship
     PUROSE: is to calculate the travel time of submarine in hours 
     **********************************************************************/
     @Override
-    public double calcTravelTime(Object inSubMarine, int distance)
+    public double calcTravelTime(int distance)
     {
         double ratio, denom, invDenom;
    

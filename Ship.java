@@ -131,7 +131,7 @@ public abstract class Ship
     EXPORT: timeHours (Real) 
     PUROSE: is to calculate the travel time of submarine in hours 
     **********************************************************************/
-    public abstract double calcTravelTime(Object inShip, int distance);
+    public abstract double calcTravelTime(int distance);
     
     //PRIVATE METHODS
 

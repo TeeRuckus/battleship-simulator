@@ -5,440 +5,236 @@ DATE:
 PURPOSE: to create a class which will model the functionality of a real life 
          fighter jet
 *******************************************************************************/
-public class FighterJet
+public class FighterJet extends Ship
+{
+    //private class fields
+    private double wingSpan; 
+    private String ordance;
+
+    /***********************************************************************
+    DEFUALT Constructor
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: a fighter jet with a serial number of 123.250, commissioned 
+               in 1950, with an engine ordance of titanium with a maximum 
+               depth of 500.0 is a valid defualt state
+    ***********************************************************************/
+    public FighterJet()
     {
-        //private class fields
-        private double wingSpan; 
-        private int year;
-        private String ordance, serialNum;
-        private Engine engine;
+        super();
+        ordance = "machine guns";
+        wingSpan = 3.0;
+    }
+    /***********************************************************************
+    ALTERNATE Constructor
+    IMPORT: inSerialNum (Real), inYear (Interger), inOrdance (String), 
+            inWingSpan (Real)        
+    EXPORT: none
+    ASSERTION: creates an object if the imports are valid, otherwise it will
+               FAIL
+    ***********************************************************************/
+    public FighterJet(String inSerialNum, int inYear, String inOrdance, 
+                 double inWingSpan, Engine inEngine)
+    {
+        super(inSerialNum, inYear, inEngine);
 
-        /***********************************************************************
-        DEFUALT Constructor
-        IMPORT: none
-        EXPORT: none
-        ASSERTION: a fighter jet with a serial number of 123.250, commissioned 
-                   in 1950, with an engine ordance of titanium with a maximum 
-                   depth of 500.0 is a valid defualt state
-        ***********************************************************************/
-        public FighterJet()
-        {
-            serialNum = "123.250";
-            year = 1950;
-            ordance = "machine guns";
-            wingSpan = 3.0;
-            engine = new Engine();
-        }
-        /***********************************************************************
-        ALTERNATE Constructor
-        IMPORT: inSerialNum (Real), inYear (Interger), inOrdance (String), 
-                inWingSpan (Real)        
-        EXPORT: none
-        ASSERTION: creates an object if the imports are valid, otherwise it will
-                   FAIL
-        ***********************************************************************/
-        public FighterJet(String inSerialNum, int inYear, String inOrdance, 
-                     double inWingSpan, Engine inEngine)
-        {
-            if(validateSerialNum(inSerialNum))
-            {
-                if(validateYear(inYear))
-                {
-                    if(validateOrdance(inOrdance))
-                    {
-                        if(validateWingSpan(inWingSpan))
-                        {      
-                            serialNum = inSerialNum;
-                            year = inYear;
-                            ordance = inOrdance; 
-                            wingSpan = inWingSpan;  
-                            engine = inEngine;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                throw new IllegalArgumentException("\nInvalid object import" +
-                                                   "values\n");  
-            }
-        }
-        /***********************************************************************
-        COPY Constructor
-        IMPORT: inFighterJet (FighterJet)
-        EXPORT: none
-        ASSERTION: creates an objext which is identical to the importred object
-        ***********************************************************************/
-        public FighterJet(FighterJet inFighterJet)
-        {
-            serialNum = inFighterJet.getSerialNum();
-            year = inFighterJet.getYear();
-            ordance = inFighterJet.getOrdance();
-            wingSpan = inFighterJet.getWingSpan();
-            engine = getEngine(); 
-        }
-        
-        //ACCESSORS
-
-        public String getSerialNum()
-        {
-            return serialNum; 
-        }
-
-        public int getYear()
-        {
-            return year;
-        }
-
-        public String getOrdance()
-        {
-            return ordance;
-        }
-
-        public double getWingSpan()
-        {
-            return wingSpan;
-        }
-        public Engine getEngine()
-        {
-            return new Engine(engine);
-        }
-        
-
-        //MUTATORS
-
-        /***********************************************************************
-        SUBMODULE: setSerialNum
-        IMPORT: inSerialNum (Real)
-        EXPORT: none
-        ASSERTION: sets the serial number to inSerialNum if it's valid, 
-                   otherwise it fails
-        ***********************************************************************/
-        public void setSerialNum(String inSerialNum)
-        {
-           if(validateSerialNum(inSerialNum))
-            {
-                serialNum = inSerialNum;
-            } 
-            else
-            {
-                throw new IllegalArgumentException("Invalid serial number");
-            }
-        }        
-        /***********************************************************************
-        SUBMODULE: setYear
-        IMPORT: inYear (Interger)
-        EXPORT: none
-        ASSERTION: set year to inYear if it'  valid, otherwise it will fail
-        ***********************************************************************/
-        public void setYear(int inYear)
-        {
-            if(validateYear(inYear))
-            {
-                year = inYear;
-            }
-            else
-            {
-                throw new IllegalArgumentException("Invalid year");
-            }
-        }
-        /***********************************************************************        
-        SUBMODULE: setOrdance 
-        IMPORT: inOrdance (String)
-        EXPORT: none
-        ASSERTION: set ordance to to inOrdance if it's valid, otherwise it will fail
-        ***********************************************************************/
-        public void setOrdance(String inOrdance)
-        {
-            if(validateOrdance(inOrdance)) 
-                ordance = inOrdance;
-            else
-            {
-                throw new IllegalArgumentException("Invalid ordance");
-            }
-        }
-        /***********************************************************************
-        SUBMODULE: setWingSpan 
-        IMPORT: inWingSpan (Real)
-        EXPORT: none
-        ASSERTION: set wingspan to inWingSpan if it's valid, otherwise fail
-        ***********************************************************************/
-        public void setWingSpan(double inWingSpan)
+        if(validateOrdance(inOrdance))
         {
             if(validateWingSpan(inWingSpan))
-            {
-                wingSpan =  inWingSpan; 
-            }
-            else
-            {
-                throw new IllegalArgumentException("\nInvalid wingspan," +
-                                                    "input a wingspan between"+ 
-                                                    " ranges of 2.20 and 25.6"+
-                                                    " (inclusive)");
+            {      
+                ordance = inOrdance; 
+                wingSpan = inWingSpan;  
             }
         }
-        /***********************************************************************
-        SUBMODULE: setEngine
-        IMPORT: inEngine (Engine object)
-        EXPORT: none
-        ASSERTION: set engine to inEngine if it's valid, otherwise fail
-        ***********************************************************************/
-        public void setEngine(Engine inEngine) 
-        {
-            if(!(inEngine instanceof Engine))
-            {
-                throw new IllegalArgumentException("ERROR: not a valid "+
-                                                   "engine");
-            }
-            else
-            {
-                engine = inEngine;
-            }
-            
-        }
+    }
+    /***********************************************************************
+    COPY Constructor
+    IMPORT: inFighterJet (FighterJet)
+    EXPORT: none
+    ASSERTION: creates an objext which is identical to the importred object
+    ***********************************************************************/
+    public FighterJet(FighterJet inFighterJet)
+    {
+        super(inFighterJet);
+        ordance = inFighterJet.getOrdance();
+        wingSpan = inFighterJet.getWingSpan();
+    }
     
-        //DOING METHODS:
+    //ACCESSORS
 
-       /* SUBMODULE: calcTravel (*** I cannot impliment this yet, as my knowledge on
-                            how to is limited ***) */
+    public String getOrdance()
+    {
+        return ordance;
+    }
 
-        //PRIVATE SUBMODULES:
-         /***********************************************************************
-        SUBMODULE: validateSerialNum
-        IMPORT: inSerialNum (Real)
-        EXPORT: isValid (Boolean)
-        ASSERTION: validates serial numbers as true whereby its first three
-                   digits are between 100 to 300 (inclusive), and the last three
-                   digits are between 001 - 999 (inclusive), otherwise it will
-                   validate them as false.
-        ***********************************************************************/
-        private boolean validateSerialNum(String inSerialNum)
-        {
-            boolean isValid = false;
-            /* don't forget to check the length of the string, to make sure
-               it conforms to this follwoing length XXX.YYY */
-            String [] parts = new String[2];
-            parts = inSerialNum.split("\\.");
-            
-            if(validateSerialNumLength(inSerialNum))
-            {
-                if(validateWholePart(parts[0]))
-                {
-                    if(validateDecimalPart(parts[1]))
-                    {
-                        isValid = true;
-                    }
-                }
-            }
-        
-            return isValid; 
-        }
-        /***********************************************************************
-        SUBMODULE: validateSerialNumLength
-        IMPORT: serialNum (String) 
-        EXPORT: isValid (Boolean)
-        ASSERTION: validates the serialNum as true if it has a length of 7 
-                   "XXX.YYY"
-        **********************************************************************/
-        private boolean validateSerialNumLength(String serialNum)
-        {
-            boolean isValid = false;
-
-            if(serialNum.length() == 7)
-            {
-                isValid = true;
-            }
-            else 
-            {
-                throw new IllegalArgumentException("ERROR: The serial number"+
-                                                   "  must a length of 7");
-            }
-        
-            return isValid;
-            
-        }
-
-
-        /***********************************************************************
-        SUBMODULE: validateWholePart
-        IMPORT: wholePart (String)
-        EXPORT: isValid (Boolean)
-        ASSERTION: validates the wholepart of the serial number as true if it's
-                   between 100 to 300 (inclusive)
-        ***********************************************************************/
-        private boolean validateWholePart(String wholePart)
-        {
-            int wholePartInt;
-            boolean isValid; 
+    public double getWingSpan()
+    {
+        return wingSpan;
+    }
     
-            
-            /* we need to convert wholePart into an integer so we can check 
-               if it's in the valid range og 100 to 300 */
-            wholePartInt = Integer.parseInt(wholePart);
-            isValid = false;
+    //MUTATORS
 
-            if(wholePartInt >= 100 && wholePartInt <= 300)
-            {
-                isValid = true;
-            }
-            else
-            {
-                throw new IllegalArgumentException("ERROR: invalid whole "+
-                                             "part of the decimal number");
-            }
-        
-            return isValid; 
-        }
-
-        /***********************************************************************
-        SUBMODULE: validaDecimalPart
-        IMPORT: decimalPart (string)
-        EXPORT: isValid (Boolean)
-        ASSERTION: validates the decimal part of the serial number if it's
-                   it's between 001 to 999 (inclusive)
-        ***********************************************************************/
-        private boolean validateDecimalPart(String decimalPart)
+   /***********************************************************************        
+    SUBMODULE: setOrdance 
+    IMPORT: inOrdance (String)
+    EXPORT: none
+    ASSERTION: set ordance to to inOrdance if it's valid, otherwise it will fail
+    ***********************************************************************/
+    public void setOrdance(String inOrdance)
+    {
+        if(validateOrdance(inOrdance)) 
+            ordance = inOrdance;
+        else
         {
-            int decimalPartInt;
-            boolean isValid;
+            throw new IllegalArgumentException("\nInvalid ordance\n");
+        }
+    }
+    /***********************************************************************
+    SUBMODULE: setWingSpan 
+    IMPORT: inWingSpan (Real)
+    EXPORT: none
+    ASSERTION: set wingspan to inWingSpan if it's valid, otherwise fail
+    ***********************************************************************/
+    public void setWingSpan(double inWingSpan)
+    {
+        if(validateWingSpan(inWingSpan))
+        {
+            wingSpan =  inWingSpan; 
+        }
+        else
+        {
+            throw new IllegalArgumentException("\nInvalid wingspan\n");
+        }
+    }
     
-            /* we need to convert decimalPart to an integer so we can check if 
-               it's in the valid range of 001 to 999. However we don't need to
-               check if it has 3 numbers places as another method handles 
-               that */
-            
-            decimalPartInt = Integer.parseInt(decimalPart); 
-            isValid = false;
+    //DOING METHODS:
 
-            if(decimalPartInt >= 1 && decimalPartInt <= 999)
-            {
-                isValid = true;
-            }
-            else
-            {
-                throw new IllegalArgumentException("ERROR: invalid "+
-                                      "decimal part of serial number");
-            }
-
-            return isValid;
-        }
-        /***********************************************************************
-        SUBMODULE: validateYear
-        IMPORT: inYear (intergers)
-        EXPORT: isValid (Boolean)
-        ASSERTION: A commission year between 1950 to 2022 (interger) will be
-                       valid, otherwise an error will be thrown to the user
-        **********************************************************************/
-        private boolean validateYear(int inYear)
-        {  
-            boolean isValid = false;
+    /**********************************************************************
+    SUBMODULE: calcTravelTimeJet
+    IMPORT:inShip (fighterJet object), (Integer) distance
+    EXPORT: timeHours (Real) 
+    PURPOSE: is to calculate the tracel time of the fighter jet in hours
+    **********************************************************************/
+    @Override
+    public double calcTravelTime(int distance)
+    {
+        double denom, timeHours;
+        denom = getWingSpan() * (double)getEngine().getCylinders() 
+                * 150.00;
+        timeHours = (double)distance / denom;
         
-            if (inYear >= 1950 && inYear <= 2022)
-            {
-                isValid = true;
-            }
+        return timeHours;
+    }
 
-            return isValid;
-        }
-        /**********************************************************************
-        SUBMODULE: validateOrdance
-        IMPORT: inOrdance (String)
-        EXPORT: isValid (boolean)
-        ASSERTION: it will only validate inOrdance if it has a string describing
-                   the ordance of the fighter jet
-        ********************************************************************/
-        private boolean validateOrdance(String inOrdance)
-        {
-            boolean isValid = false;
-            if (inOrdance.length() != 0)
-            {
-                isValid = true;
-            }
+    //PRIVATE SUBMODULES:
 
-            return isValid;
-        }
-        /*******************************************************************
-        SUBMODULE: validateWingSpan
-        IMPORT: inWingSpan (Real)
-        EXPORT: isValid (Boolean)
-        ASSERTION: a wingSpan of between 2.20 and 25.6 will be validate 
-                   otherwise, error will be thrown to the user
-        ********************************************************************/
-        private boolean validateWingSpan(double inWingSpan)
+   /**********************************************************************
+    SUBMODULE: validateOrdance
+    IMPORT: inOrdance (String)
+    EXPORT: isValid (boolean)
+    ASSERTION: it will only validate inOrdance if it has a string describing
+               the ordance of the fighter jet
+    ********************************************************************/
+    private boolean validateOrdance(String inOrdance)
+    {
+        boolean isValid = false;
+        if (inOrdance.length() != 0)
         {
-            /*
-            boolean isValid = false;
-            if(inWingSpan >= 2.2 && inWingSpan <= 25.6)
-            {
-                isValid = true;            
-            }
-            return isValid;
-            */
-            return ((inWingSpan >= 2.2) && (inWingSpan <= 25.6));
+            isValid = true;
         }
 
-        //OTHER METHODS
+        return isValid;
+    }
+    /*******************************************************************
+    SUBMODULE: validateWingSpan
+    IMPORT: inWingSpan (Real)
+    EXPORT: isValid (Boolean)
+    ASSERTION: a wingSpan of between 2.20 and 25.6 will be validate 
+               otherwise, error will be thrown to the user
+    ********************************************************************/
+    private boolean validateWingSpan(double inWingSpan)
+    {
+        /*
+        boolean isValid = false;
+        if(inWingSpan >= 2.2 && inWingSpan <= 25.6)
+        {
+            isValid = true;            
+        }
+        return isValid;
+        */
 
-        /********************************************************************
-        SUBMODULE: clone
-        IMPORT: none
-        EXPORT: cloneFighterJet (Object)
-        ASSERTION: returns a cloned object of the current object
-        ********************************************************************/
-        public FighterJet clone()
-        {
-            FighterJet cloneFighterJet;
+        return ((inWingSpan >= 2.2) && (inWingSpan <= 25.6));
+    }
 
-            cloneFighterJet = new FighterJet(this.serialNum, this.year, 
-                                    this.ordance, this.wingSpan, this.engine);
-            return cloneFighterJet; 
-        }
-        /********************************************************************
-        SUBMODULE: equals
-        IMPORT: inObjct (object)
-        EXPORT: isSame (boolean)
-        ASSERTION: two fighter jets are interchangable if they have the same 
-                   ordance and wingspan
-        ********************************************************************/
-        public boolean equals(Object inObjct)
-        {
-            boolean isSame = false;
-            if(inObjct instanceof FighterJet) 
-            {
-                FighterJet inFighterJet = (FighterJet)inObjct;
-                isSame = ordance.equals(inFighterJet.getOrdance()) &&
-                          wingSpan == (inFighterJet.getWingSpan()) &&
-                          engine.equals(getEngine());
-            }
+    //OTHER METHODS
 
-            return isSame;
-        }
-        /********************************************************************
-        SUBMODULE: toString
-        IMPORT: none
-        EXPORT: str (String)
-        ASSERTION:
-        ********************************************************************/
-        public String toString()
+    /********************************************************************
+    SUBMODULE: clone
+    IMPORT: none
+    EXPORT: cloneFighterJet (Object)
+    ASSERTION: returns a cloned object of the current object
+    ********************************************************************/
+    @Override
+    public FighterJet clone()
+    {
+        /*FighterJet cloneFighterJet;
+
+        cloneFighterJet = new FighterJet(this.serialNum, this.year, 
+                                this.ordance, this.wingSpan, this.engine);
+        return cloneFighterJet; */
+
+        return new FighterJet(this);
+    }
+
+    /********************************************************************
+    SUBMODULE: equals
+    IMPORT: inObjct (object)
+    EXPORT: isSame (boolean)
+    ASSERTION: two fighter jets are interchangable if they have the same 
+               ordance and wingspan
+    ********************************************************************/
+    @Override
+    public boolean equals(Object inObjct, Engine inEngine)
+    {
+        boolean isSame = false;
+        if(inObjct instanceof FighterJet) 
         {
-            int cylinders = engine.getCylinders();
-            String fuel = engine.getFuel();
-            return("The ship " +serialNum+ " was comissioned in " +year+ 
-                   " , its engine has " +cylinders+ " cylinders and runs on "
-                    +fuel+ "fuel. It is a fighter jet with a wing span of "
-                    +wingSpan+ " metres and equiped wit " +ordance+ ".");
+            FighterJet inFighterJet = (FighterJet)inObjct;
+            isSame = ordance.equals(inFighterJet.getOrdance()) &&
+                      wingSpan == (inFighterJet.getWingSpan()) &&
+                      getEngine().equals(inEngine);
         }
-        /********************************************************************
-        SUBMODULE: toFileString
-        IMPORT: none
-        EXPORT: str (String)
-        ASSERTION: 
-        ********************************************************************/
-        public String toFileString()
-        {
-            int cylinders = engine.getCylinders();
-            String fuel = engine.getFuel();
-            return("F," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ "," 
-                  +ordance+"," +wingSpan+ ".");
-        }
-    } 
+
+        return isSame;
+    }
+    /********************************************************************
+    SUBMODULE: toString
+    IMPORT: none
+    EXPORT: str (String)
+    ASSERTION:
+    ********************************************************************/
+    @Override 
+    public String toString()
+    {
+        String str;
+        str = super.toString() +getEngine().toString()+ "It is a fighter jet "+
+                    "with a wing span of " +wingSpan+ " metres and equiped "+
+                    "with " +ordance+ ".";
+        return str;
+    }
+    /********************************************************************
+    SUBMODULE: toFileString
+    IMPORT: none
+    EXPORT: str (String)
+    ASSERTION: 
+    ********************************************************************/
+    @Override
+    public String toFileString()
+    {
+        String str;
+        str = "F," + super.toFileString() + "," + getEngine().toFileString() +
+              "," + wingSpan + "," + ordance;
+    
+        return str;
+    }
+} 
