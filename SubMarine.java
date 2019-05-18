@@ -38,9 +38,10 @@ public class SubMarine extends Ship
     ASSERTION: creates a submarine object if the imports are valid, otherwise 
                it will FAIL
     ***********************************************************************/
-    public SubMarine(String inHull,double inMaxDepth)
+    public SubMarine(String inSerialNum, int inYear, String inHull,
+                     double inMaxDepth)
     {
-        super(inHull, inMaxDepth);
+        super(inSerialNum, inYear);
         if(validateHull(inHull))
         {
             if(validateMaxDepth(inMaxDepth))
@@ -88,12 +89,11 @@ public class SubMarine extends Ship
     public void setHull(String inHull)
     {
         if(validateHull(inHull))
-            hull = inHull;
-        else
         {
-            throw new IllegalArgumentException("Invalid hull");
+            hull = inHull;
         }
     }
+
     /***********************************************************************
     SUBMODULE: setMaxDepth
     IMPORT: inMaxDepth (Real)
@@ -111,8 +111,26 @@ public class SubMarine extends Ship
 
     //DOING METHODS:
 
-   /* SUBMODULE: calcTravel (*** I cannot impliment this yet, as my knowledge on
-                        how to is limited ***) */
+    /**********************************************************************
+    SUBMODULE: calcTravelTimeSub
+    IMPORT: inShip (Submarine Object), distance (Integer)
+    EXPORT: timeHours (Real) 
+    PUROSE: is to calculate the travel time of submarine in hours 
+    **********************************************************************/
+    public double calcTravelTime(SubMarine inSubMarine, int distance)
+    {
+        // complier to check and to tell you what is excatly wrong
+        @Override
+        super(inSubMarine);
+        double ratio, denom, invDenom;
+   
+        ratio = ( (double) distance / (double) getCylinders());
+        denom = (10.00 + getMaxDepth() * -1.00);
+        invDenom = 1.00 / denom;
+    
+        return ratio * invDenom;
+    }
+    
 
     //PRIVATE SUBMODULES:
 
@@ -172,6 +190,7 @@ public class SubMarine extends Ship
     ********************************************************************/
     public SubMarine clone()
     {
+        @Override
         return new SubMarine(this);
     }
 
@@ -184,6 +203,7 @@ public class SubMarine extends Ship
     ********************************************************************/
     public boolean equals(Object inObjct, Engine inEngine)
     {
+        @Override
         boolean isSame = false;
         if(inObjct instanceof SubMarine)
         {
@@ -204,6 +224,7 @@ public class SubMarine extends Ship
     ********************************************************************/
     public String toString()
     {
+        @Override
         String str;
         str = super.toString() + engine.toString()+ 
               "It is a submarine with a " +hull+ " hull and a  max depth of " 
@@ -220,6 +241,7 @@ public class SubMarine extends Ship
     ********************************************************************/
     public String toFileString()
     {
+        @Override
         String str;
         str = "S," + super.toFileString() +","+ engine.toFileString() + "," +
               +hull+ "," +maxDepth;

@@ -149,24 +149,7 @@ public class ShipStorage
             
             return fastestSub.toString(); 
         }
-        /**********************************************************************
-        SUBMODULE: calcTravelTimeSub
-        IMPORT: inShip (Submarine Object), distance (Integer)
-        EXPORT: timeHours (Real) 
-        PUROSE: is to calculate the travel time of submarine in hours 
-        **********************************************************************/
-        public double calcTravelTime(SubMarine inShip, int distance)
-        {
-            double ratio, denom, invDenom;
        
-            ratio = ((double)distance / 
-                    (double)(inShip.getEngine().getCylinders()));
-            denom = (10.00 + (inShip.getMaxDepth() * -1.00));
-            invDenom = 1.00 / denom;
-        
-            return ratio * invDenom;
-        }
-        
         /**********************************************************************
         SUBMODULE: destinationCheckJet
         IMPORT: (Integer) distance

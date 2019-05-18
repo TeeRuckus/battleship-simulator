@@ -123,6 +123,18 @@ public abstract class Ship
         
     }
     
+    //DOING METHODS 
+    
+    /**********************************************************************
+    SUBMODULE: calcTravelTimeSub
+    IMPORT: inShip (Submarine Object), distance (Integer)
+    EXPORT: timeHours (Real) 
+    PUROSE: is to calculate the travel time of submarine in hours 
+    **********************************************************************/
+    public abstract double calcTravelTime(Object inShip, int distance) 
+    {
+    }
+    
     //PRIVATE METHODS
 
     /***********************************************************************
@@ -267,6 +279,27 @@ public abstract class Ship
     }
   
     //OTHER METHODS
+    
+    /********************************************************************
+    ABSTRACT SUBMODULE: clone
+    IMPORT: none
+    EXPORT: an identical object to the current object which has been made
+    ASSERTION: returns a cloned object of the current object
+    ********************************************************************/
+    public abstract Object clone()
+    {
+    }
+
+    /********************************************************************
+    ABSTRACT SUBMODULE: equals
+    IMPORT: inObjct (object)
+    EXPORT: isSame (boolean)
+    ASSERTION: two submarines are interchangable if they have the same hull,
+               and max depth
+    ********************************************************************/
+    public abstract boolean equals(Object inObject, Engine inEngine)
+    {
+    }
       
     /********************************************************************
     SUBMODULE: toString
@@ -278,7 +311,22 @@ public abstract class Ship
     {
         String str;
         str = "The ship " +serialNum+ " was comissioned in " +year;
+        
+        return str;
     }
 
-    
+    /********************************************************************
+    SUBMODULE: toFileString
+    IMPORT: none
+    EXPORT: str
+    ASSERTION:
+    ********************************************************************/
+    public String toFileString()
+    {
+        String str;
+        str = serialNum+ "," +year;
+
+        return str;
+    }
+}
     
