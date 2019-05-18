@@ -58,7 +58,7 @@ public abstract class Ship
 
     //ACCESSORS
 
-     public String getSerialNum()
+    public String getSerialNum()
     {
         return serialNum;
     }

@@ -8,15 +8,18 @@ public class ShipStorage
 {
     //PUBLIC CLASS CONSTANTS:
 
-    public static final int MAX_CAP = 15; 
+    public static final int MAX_CAP = 30; 
 
     //CLASS FIELDS:
     
-    //refactor this to have a method overlaod of the strings. same name
-    private int countSubs;
+    /*private int countSubs;
     private int countJets;
     SubMarine storeSubs [];
-    FighterJet storeJets [];
+    FighterJet storeJets [];*/
+
+    private int countShips;
+    Object storeShips [];
+    private Ship ships;
 
     //COSTRUCRS:
     
@@ -29,10 +32,14 @@ public class ShipStorage
     **********************************************************************/
     public ShipStorage()
     {
-        countSubs = 0;
+        /*countSubs = 0;
         countJets = 0;
         storeSubs = new SubMarine [MAX_CAP];
-        storeJets = new FighterJet [MAX_CAP];
+        storeJets = new FighterJet [MAX_CAP];*/
+        
+        countShips = 0;
+        storeShips = new storeShips [MAX_CAP];
+        ship = new Ship();
     }
 
     //DOING METHODS
