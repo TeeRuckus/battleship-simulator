@@ -67,16 +67,7 @@ public class SubMarine extends Ship
 
     //ACCESSORS
 
-    public String getSerialNum()
-    {
-        return serialNum;
-    }
-
-    public int getYear()
-    {
-        return year;
-    }
-
+   
     public String getHull()
     {
         return hull;
@@ -86,50 +77,12 @@ public class SubMarine extends Ship
     {
         return maxDepth;
     }
-    public Engine getEngine()
-    {
-        return new Engine(engine);
-    }
+    
     
 
     //MUTATORS
 
-    /***********************************************************************
-    SUBMODULE: setSerialNum
-    IMPORT: inSerialNum (Real)
-    EXPORT: none
-    ASSERTION: sets the serial number to inSerialNum if it's valid,
-               otherwise it fails
-    ***********************************************************************/
-    public void setSerialNum(String inSerialNum)
-    {
-       if(validateSerialNum(inSerialNum))
-        {
-            serialNum = inSerialNum;
-        }
-        else
-        {
-            throw new IllegalArgumentException("\nInvalid serial number\n");
-        }
-    }
-    /***********************************************************************
-    SUBMODULE: setYear
-    IMPORT: inYear (Interger)
-    EXPORT: none
-    ASSERTION: set year to inYear if it'  valid, otherwise it will fail
-    ***********************************************************************/
-    public void setYear(int inYear)
-    {
-        if(validateYear(inYear))
-        {
-            year = inYear;
-        }
-        else
-        {
-            throw new IllegalArgumentException("Invalid year");
-        }
-    }
-    /***********************************************************************
+   /***********************************************************************
     SUBMODULE: setHull
     IMPORT: inHull (String)
     EXPORT: none
@@ -156,32 +109,8 @@ public class SubMarine extends Ship
         {
             maxDepth =  inMaxDepth;
         }
-        else
-        {
-            throw new IllegalArgumentException("Invalid max depth," +
-                                                "input a depth between the"+
-                                                " ranges of -500.0 to 0");
-        }
     }
-    /***********************************************************************
-    SUBMODULE: setEngine
-    IMPORT: inEngine (Engine object)
-    EXPORT: none
-    ASSERTION: set engine to inEngine if it's valid, otherwise fail
-    ***********************************************************************/
-    public void  setEngine(Engine inEngine) 
-    {
-        if(!(inEngine instanceof Engine))
-        {
-            throw new IllegalArgumentException("ERROR: not a valid "+
-                                               "engine");
-        }
-        else
-        {
-            engine = inEngine;
-        }
-        
-    }
+    
 
     //DOING METHODS:
 
@@ -202,8 +131,6 @@ public class SubMarine extends Ship
     private boolean validateSerialNum(String inSerialNum)
     {
         boolean isValid = false;
-        /* don't forget to check the length of the string, to make sure
-           it conforms to this follwoing length XXX.YYY */
         String [] parts = new String[2];
         parts = inSerialNum.split("\\.");
         

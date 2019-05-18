@@ -55,3 +55,73 @@ public abstract class Ship
         year = inShip.getYear();
         engine = getEngine();
     }
+
+    //ACCESSORS
+
+     public String getSerialNum()
+    {
+        return serialNum;
+    }
+
+    public int getYear()
+    {
+        return year;
+    }
+    public Engine getEngine()
+    {
+        return new Engine(engine);
+    }
+
+    //MUTATORS
+
+    /***********************************************************************
+    SUBMODULE: setSerialNum
+    IMPORT: inSerialNum (Real)
+    EXPORT: none
+    ASSERTION: sets the serial number to inSerialNum if it's valid,
+               otherwise it fails
+    ***********************************************************************/
+    public void setSerialNum(String inSerialNum)
+    {
+       if(validateSerialNum(inSerialNum))
+        {
+            serialNum = inSerialNum;
+        }
+    }
+
+    /***********************************************************************
+    SUBMODULE: setYear
+    IMPORT: inYear (Interger)
+    EXPORT: none
+    ASSERTION: set year to inYear if it'  valid, otherwise it will fail
+    ***********************************************************************/
+    public void setYear(int inYear)
+    {
+        if(validateYear(inYear))
+        {
+            year = inYear;
+        }
+    }
+
+    /***********************************************************************
+    SUBMODULE: setEngine
+    IMPORT: inEngine (Engine object)
+    EXPORT: none
+    ASSERTION: set engine to inEngine if it's valid, otherwise fail
+    ***********************************************************************/
+    public void  setEngine(Engine inEngine) 
+    {
+        if(!(inEngine instanceof Engine))
+        {
+            throw new IllegalArgumentException("ERROR: not a valid "+
+                                               "engine");
+        }
+        else
+        {
+            engine = inEngine;
+        }
+        
+    }
+    
+    //PRIVATE METHODS
+    
