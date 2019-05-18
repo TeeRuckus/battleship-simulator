@@ -154,16 +154,17 @@ public class FighterJet extends Ship
     ********************************************************************/
     private boolean validateWingSpan(double inWingSpan)
     {
-        /*
+        
         boolean isValid = false;
         if(inWingSpan >= 2.2 && inWingSpan <= 25.6)
         {
             isValid = true;            
         }
-        return isValid;
-        */
 
-        return ((inWingSpan >= 2.2) && (inWingSpan <= 25.6));
+        return isValid;
+        
+
+       // return ((inWingSpan >= 2.2) && (inWingSpan <= 25.6));
     }
 
     //OTHER METHODS
@@ -217,8 +218,8 @@ public class FighterJet extends Ship
     public String toString()
     {
         String str;
-        str = super.toString() +getEngine().toString()+ "It is a fighter jet "+
-                    "with a wing span of " +wingSpan+ " metres and equiped "+
+        str = super.toString() +getEngine().toString()+ " It is a fighter jet"+
+                    " with a wing span of " +wingSpan+ " metres and equiped "+
                     "with " +ordance+ ".";
         return str;
     }

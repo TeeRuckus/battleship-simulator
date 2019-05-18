@@ -26,8 +26,8 @@ public class Engine
         ***********************************************************************/
         public Engine()
         {
-            fuel = DSL;
             cylinders = 6;
+            fuel = DSL;
         }
         /***********************************************************************
         ALTERNATE Constructor
@@ -165,11 +165,12 @@ public class Engine
         ********************************************************************/
         public Engine clone()
         {
+            /*
             Engine cloneEngine;
 
-            cloneEngine = new Engine(this.cylinders, this.fuel);
+            cloneEngine = new Engine(this.cylinders, this.fuel);*/
 
-            return cloneEngine;
+            return new Engine(this);
         }
         /********************************************************************
         SUBMODULE: equals
@@ -199,7 +200,7 @@ public class Engine
         public String toString()
         {
 
-            return("The engine has " +cylinders+ " cylinders, and it runs on "
+            return(" The engine has " +cylinders+ " cylinders, and it runs on "
                   +fuel+ " fuel.");
         }
         /********************************************************************

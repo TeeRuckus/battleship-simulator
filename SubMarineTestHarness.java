@@ -9,7 +9,8 @@ public class SubMarineTestHarness
             // creating objects for testing
             subMarine[0] = new SubMarine();
             subMarine[1] = new SubMarine("199.666", 1969,
-                                    new Engine(), SubMarine.TTNM, -200.0);
+                                    new Engine(12, "BIO"), SubMarine.TTNM, 
+                                    -200.0);
             subMarine[2] = new SubMarine(subMarine[1]);
             subMarine[3] = subMarine[1].clone();
 

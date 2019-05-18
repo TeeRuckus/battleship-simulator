@@ -12,8 +12,8 @@ public class ShipStorage
 
     //CLASS FIELDS:
     private int countShips;
-    Object storeShips [];
-    private Ship ships;
+    Ship storeShips [];
+    private Ship ship;
 
     //COSTRUCRS:
     
@@ -27,7 +27,7 @@ public class ShipStorage
     public ShipStorage()
     {
         countShips = 0;
-        storeShips = new storeShips [MAX_CAP];
+        storeShips = new Ship[MAX_CAP];
     }
 
     //DOING METHODS
@@ -41,7 +41,7 @@ public class ShipStorage
     **********************************************************************/
     public void addShip(SubMarine inSub)
     {
-        if (validateSub(inSub))
+        if (validateShip(inSub))
         {
             storeShips[countShips] = inSub.clone();
 
@@ -60,7 +60,7 @@ public class ShipStorage
     **********************************************************************/
     public void addShip(FighterJet inJet)
     {
-        if(validateJet(inJet))
+        if(validateShip(inJet))
         {
             storeShips[countShips] = inJet.clone();
 
@@ -76,66 +76,49 @@ public class ShipStorage
     IMPORT: none
     EXOPORT: sub (subMarine Object)
     **********************************************************************/
-    public SubMarine getSub()
+    public Ship getShip()
     {
         /* I have subtracted one because the other constructors (i.e.
         alternate constructor) will move the index  of the count
         variable to the next available index, hence you have to
         subtract one to get the last stored submarine*/
     
-        SubMarine sub; 
-        return sub = storeShips[countShips - 1]; 
+        ship = storeShips[countShips - 1]; 
+        return ship;
     } 
-
-    /**********************************************************************
-    SUBMODULE: getLastjet (FighterJet Object)
-    IMPORT: none
-    EXPORT: jet (fighterJet object)
-    **********************************************************************/
-    public FighterJet getJet()
-    {
-
-         /*I have subtracted one because the other constructors (i.e.
-         alternate constructor) will move the index of the count
-         variable to the next available index, hence you have to
-         subtract one to get the last stored jet*/
-
-        FighterJet jet; 
-        return jet = storeShips[countShips - 1];
-    }
 
     /**********************************************************************
     SUBMODULE: destinationCheckSub
     IMPORT: (integer) distance
     EXPORTS: (String) str 
     **********************************************************************/
-    
+    /*
     public String destinationCheck(int distance) 
     {
-        double fastestShip, compareShips;
-        Ship fastestShip = null; 
+        double compareShips;
+        Ship fatestShip;
         
          /* I am setting up the first ship as a reference point of 
             comparison to other ships, and the 0 index is the most convient
             index*/
 
-        fastestShipTime = Ship.calcTravelTime(storeShips[0], distance);
+      //  compareShips = ship.calcTravelTime(distance);
     
         /*I don't want the reference submarine of comparison, to comparew
         by itself, as this is an ineffecient use of the machine's 
         resouces.*/
-    
+    /*
         for(int ii = 1; ii < MAX_CAP; ii++)
         {
-            compareShip = Ship.calcTravelTime(storeShips[ii],distance);
-            if(compareShip < fastestShip)
+            compareShips = Ship.calcTravelTime(storeShips[ii],distance);
+            if(compareShips < fastestShipTime)
             {
-                fastestShip = storeShips[ii];
+                fastestShip = storeShips[ii].toString();
             } 
         }
         
         return fastestShip.toString(); 
-    }
+    }*/
    
     /**********************************************************************
     SUBMODULE: findDuplicateSubs
@@ -143,9 +126,9 @@ public class ShipStorage
     EXPORT: dupilicates[] (Object) 
     ASSERTION:
     **********************************************************************/
-    public SubMarine [] findDuplicateShips() 
+    public Ship [] findDuplicateShips() 
     {
-        Object duplicates [] = new Object[MAX_CAP];
+        Ship duplicates [] = new Ship[MAX_CAP];
         
         for (int ii = 0 ;ii < countShips; ii++) 
         {
@@ -307,9 +290,9 @@ public class ShipStorage
 
         String strArr [] = new String [tolShipsInfo];
 
-        strArr [0] = "The ship storage contains " +shipNum+ " ships. There's "+
-                    +countShips+ " submarines, and there's " +countShips+
-                    "fighter jets in the hanger";
+        strArr [0] = "The ship storage contains " +(countShips-1)+ " ships. "+
+                     "There's " +countShips+ " submarines, and there's " +
+                      countShips+ "fighter jets in the hanger";
 
          /*I am starting the looping condition at 1, becasue the 0 index
          is reserved for the summary of the arrays, and I am subtracting

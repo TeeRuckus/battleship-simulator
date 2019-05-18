@@ -27,8 +27,8 @@ public class SubMarine extends Ship
     public SubMarine()
     {
         super();
-        hull = TTNM;
         maxDepth = -500.0;
+        hull = TTNM;
     }
 
     /***********************************************************************
@@ -225,7 +225,7 @@ public class SubMarine extends Ship
     {
         String str;
         str = super.toString() + getEngine().toString()+ 
-              "It is a submarine with a " +hull+ " hull and a  max depth of " 
+              " It is a submarine with a " +hull+ " hull and a  max depth of " 
                +maxDepth+ ".";
 
         return str;
@@ -241,7 +241,7 @@ public class SubMarine extends Ship
     public String toFileString()
     {
         String str;
-        str = "S," + super.toFileString() +","+ getEngine().toFileString() + 
+        str = "S," + super.toFileString() +", "+ getEngine().toFileString() + 
               "," + hull + "," +maxDepth;
         return str;
     }

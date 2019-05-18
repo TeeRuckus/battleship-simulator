@@ -8,8 +8,8 @@ public class FighterJetTestHarness
 
             // creating objects for testing
             fighterJet[0] = new FighterJet();
-            fighterJet[1] = new FighterJet(199.666, 1969,
-                                                "turrents", 3);
+            fighterJet[1] = new FighterJet("199.666", 1969,"turrents", 
+                             3, new Engine());
             fighterJet[2] = new FighterJet(fighterJet[1]);
             fighterJet[3] = fighterJet[1].clone();
 
@@ -23,22 +23,28 @@ public class FighterJetTestHarness
 
             //equals method
             System.out.println("\nEQUALS METHOD TESTS:");
-            System.out.println("Equals (object) expected TRUE: " + fighterJet[1].equals(fighterJet[3]));
-            System.out.println("Equals (object) expected FALSE: " + fighterJet[0].equals(fighterJet[3]));
+            System.out.println("Equals (object) expected TRUE: " 
+                                + fighterJet[1].equals(fighterJet[3]));
+            System.out.println("Equals (object) expected FALSE: " 
+                                + fighterJet[0].equals(fighterJet[3]));
 
             //getters and setters
             System.out.println("\nGETTERS AND SETTERS:");
             fighterJet[0].setSerialNum(fighterJet[1].getSerialNum());
-            System.out.println(fighterJet[0].getSerialNum() + " = " + fighterJet[1].getSerialNum());
+            System.out.println(fighterJet[0].getSerialNum() + " = " 
+                                            + fighterJet[1].getSerialNum());
 
             fighterJet[0].setYear(fighterJet[2].getYear());
-            System.out.println(fighterJet[0].getYear() + " = " + fighterJet[2].getYear());
+            System.out.println(fighterJet[0].getYear() + " = " 
+                              + fighterJet[2].getYear());
 
             fighterJet[0].setOrdance(fighterJet[1].getOrdance());
-            System.out.println(fighterJet[0].getOrdance() + " = " + fighterJet[1].getOrdance());
+            System.out.println(fighterJet[0].getOrdance() + " = " 
+                              + fighterJet[1].getOrdance());
 
             fighterJet[0].setWingSpan(fighterJet[1].getWingSpan());
-            System.out.println(fighterJet[0].getWingSpan() + " = " + fighterJet[1].getWingSpan());
+            System.out.println(fighterJet[0].getWingSpan() + " = " 
+                               + fighterJet[1].getWingSpan());
 
         }
         catch(IllegalArgumentException err)

@@ -69,7 +69,7 @@ public abstract class Ship
     }
     public Engine getEngine()
     {
-        return new Engine(engine);
+        return new Engine();
     }
 
     //MUTATORS
