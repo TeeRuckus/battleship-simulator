@@ -92,13 +92,14 @@ public class ShipStorage
     IMPORT: none
     EXPORT: jet (fighterJet object)
     **********************************************************************/
-    public FighterJet getLastJet()
+    public FighterJet getJet()
     {
 
          /*I have subtracted one because the other constructors (i.e.
          alternate constructor) will move the index of the count
          variable to the next available index, hence you have to
          subtract one to get the last stored jet*/
+
         FighterJet jet; 
         return jet = storeShips[countShips - 1];
     }
@@ -109,16 +110,16 @@ public class ShipStorage
     EXPORTS: (String) str 
     **********************************************************************/
     
-    public String destinationCheckSub(int distance) 
+    public String destinationCheck(int distance) 
     {
-        double fastestSubTime, compareSub;
-        SubMarine fastestSub = null; 
+        double fastestShip, compareShips;
+        Ship fastestShip = null; 
         
-         /*I am setting up a submarine object to set up a reference point
-         of comparison to other submarine objects withing the storeShips
-                 array. The 0 index sub is the most convient*/
+         /* I am setting up the first ship as a reference point of 
+            comparison to other ships, and the 0 index is the most convient
+            index*/
 
-        fastestSubTime = calcTravelTime(storeShips[0], distance);
+        fastestShipTime = Ship.calcTravelTime(storeShips[0], distance);
     
         /*I don't want the reference submarine of comparison, to comparew
         by itself, as this is an ineffecient use of the machine's 
@@ -126,64 +127,25 @@ public class ShipStorage
     
         for(int ii = 1; ii < MAX_CAP; ii++)
         {
-            compareSub = calcTravelTime(storeShips[ii],distance);
-            if(compareSub < fastestSubTime)
+            compareShip = Ship.calcTravelTime(storeShips[ii],distance);
+            if(compareShip < fastestShip)
             {
-                fastestSub = storeShips[ii];
+                fastestShip = storeShips[ii];
             } 
         }
         
-        return fastestSub.toString(); 
+        return fastestShip.toString(); 
     }
    
-    /**********************************************************************
-    SUBMODULE: destinationCheckJet
-    IMPORT: (Integer) distance
-    EXPORTS: (String) str 
-    PURPOSE:
-    **********************************************************************/
-    public String destinationCheckJet(int distance)
-    {
-        double fastestJetTime, compareJet;
-        FighterJet fastestJet = null;
-    
-        /*I am setting up a submarine object to set up a reference point
-        of comparison to other jet objects withing the storeShips
-        array. The 0 index sub is the most convient*/
-
-        fastestJetTime = calcTravelTime(storeShips[0], distance);
-        
-        /*I don't want the reference jet of comparison, to comparew
-        by itself, as this is an ineffecient use of the machine's 
-        resouces.*/
-        
-        for (int ii = 1; ii < MAX_CAP; ii++)                 
-        {
-            compareJet = calcTravelTime(storeShips[ii],distance);
-            if (compareJet < fastestJetTime) 
-            {
-                fastestJet = storeShips[ii];
-            }
-        }
-        return fastestJet.toString();
-    }
-
     /**********************************************************************
     SUBMODULE: findDuplicateSubs
     IMPORTS: none
     EXPORT: dupilicates[] (Object) 
     ASSERTION:
     **********************************************************************/
-    public SubMarine [] findDuplicateSubs() 
+    public SubMarine [] findDuplicateShips() 
     {
-        /*The multipilcation by 2 is done because it allows the 
-        duplicates array store the actual ship and it's dupilcate in 
-        the indexes next to each other and the programme only to
-        allowed to have 15 ships at time hence the maximum number of
-        duplicates you can have is 15. Therefore, double the orginal
-        amount is the maxiumum amount you can have. */
-
-        SubMarine duplicates [] = new SubMarine[MAX_CAP * 2];
+        Object duplicates [] = new Object[MAX_CAP];
         
         for (int ii = 0 ;ii < countShips; ii++) 
         {
@@ -204,37 +166,8 @@ public class ShipStorage
         return duplicates; 
     }
 
-    /**********************************************************************
-    SUBMODULE: findDuplicateJets
-    IMPORTS: none
-    EXPORT: dupilicates[] (Object) 
-    ASSERTION:
-    **********************************************************************/
-    public FighterJet[] findDuplicateJets() 
-    {
-
-        FighterJet duplicates [] = new FighterJet[MAX_CAP * 2]; 
-        
-        for (int ii = 0 ;ii < MAX_CAP; ii++) 
-        {
-             /*I am starting the looping variable at one because I don't
-             want the programme to store itself as a dupilcate, hence
-             it will search for objects after itself*/
-
-            for(int jj = 1 ; jj < MAX_CAP; jj++) 
-            {
-                if (storeShips[ii].equals(storeShips[jj])) 
-                { 
-                    duplicates[ii] = storeShips[ii]; 
-                    duplicates[jj] = storeShips[jj];
-                }
-            }   
-        }
-        return duplicates;
-    }
-    //PRIVATE SUBMODULES:
-
-    
+   //PRIVATE SUBMODULES:
+   
     /**********************************************************************
     SUBMODULE: validateSub
     IMPORT: inObjct (subMarine object)
@@ -244,28 +177,18 @@ public class ShipStorage
     private boolean validateShip(SubMarine inObjct)
     {
         boolean isValid = false;
+
         if (inObjct instanceof SubMarine) 
         {
-                if (countShips < MAX_CAP)
+            if(validateShipFields(inObjct))
+            {
+                if(validateShipCap())
                 {
                     isValid = true;
                 }
-                else 
-                {
-                    throw new IllegalArgumentException("ERROR: not "+
-                               "enough storage in the submarine storage.");
-                }
-            else
-            {
-                throw new IllegalArgumentException("ERROR: the fields of "+
-                                         "the submarine object are empty");
-            } 
+            }
         }
-        else
-        {
-            throw new IllegalArgumentException("ERROR: not a submarine");
-        }
-
+                
         return isValid;
     }
 
@@ -280,30 +203,15 @@ public class ShipStorage
         boolean isValid = false;
         if (inObjct instanceof FighterJet) 
         {
-            if (inObjct != null)
+            if(validateShipFields(inObjct))
             {
-                if(countShips < MAX_CAP)
+                if(validateShipCap())
                 {
                     isValid = true;
                 }
-                else
-                {
-                    throw new IllegalArgumentException ("ERROR: not " +
-                                                        "enough storage "); 
-                }
-            }
-            else
-            {
-                throw new IllegalArgumentException("ERROR: the "+
-                               "the classfields of the objects are empty"); 
             }
         }
-        else 
-        {
-            throw new IllegalArgumentException("ERROR: not a fighterJet "+
-                                                "object");
-        }
-        return isValid;
+               return isValid;
     }
 
     /**********************************************************************
@@ -332,7 +240,7 @@ public class ShipStorage
     EXPORT: isValid (Boolean)
     ASSERTION: checks if the MAX CAP of the shipstorage has been reached
     **********************************************************************/
-    private boolean validateShipCa()
+    private boolean validateShipCap()
     {
         boolean isValid = false;
         if(countShips < MAX_CAP)
@@ -350,42 +258,6 @@ public class ShipStorage
     
     //OTHER METHODS:
 
-    /**********************************************************************
-    SUBMODULE: clone
-    IMPORT: none
-    EXPORT: cloneShipStorage (Object)
-    ASSERTION: returns a cloned object of the current object
-    **********************************************************************/
-    /*public ShipStorage clone()
-    {
-        ShipStorage cloneShipStorage;
-    
-        cloneShipStorage = new ShipStorage(this.countShips, this.countShips,
-                                          this.storeShips, this.storeShips);
-        return cloneShipStorage;
-    }*/
-    /**********************************************************************
-    SUBMODULE: equals
-    IMPORT: inObjct (object)
-    EXPORT: isSame (boolean)
-    ASSERTION: two ship storages are the same if they can store submarines and
-               jets and they have the same storage capacity with the same
-               storage distrubution
-    **********************************************************************/
-    /*
-    public boolean equals (Object inObjct)
-    {
-        isSame = false;
-        if (inObj instanceof ShipStorage) 
-        {
-            inShipStorage = (ShipStorage) inObjct;
-            isSame = ((storeShips.length()).equals(
-                        inShipStorage.getStoreSubs()) && 
-                        (storeShips.length()).equals(
-                        inShipStorage.getStoreJets()));
-        }
-        return isSame;
-    }*/
     /**********************************************************************
     SUBODULE: equalsArray
     IMPORT: arrayOne (Object), arrayTwo (object Two)
@@ -415,48 +287,7 @@ public class ShipStorage
         }
         return isSame; 
     }
-    /**********************************************************************
-    SUBMODULE: toStringSubArr
-    IMPORT: none
-    EXPORT: str [] (address of str in memory of the data type string)
-    ASSERTION: str will return the strings stored in storeShips 
-               array
-    **********************************************************************/
-    /* make these a variable overload, so you can use the same name when
-       you call them */
-    public String [] toStringSubArr()
-    {
-            String str [] = new String [MAX_CAP];
-
-             /*I am subtracting one, so the for loop deosn't try to search
-             outside the indexs of the str arrays as its index starts at*/
-
-            for (int ii = 0 ; ii < MAX_CAP;ii++) 
-            {
-                str[ii] = storeShips[ii].toString();
-            }
-            return str;
-    }
-    /**********************************************************************
-    SUBMODULE: toStringJetArr
-    IMPORT: none
-    EXPORT: str [] (address of str in memory of the data type string)
-    ASSERTION: str will return the strings of the fighter jets stored in
-               storeShips.
-    **********************************************************************/
-    public String [] toStringJetArr()
-    {
-        String str [] = new String [MAX_CAP];
-
-         /*I am subtracting one, so the for loop doesn't try to search
-         outside the indexs of the str array as its indes starts at 0*/
-
-        for (int ii = 0 ;ii < MAX_CAP;ii++) 
-        {
-            str [ii] = storeShips[ii].toString();
-        }
-        return str;
-    }
+    
     /**********************************************************************
     SUBMODULE: toStringArr
     IMPORT: none
@@ -465,19 +296,18 @@ public class ShipStorage
     **********************************************************************/
     public String[] toStringArr() 
     {
-        int tolShipsInfo, shipNum;
+        int tolShipsInfo;
+
          /*I am adding an extra 1 to tolShipsInfo. Because, I want an
          extra index to store the summary of the ship storage units
          (i.e. how many ships they're in total. How many jets they're,
          and how many submarines they're)*/
 
-        tolShipsInfo = MAX_CAP * 2 + 1;
+        tolShipsInfo = MAX_CAP + 1;
 
         String strArr [] = new String [tolShipsInfo];
 
-        shipNum = countShips + countShips; 
-
-        strArr [0] = "The hanger contains " +shipNum+ " ships. There's "+
+        strArr [0] = "The ship storage contains " +shipNum+ " ships. There's "+
                     +countShips+ " submarines, and there's " +countShips+
                     "fighter jets in the hanger";
 
@@ -491,15 +321,6 @@ public class ShipStorage
             strArr [ii] =  storeShips[ii].toString();
         }
 
-         /*I used the starting index of (MAX_CAP) becasue I want to
-         start adding the information of the fighter jets, to the next
-         vaccant spot after the information of the submarines and it
-         corresponds to MAX_CAP*/
-
-        for (int ii = MAX_CAP ; ii < tolShipsInfo; ii++)
-        {
-            strArr [ii] =  storeShips[ii].toString();
-        }
-        return strArr;
+       return strArr;
     }
-};
+}
