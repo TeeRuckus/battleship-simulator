@@ -1,0 +1,220 @@
+CLASS: SubMarine
+
+    PUBLIC CLASS CONSTANTS:
+        STEEL := "STEEL"
+        ALLY := "ALLOY"
+        TTNM := "TITANIUM"
+
+    CLASS FIELDS:
+        hull (string)
+        maxDepth (Real)
+
+    COSTRUCTORS:
+
+    Defualt:
+        IMPORT: none
+        EXPORT: none
+        ASSERTION: a sumbmarine which inherits its defualt constructor with a 
+                   maxDepth of -500 and a hull of titanium is a valid defualt
+                   state
+
+        ALGORITHM:
+            super default constructor
+            maxDepth := -500.0
+            hull := TTNM
+
+    Alternate
+        IMPORT: inSerialNum (Real), inYear (Interger), inHull (String),
+                inMaxDepth (Real)
+        EXPORT: none
+        ASSERTIONS: creates an object if the imports are valid, otherwise it 
+                    will FAIL
+
+        ALGORITHM:
+            super <- inSerialNum, inYear, inEngine
+            IF (validateHull <- inHull) THEN
+                IF (validateMaxDepth <- inMaxDepth) THEN
+                    hull := inHull
+                    maxDepth := inMaxDepth
+                END IF
+            END IF 
+
+    Copy:
+        IMPORT: inSubMarine (SubMarineClass)
+        EXPORT: none
+        ASSERTION: creates an object which is identical to the imported object
+
+        ALGORITHM:
+            super <- inSubMarine
+            hull := inSubMarine.getHull <- none
+            maxDepth := inSubMarine.getMaxDepth <- none
+
+    ACCESSORS
+
+    SUBMODULE: get getHull
+        IMPORT: none
+        EXPORT: hull
+        ASSERTION: returns the last set hull
+
+    SUBMODULE: getMaxDepth
+        IMPORT: none
+        EXPORT: maxDepth
+        ASSERTION: returns the last set max depth
+
+    MUTATORS:
+
+    SUBMODULE: setHull
+        IMPORT: inHull (String)
+        EXPORT: none
+        ASSERTION: set hull to to inHull if it's valid, otherwise it will fail
+
+        ALGORITHM:
+            IF (validateHull <- inHull) THEN
+                hull := inHull
+            END IF 
+
+    SUBMODULE: setMaxDepth
+        IMPORT: inMaxDepth (Real)
+        EXPORT: none
+        ASSERTION: set max depth to inMaxDepth if it's valid, otherwise
+
+        ALGORITHM:
+            IF (validateMaxDepth <- inMaxdepth) THEN
+                maxDepth :=  inMaxDepth
+            END IF
+    SUBMODULE: calcTravelTime
+        IMPORT: inShip SubMarine object), distance (integer)
+        EXPORT: timeHours (Real)
+        PURPOSE: is to calculate the travel time of submarine in hours
+
+        ALGORITHM:
+            
+     PRIVATE SUBMODULES:
+
+        SUBMODULE: validateSerialNum
+            IMPORT: inSerialNum (Real)
+            EXPORT: isValid (Boolean)
+            ASSERTION: validates serial numbers as true whereby its first three
+                       digits are between 100 to 200 (inclusive), and the last three
+                       digits are between 001 - 999 (inclusive), otherwise it will
+                       validate them as false.
+
+            ALGORITHM:
+                isValid := FALSE
+
+                inSerialNum := inSerialNum * 1 000
+                wholePart := (interger)inSerialNum DIV 1 000
+                decimalPart := (interger)inSerialNum MOD 1 000
+
+                IF (validSerialFormat <- inSerialNum, wholePart, decimalPart) THEN
+                    isValid := TRUE
+                END IF
+
+        SUBMODULE: validSerialFormat
+            IMPORT: inSerialNum (Real), wholePart (interger), decimalPart (interger)
+            EXPORT: isValid (Boolean)
+            PURPOSE: to ensure that the serial number is written in this format
+                     XXX.YYY and not in any other format.
+            ASSERTION: inSerialNum will be true if it's inputed in the following
+                       formatting XXX.YYY, otherwise, an error will be thrown to the
+                       user
+
+            ALGORITHM:
+                isValid := FALSE
+
+                checkDecimalPart := inSerialNum - (Real)(wholePart * 1000)
+                IF (AbsouleValueOf(checkDecimalPart - decimalPart) < TOL)
+                    IF (100 <= wholePart <= 300) THEN
+                        IF (1 <= decimalPart <= 999) THEN
+                            isValid := TRUE
+                END IF
+
+        SUBMODULE: validateYear
+            IMPORT: inYear (intergers)
+            EXPORT: isValid (Boolean)
+            ASSERTION: A commission year between 1950 to 2022 (interger) will be
+                       valid, otherwise an error will be thrown to the user
+
+            ALGORITHM:
+                isValid := FALSE
+
+                IF ( 1950 <= inYear <= 2022) THEN
+                    isValid :=   TRUE
+                END IF
+
+
+        SUBMODULE: validateHull
+            IMPORT: inHull (String)
+            EXPORT: isValid (boolean)
+            ASSERTION: it will only validate inHull if it's one of the following
+                       three; steel, alloym and titanium.
+
+            ALGORITHM:
+                isValid := FALSE
+                IF (inHull equals to STEEL or ALY or TTNM) THEN
+                    isValid := TRUE
+                END IF
+
+        SUBMODULE: validateMaxDepth
+            IMPORT: inMaxDepth (Real)
+            EXPORT: isValid (Boolean)
+            ASSERTION: a maxdepth of between -500 - 0 will be validate otherwise, an
+                       error will be thrown to the user
+
+            ALGORITHM:
+                isValid := FALSE
+
+                IF (-500.0 <= inMaxDepth <= 0) THEN
+                    isValid := TRUE
+                END IF
+
+    OTHER METHODS:
+
+    SUBMODULE: clone
+        IMPORT: none
+        EXPORT: cloneSubMarine (Object)
+        ASSERTION: returns a cloned object of the current object
+
+        ALGORITHM:
+            CONSTRUCT cloneSubmarine USING ALTERNATE CONSTRUCTOR with
+                -serialNum
+                -year
+                -hull
+                -maxDepth
+                -engine
+
+    SUBMODULE: equals
+        IMPORT: inObjct (object)
+        EXPORT: isSame (boolean)
+        ASSERTION: two submarines are interchangable if they have the same hull, and
+                    max depth
+
+        ALGORITHM:
+            isSame := FALSE
+            IF (inObj ISA SubMarine) THEN
+                inSubmarine  := (Convert to SubMarine)inObjct
+                isSame := (hull EQUALS inSubmarine.getHull <- none) AND
+                          (maxDepth EQUALS inSubmarine.getMaxDepth <- none) AND
+                          engine EQUALS getEngine <- none
+            END IF
+
+
+    SUBMODULE: toString
+        IMPORT: none
+        EXPORT: str
+        ASSERTION:
+
+        ALGORITHM:
+           str := "The ship " +serialNum+ " was comissioned in " +year+ ", its
+                   engine has " +cylinders+ " cylinders and runs on " +fuel+ ". It
+                   is a submarine with a " +hull+ " hull and a max depth of "
+                    +maxDepth+ "."
+
+    SUBMODULE: toFileString
+        IMPORT: none
+        EXPORT: str
+        ASSERTION:
+
+        ALGOTITHM:
+            str := "S," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ "," +hull+
+                   "," +maxDepth

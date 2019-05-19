@@ -20,9 +20,8 @@ public class SubMarine extends Ship
     DEFUALT Constructor
     IMPORT: none
     EXPORT: none
-    ASSERTION: a submarine with a serial number of 123.456, commissioned in
-               1950, with an engine hull of titanium with a maximum depth of
-              500.0 is a valid defualt state
+    ASSERTION: a submarine whihc inherits its defualt constructor with a max
+               depth of -500 and a hull of titanium is a valid defualt state
     ***********************************************************************/
     public SubMarine()
     {
@@ -33,7 +32,8 @@ public class SubMarine extends Ship
 
     /***********************************************************************
     ALTERNATE Constructor
-    IMPORT: inHull (String), inMaxDepth (Real)
+    IMPORT: inSerialNum (Real), inYear (Interger), inHull (String),
+        inMaxDepth (Real)
     EXPORT: none
     ASSERTION: creates a submarine object if the imports are valid, otherwise 
                it will FAIL
@@ -112,7 +112,7 @@ public class SubMarine extends Ship
     //DOING METHODS:
 
     /**********************************************************************
-    SUBMODULE: calcTravelTimeSub
+    SUBMODULE: calcTravelTime
     IMPORT: inShip (Submarine Object), distance (Integer)
     EXPORT: timeHours (Real) 
     PUROSE: is to calculate the travel time of submarine in hours 
