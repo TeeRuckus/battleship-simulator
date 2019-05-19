@@ -1,160 +1,155 @@
-sCLASS: engineClass
+CLASS: engineClass
 
-PUBLIC CLASS CONSTANTS:
-    BATRY := "BATTERY"
-    DSL := "DIESEL" 
-    BIO := "BIO" 
+    PUBLIC CLASS CONSTANTS:
+        BATRY := "BATTERY"
+        DSL := "DIESEL" 
+        BIO := "BIO" 
 
-CLASS FIELDS:
-    cyliners (Interger)
-    fuel (String)
+    CLASS FIELDS:
+        cyliners (Interger)
+        fuel (String)
 
-COSTRUCTORS:
+    COSTRUCTORS:
 
-Defualt:
-    IMPORT: none
-    EXPORT: none
-    ASSERTION: an engine is valid with a fuel of diesel and 6 cylinders
+    Defualt:
+        IMPORT: none
+        EXPORT: none
+        ASSERTION: an engine is valid with a fuel of diesel and 6 cylinders
 
-    ALGORITHM:
-        cylinders : = 6            
-        fuel := DSL
+        ALGORITHM:
+            cylinders : = 6            
+            fuel := DSL
 
-Alternate
-    IMPORT: inFuel (String), inCylinders (Interger) 
-    EXPORT: none
-    ASSERTIONS: creates an object if the imports are valid, otherwise it will
-                FAIL
+    Alternate
+        IMPORT: inFuel (String), inCylinders (Interger) 
+        EXPORT: none
+        ASSERTIONS: creates an object if the imports are valid, otherwise it 
+                    will FAIL
 
-    ALGORITHM:
-        IF (validateCylinders <- inCylinders) THEN
-            IF (validateFuel <- inFuel) THEN
-                
-                fuel := inFuel
+        ALGORITHM:
+            IF (validateCylinders <- inCylinders) THEN
+                IF (validateFuel <- inFuel) THEN
+                    
+                    fuel := inFuel
+                    cylinders := inCylinders
+                END IF
+            END IF
+
+    Copy:
+        IMPORT: inEngine (engineClass)
+        EXPORT: none
+        ASSERTION: creates an object which is identical to the imported object
+
+        ALGORITHM:
+            cylinders := inEngine.getCylinders <- none
+            fuel := inEngine.getFuel <- none
+
+    ACCESSORS
+
+    SUBMODULES: getCylinders
+        IMPORT: none
+        EXPORT: cylinders (Real) 
+        ASSERTION: returns the last set cylinder value
+
+    SUBMODULE: get getFuel
+        IMPORT: none
+        EXPORT: fuel (String)
+        ASSERTION: returns the last set fuel
+
+    MUTATORS:
+
+    SUBMODULE: setCylinders
+        IMPORT: inCylinders (Real)
+        EXPORT: none
+        ASSERTION: sets the cylinders to inCylinders if it's valid, otherwise
+                    it fails
+
+        ALGORITHM:
+            IF (validateCylinders <- inCylinders) THEN
                 cylinders := inCylinders
             END IF
-        END IF
 
-Copy:
-    IMPORT: inEngine (engineClass)
-    EXPORT: none
-    ASSERTION: creates an object which is identical to the imported object
-
-    ALGORITHM:
-        cylinders := inEngine.getCylinders <- none
-        fuel := inEngine.getFuel <- none
-
-ACCESSORS
-
-SUBMODULES: getCylinders
-    IMPORT: none
-    EXPORT: cylinders (Real) 
-    ASSERTION: returns the last set cylinder value
-
-SUBMODULE: get getFuel
-    IMPORT: none
-    EXPORT: fuel (String)
-    ASSERTION: returns the last set fuel
-
-MUTATORS:
-
-SUBMODULE: setCylinders
-    IMPORT: inCylinders (Real)
-    EXPORT: none
-    ASSERTION: sets the cylinders to inCylinders if it's valid, otherwise
-                it fails
-
-    ALGORITHM:
-        IF (validateCylinders <- inCylinders) THEN
-            cylinders := inCylinders
-        ELSE
-            FAIL
-        END IF ELSE
-
-SUBMODULE: setFuel
-    IMPORT: inFuel (String)
-    EXPORT: none
-    ASSERTION: set fuel to to inFuel if it's valid, otherwise it will fail
-
-    ALGORITHM:
-        IF (validateFuel <- inFuel) THEN
-            fuel := inFuel
-        ELSE
-            FAIL
-        END IF ELSE
-
-DOING METHODS:
-
-    SUBMODULE: calcTravel (*** I cannot impliment this yet, as my knowledge on
-                            how to is limited ***)
-
-PRIVATE SUBMODULES:
-
-    SUBMODULE: validateCylinders
-        IMPORT: inCylinders (Real)
-        EXPORT: isValid (Boolean)
-        ASSERTION: validates cylinders which are beteween 2 and 20 (inclusive)
-
-        ALGORITHM:
-            isValid := FALSE           
-            
-            IF ( 2 <= inCylinders <= 20) THEN
-                isValid := TRUE
-            END IF             
-
-    SUBMODULE: validateFuel
+    SUBMODULE: setFuel
         IMPORT: inFuel (String)
-        EXPORT: isValid (boolean)
-        ASSERTION: it will only validate inFuel if it has a string describing
-                   the fuel of the fighter jet
+        EXPORT: none
+        ASSERTION: set fuel to to inFuel if it's valid, otherwise it will fail
 
         ALGORITHM:
-           isValid := False
-           
-            IF (inFuel EQUALS TO BATRY or DSL or BIO) THEN 
-                isValid := TRUE
+            IF (validateFuel <- inFuel) THEN
+                fuel := inFuel
             END IF 
 
-OTHER METHODS:
+    PRIVATE SUBMODULES:
 
-SUBMODULE: clone
-    IMPORT: none
-    EXPORT: cloneEngine (Object)
-    ASSERTION: returns a cloned object of the current object
+        SUBMODULE: validateCylinders
+            IMPORT: inCylinders (Real)
+            EXPORT: isValid (Boolean)
+            ASSERTION: validates cylinders which are beteween 2 and 20 
+                       (inclusive)
 
-    ALGORITHM:
-        CONSTRUCT cloneEngine USING ALTERNATE CONSTRUCTOR with
-            -cylinders
-            -fuel
+            ALGORITHM:
+                isValid := FALSE           
+                
+                IF ( 2 <= inCylinders <= 20) THEN
+                    isValid := TRUE
+                ELSE
+                    FAIL("Invalid cylinders")
+                END IF ELSE 
 
-SUBMODULE: equals
-    IMPORT: inObjct (object)
-    EXPORT: isSame (boolean)
-    ASSERTION: two engines are indentical if they have the same fuel and 
-               cylinders
+        SUBMODULE: validateFuel
+            IMPORT: inFuel (String)
+            EXPORT: isValid (boolean)
+            ASSERTION: it will only validate inFuel if it is a battery, or
+                       diesel or bio. 
 
-    ALGORITHM:
-        isSame := FALSE
-        IF (inObj ISA engineClass) THEN
-            inEngine  := (Convert to engineClass)inObjct
-            isSame := (fuel EQUALS inEngine.getFuel <- none) AND
-                      (cylinders ==  inEngine.getCylinders <- none)
-        END IF
+            ALGORITHM:
+               isValid := False
+               
+                IF (inFuel EQUALS TO BATRY or DSL or BIO) THEN 
+                    isValid := TRUE
+                ELSE
+                    FAIL("Invalid fuel")
+
+    OTHER METHODS:
+
+    SUBMODULE: clone
+        IMPORT: none
+        EXPORT: cloneEngine (Object)
+        ASSERTION: returns a cloned object of the current object
+
+        ALGORITHM:
+            CONSTRUCT cloneEngine USING ALTERNATE CONSTRUCTOR with
+                -cylinders
+                -fuel
+
+    SUBMODULE: equals
+        IMPORT: inObjct (object)
+        EXPORT: isSame (boolean)
+        ASSERTION: two engines are indentical if they have the same fuel and 
+                   cylinders
+
+        ALGORITHM:
+            isSame := FALSE
+            IF (inObj ISA engineClass) THEN
+                inEngine  := (Convert to engineClass)inObjct
+                isSame := (fuel EQUALS inEngine.getFuel <- none) AND
+                          (cylinders ==  inEngine.getCylinders <- none)
+            END IF
 
 
-SUBMODULE: toString
-    IMPORT: none
-    EXPORT: str (String)
-    ASSERTION:
+    SUBMODULE: toString
+        IMPORT: none
+        EXPORT: str (String)
+        ASSERTION:
 
-    ALGORITHM:
-       str :=  "The engine has" +cylinders+ " cylinders, and it runs on"
-                +fuel+ " fuel".
+        ALGORITHM:
+           str :=  "The engine has" +cylinders+ " cylinders, and it runs on"
+                    +fuel+ " fuel".
 
-SUBMODULE: toFileString
-    IMPORT: none
-    EXPORT: str (String) 
-    ASSERTION:
+    SUBMODULE: toFileString
+        IMPORT: none
+        EXPORT: str (String) 
+        ASSERTION:
 
-    ALGOTITHM:
-        str := "E, " +cylinders+ ", " +fuel+ "."
+        ALGOTITHM:
+            str := "E, " +cylinders+ ", " +fuel+ "."

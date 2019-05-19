@@ -52,7 +52,7 @@ public class Engine
         COPY Constructor
         IMPORT: inEngine (Engine)
         EXPORT: none
-        ASSERTION: creates an objext which is identical to the importred object
+        ASSERTION: creates an object which is identical to the importred object
         ***********************************************************************/
         public Engine(Engine inEngine)
         {
@@ -77,8 +77,8 @@ public class Engine
         SUBMODULE: setCylinders
         IMPORT: inCylinders (Real)
         EXPORT: none
-        ASSERTION: sets the serial number to inCylinders if it's valid,
-                   otherwise it fails
+        ASSERTION: sets the cylinders to inCylinders of it's valid, otherwise
+                   it fails
         ***********************************************************************/
         public void setCylinders(int inCylinders)
         {
@@ -108,10 +108,7 @@ public class Engine
         SUBMODULE: validateCylinders
         IMPORT: inCylinders (Real)
         EXPORT: isValid (Boolean)
-        ASSERTION: validates serial numbers as true whereby its first three
-                   digits are between 100 to 200 (inclusive), and the last three
-                   digits are between 001 - 999 (inclusive), otherwise it will
-                   validate them as false.
+        ASSERTION: validates cylinders which are between 2 and 20 (inclusive)
         ***********************************************************************/
         private boolean validateCylinders(int inCylinders)
         {
