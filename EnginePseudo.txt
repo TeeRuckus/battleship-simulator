@@ -1,4 +1,4 @@
-CLASS: engineClass
+CLASS: Engine
 
     PUBLIC CLASS CONSTANTS:
         BATRY := "BATTERY"
@@ -36,7 +36,7 @@ CLASS: engineClass
             END IF
 
     Copy:
-        IMPORT: inEngine (engineClass)
+        IMPORT: inEngine (Engine)
         EXPORT: none
         ASSERTION: creates an object which is identical to the imported object
 
@@ -118,9 +118,7 @@ CLASS: engineClass
         ASSERTION: returns a cloned object of the current object
 
         ALGORITHM:
-            CONSTRUCT cloneEngine USING ALTERNATE CONSTRUCTOR with
-                -cylinders
-                -fuel
+            construct cloneEngine using this
 
     SUBMODULE: equals
         IMPORT: inObjct (object)
@@ -130,8 +128,8 @@ CLASS: engineClass
 
         ALGORITHM:
             isSame := FALSE
-            IF (inObj ISA engineClass) THEN
-                inEngine  := (Convert to engineClass)inObjct
+            IF (inObj ISA Engine) THEN
+                inEngine  := (Convert to Engine)inObjct
                 isSame := (fuel EQUALS inEngine.getFuel <- none) AND
                           (cylinders ==  inEngine.getCylinders <- none)
             END IF
@@ -143,7 +141,7 @@ CLASS: engineClass
         ASSERTION:
 
         ALGORITHM:
-           str :=  "The engine has" +cylinders+ " cylinders, and it runs on"
+           str := " The engine has" +cylinders+ " cylinders, and it runs on"
                     +fuel+ " fuel".
 
     SUBMODULE: toFileString
@@ -152,4 +150,4 @@ CLASS: engineClass
         ASSERTION:
 
         ALGOTITHM:
-            str := "E, " +cylinders+ ", " +fuel+ "."
+            str :=  +cylinders+ ", " +fuel+ "."
