@@ -49,11 +49,6 @@ public class Engine
                 }
             }
 
-            else
-            {
-                throw new IllegalArgumentException("\nInvalid object import" +
-                                                   "values\n");
-            }
         }
         /***********************************************************************
         COPY Constructor
@@ -93,11 +88,8 @@ public class Engine
             {
                 cylinders = inCylinders;
             }
-            else
-            {
-                throw new IllegalArgumentException("Invalid serial number");
-            }
         }
+
         /***********************************************************************
         SUBMODULE: setFuel
         IMPORT: inFuel (String)
@@ -107,14 +99,10 @@ public class Engine
         public void setFuel(String inFuel)
         {
             if(validateFuel(inFuel))
-                fuel = inFuel;
-            else
             {
-                throw new IllegalArgumentException("Invalid fuel");
+                fuel = inFuel;
             }
         }
-       /* SUBMODULE: calcTravel (*** I cannot impliment this yet, as my knowledge on
-                            how to is limited ***) */
 
         //PRIVATE SUBMODULES:
 
@@ -135,6 +123,11 @@ public class Engine
             {
                 isValid = true;
             }
+            else
+            {
+                throw new IllegalArgumentException("\nInvalid cylinders\n");
+            }
+
             return isValid;
         }
         /**********************************************************************
@@ -147,9 +140,14 @@ public class Engine
         private boolean validateFuel(String inFuel)
         {
             boolean isValid = false;
-            if (inFuel.equals(BATRY) || inFuel.equals(DSL) || inFuel.equals(BIO))
+
+            if(inFuel.equals(BATRY) || inFuel.equals(DSL) ||inFuel.equals(BIO))
             {
                 isValid = true;
+            }
+            else
+            {
+                throw new IllegalArgumentException("\nInvalid fuel\n");
             }
 
             return isValid;
