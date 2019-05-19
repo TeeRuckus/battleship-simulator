@@ -56,14 +56,22 @@ public class EngineTestHarness
             System.out.println("\nvalidateFuel\n");
             String mssg = "inFuel equal to ";
             assert true == test.validateFuel("BATTERY"): mssg+"battery in "+
-                                                        "upper cases" 
+                                                        "upper cases";
             assert true == test.validateFuel("battery"): mssg+
                                                       "battery in lower cases";
             assert true == test.validateFuel("DIESEL"):mssg+
                                                       "diesel in upper cases";
             assert true == test.validateFuel("diesel"):mssg+
                                                        "diesel in lower cases";
-            
+            assert true == test.validateFuel("BIO"):mssg+
+                                                   "bio in upper cases";
+            assert true == test.validateFuel("bio"):mssg+
+                                                   "bio in lower cases";
+            assert false == test.validateFuel(""):mssg+
+                                                 "an empty string";
+            assert false == test.validateFuel("#%^&%"):mssg+
+                                              "string with special characters";
+
 
         }
         catch(IllegalArgumentException err)
@@ -98,7 +106,6 @@ public class EngineTestHarness
                 /* I am commenting this out, so it doesn't stop my whole test
                    programme 
                 throw new IllegalArgumentException("\nInvalid cylinders\n");*/
-                System.out.println("\nIllegalArgumentExceptiion\n");
             }
 
             return isValid;
@@ -124,7 +131,6 @@ public class EngineTestHarness
                    to quit
                 throw new IllegalArgumentException("\nInvalid fuel\n");*/
             
-                System.out.println("\nIllegalArgumentException\n");
             }
 
             return isValid;

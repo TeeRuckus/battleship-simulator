@@ -20,9 +20,7 @@ public class Engine
         DEFUALT Constructor
         IMPORT: none
         EXPORT: none
-        ASSERTION: a fighter jet with a serial number of 123.250, commissioned
-                   in 1950, with an engine fuel of titanium with a maximum
-                   depth of 500.0 is a valid defualt state
+        ASSERTION: an engine is valid with a fuel of diesel and  6 cylinders
         ***********************************************************************/
         public Engine()
         {

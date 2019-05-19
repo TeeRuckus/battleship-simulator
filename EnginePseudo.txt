@@ -14,12 +14,11 @@ COSTRUCTORS:
 Defualt:
     IMPORT: none
     EXPORT: none
-    ASSERTION: an engine should be valid if its fuel is diesel and it has 6 
-               cylinders
+    ASSERTION: an engine is valid with a fuel of diesel and 6 cylinders
 
     ALGORITHM:
-        fuel := DSL
         cylinders : = 6            
+        fuel := DSL
 
 Alternate
     IMPORT: inFuel (String), inCylinders (Interger) 
@@ -33,9 +32,8 @@ Alternate
                 
                 fuel := inFuel
                 cylinders := inCylinders
-        ELSE
-            FAIL
-        END IF ELSE
+            END IF
+        END IF
 
 Copy:
     IMPORT: inEngine (engineClass)
