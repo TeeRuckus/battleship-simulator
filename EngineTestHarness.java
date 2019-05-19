@@ -37,24 +37,33 @@ public class EngineTestHarness
             System.out.println("\nGETTERS AND SETTERS:\n");
             engine[0].setCylinders(engine[1].getCylinders());
             System.out.println(engine[0].getCylinders() + " = " 
-                               + engine[ii].getCylinders());
+                               + engine[1].getCylinders());
 
             engine[0].setFuel(engine[1].getFuel());
             System.out.println(engine[0].getFuel() + " = " 
                                          + engine[1].getFuel());
 
             //Private submodules
+            EngineTestHarness test = new EngineTestHarness();
 
-            boolean actuall;
+            boolean actual;
             System.out.println("\nvalidateCylinders\n");
-            actual = validateCylinders(1);
-            assert actual == false: "inCylinders <= 2";
 
-            actual = validateCylinders(40);
-            assert actual == false: "inCylinders >= 20";
+            assert false == test.validateCylinders(1): "inCylinders <= 2";
+            assert false == test.validateCylinders(40): "inCylinders >= 20";
+            assert true  == test.validateCylinders(20): "2 > inCylinders < 20";
 
-            actual = validateCylinders(20);
-            assert actual == true: "2 > inCylinders < 20";
+            System.out.println("\nvalidateFuel\n");
+            String mssg = "inFuel equal to ";
+            assert true == test.validateFuel("BATTERY"): mssg+"battery in "+
+                                                        "upper cases" 
+            assert true == test.validateFuel("battery"): mssg+
+                                                      "battery in lower cases";
+            assert true == test.validateFuel("DIESEL"):mssg+
+                                                      "diesel in upper cases";
+            assert true == test.validateFuel("diesel"):mssg+
+                                                       "diesel in lower cases";
+            
 
         }
         catch(IllegalArgumentException err)
@@ -89,8 +98,7 @@ public class EngineTestHarness
                 /* I am commenting this out, so it doesn't stop my whole test
                    programme 
                 throw new IllegalArgumentException("\nInvalid cylinders\n");*/
-                System.out.println("an IllegalArgumentException is meant "+
-                                   "to be thrown here");
+                System.out.println("\nIllegalArgumentExceptiion\n");
             }
 
             return isValid;
@@ -112,7 +120,11 @@ public class EngineTestHarness
             }
             else
             {
-                throw new IllegalArgumentException("\nInvalid fuel\n");
+                /* I am commenting this out, so my test harness isn't forced 
+                   to quit
+                throw new IllegalArgumentException("\nInvalid fuel\n");*/
+            
+                System.out.println("\nIllegalArgumentException\n");
             }
 
             return isValid;
