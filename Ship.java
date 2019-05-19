@@ -126,7 +126,7 @@ public abstract class Ship
     //DOING METHODS 
     
     /**********************************************************************
-    SUBMODULE: calcTravelTimeSub
+    SUBMODULE: calcTravelTime
     IMPORT: inShip (Submarine Object), distance (Integer)
     EXPORT: timeHours (Real) 
     PUROSE: is to calculate the travel time of submarine in hours 
