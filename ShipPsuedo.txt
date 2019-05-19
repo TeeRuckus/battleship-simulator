@@ -1,3 +1,58 @@
+  SUBMODULES: getSerialNum
+        IMPORT: none
+        EXPORT: serialNum (Real) 
+        ASSERTION: returns the last set serial number set
+
+    SUBMODULE: getYear
+        IMPORT: none
+        EXPORT: year (Interger)
+        ASSERTION: returns the last set commision year
+SUBMODULE: getEngine 
+        IMPORT: none
+        EXPORT: new Engine object
+        ASSERTION: returns the last created engine object
+    SUBMODULE: setSerialNum
+        IMPORT: inSerialNum (Real)
+        EXPORT: none
+        ASSERTION: sets the serial number to inSerialNum if it's valid, otherwise
+                    it fails
+
+        ALGORITHM:
+            IF (validateSerialNum <- inSerialNum) THEN
+                serialNum := inSerialNum
+            ELSE
+                FAIL
+            END IF ELSE
+
+
+    SUBMODULE: setYear
+        IMPORT: inYear (interger)
+        EXPORT: none
+        ASSERTION: set year to inYear if it's valid, otherwise it will fail
+
+        ALGORITHM:
+            IF (validateYear <- inYear) THEN
+                year := inYear
+            ELSE
+                FAIL
+            END IF ELSE
+
+
+    SUBMODULE: setEngine
+        IMPORT: inEngine (Engine object) 
+        EXPORT: engine (Engine ObjectA
+        ASSERTION: sets engine to inEngine it it's valid, otherwise fail
+
+        ALGORITHM:
+
+            IF(NOT(inEngine ISA Engine)) THEN
+                FAIL
+            ELSE
+                engine := inEngine
+            END IF ELSE
+
+
+
  SUBMODULE: validateSerialNum
             IMPORT: inSerialNum (Real)
             EXPORT: isValid (Boolean)

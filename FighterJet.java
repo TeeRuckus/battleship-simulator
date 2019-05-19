@@ -30,8 +30,8 @@ public class FighterJet extends Ship
     IMPORT: inSerialNum (Real), inYear (Interger), inOrdance (String), 
             inWingSpan (Real)        
     EXPORT: none
-    ASSERTION: creates an object if the imports are valid, otherwise it will
-               FAIL
+    ASSERTION: creates a FighterJet object if its imports are valid, otherwise
+               it fails
     ***********************************************************************/
     public FighterJet(String inSerialNum, int inYear, String inOrdance, 
                  double inWingSpan, Engine inEngine)
@@ -83,11 +83,10 @@ public class FighterJet extends Ship
     public void setOrdance(String inOrdance)
     {
         if(validateOrdance(inOrdance)) 
-            ordance = inOrdance;
-        else
         {
-            throw new IllegalArgumentException("\nInvalid ordance\n");
+            ordance = inOrdance;
         }
+
     }
     /***********************************************************************
     SUBMODULE: setWingSpan 
@@ -101,10 +100,6 @@ public class FighterJet extends Ship
         {
             wingSpan =  inWingSpan; 
         }
-        else
-        {
-            throw new IllegalArgumentException("\nInvalid wingspan\n");
-        }
     }
     
     //DOING METHODS:
@@ -113,7 +108,7 @@ public class FighterJet extends Ship
     SUBMODULE: calcTravelTimeJet
     IMPORT:inShip (fighterJet object), (Integer) distance
     EXPORT: timeHours (Real) 
-    PURPOSE: is to calculate the tracel time of the fighter jet in hours
+    PURPOSE: is to calculate the travel time of the fighter jet in hours
     **********************************************************************/
     @Override
     public double calcTravelTime(int distance)
@@ -142,6 +137,10 @@ public class FighterJet extends Ship
         {
             isValid = true;
         }
+        else
+        {
+            throw new IllegalArgumentException("\nInvalid ordance\n");
+        }
 
         return isValid;
     }
@@ -160,11 +159,13 @@ public class FighterJet extends Ship
         {
             isValid = true;            
         }
+        else
+        {
+            throw new IllegalArgumentException("\nInvalid wingspan\n");
+        }
 
         return isValid;
-        
 
-       // return ((inWingSpan >= 2.2) && (inWingSpan <= 25.6));
     }
 
     //OTHER METHODS
@@ -178,12 +179,6 @@ public class FighterJet extends Ship
     @Override
     public FighterJet clone()
     {
-        /*FighterJet cloneFighterJet;
-
-        cloneFighterJet = new FighterJet(this.serialNum, this.year, 
-                                this.ordance, this.wingSpan, this.engine);
-        return cloneFighterJet; */
-
         return new FighterJet(this);
     }
 
