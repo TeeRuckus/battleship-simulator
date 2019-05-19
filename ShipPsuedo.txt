@@ -121,45 +121,97 @@ ABSTRACT CLASS: Ship
             String [] parts = SIZE of 2
             parts = inSerialNum SPLIT every "."
 
-            inSerialNum := inSerialNum * 1 000
-            wholePart := (interger)inSerialNum DIV 1 000
-            decimalPart := (interger)inSerialNum MOD 1 000
+            IF (validateSerialNumLength(inSerialNum)) THEN 
+                IF (validateWholePart(parts[0])) THEN
+                    IF (validateDecimalPart(parts[1]))
+                        
+                        isValid = TRUE
 
-            IF (validSerialFormat <- inSerialNum, wholePart, decimalPart) THEN
-                isValid := TRUE
+                    END IF
+                END IF
             END IF
 
-        SUBMODULE: validSerialFormat
-            IMPORT: inSerialNum (Real), wholePart (interger), decimalPart (interger)
-            EXPORT: isValid (Boolean)
-            PURPOSE: to ensure that the serial number is written in this format
-                     XXX.YYY and not in any other format.
-            ASSERTION: inSerialNum will be true if it's inputed in the following
-                       formatting XXX.YYY, otherwise, an error will be thrown to the
-                       user
+    SUBMODULE: validateSerialNumLength
+        IMPORT: serialNum (String)
+        EXPORT: isValid (Boolean)
+        ASSERTION: validate serialNu, as true if it has a length of 7 "XXX.YYY"
 
-            ALGORITHM:
-                isValid := FALSE
+        ALGORITHM:
+            (Boolean) isValid = FALSE
 
-                checkDecimalPart := inSerialNum - (Real)(wholePart * 1000)
-                IF (AbsouleValueOf(checkDecimalPart - decimalPart) < TOL)
-                    IF (100 <= wholePart <= 300) THEN
-                        IF (1 <= decimalPart <= 999) THEN
-                            isValid := TRUE
-                END IF
+            IF (serialNum LENGTH is equal to 7 ) THEN
+                isValid = TRUE
+            ELSE
+                FAIL
+            END IF ELSE 
+        
+    SUBMODULE: validateWholePart
+        IMPORT: wholePart (String)
+        EXPORT: isValid (Boolean)
+        ASSERTION: validates the wholepart of the serial number as true if it's
+               between 100 to 300 (inclusive)
 
-SUBMODULE: validateYear
-            IMPORT: inYear (intergers)
-            EXPORT: isValid (Boolean)
-            ASSERTION: A commission year between 1950 to 2022 (interger) will be
-                       valid, otherwise an error will be thrown to the user
+        ALGORITHM:
 
-            ALGORITHM:
-                isValid := FALSE
+        COMMENT:we need to convert wholePart into an integer so we can check 
+                if it's in the valid range og 100 to 300 
+        
+        (integer) wholePartInt := parse wholePart to integer
+        isValid = FALSE
 
-                IF ( 1950 <= inYear <= 2022) THEN
-                    isValid :=   TRUE
-                END IF
+        IF ( 100 >= wholePartInt <= 300 ) THEN 
+            isValid := TRUE
+        ELSE
+            FAIL("Invalid  whole part of the serial number")
+        END IF ELSE
 
+    SUBMODULE: validaDecimalPart
+        IMPORT: decimalPart (string)
+        EXPORT: isValid (Boolean)
+        ASSERTION: validates the decimal part of the serial number if it's
+                   it's between 001 to 999 (inclusive)
+
+        ALGORITHM:
+
+        COMMENT:we need to convert decimalPart to an integer so we can check if 
+                it's in the valid range of 001 to 999. However we don't need to
+                check if it has 3 numbers places as another method handles 
+                that 
+
+        (integer) decimalPartInt := parse decimalPart to integer 
+        isValid := FALSE
+
+        IF (1 >= decimalPartint <= 999) THEN
+            isValid = TRUE
+        ELSE
+            FAIL("Invalid decimal part of serial number")
+        END IF ELSE
+  
+    SUBMODULE: validateYear
+        IMPORT: inYear (intergers)
+        EXPORT: isValid (Boolean)
+        ASSERTION: A commission year between 1950 to 2022 (interger) will be
+                   valid, otherwise an error will be thrown to the user
+
+        ALGORITHM:
+            isValid := FALSE
+
+            IF ( 1950 <= inYear <= 2022) THEN
+                isValid :=   TRUE
+            ELSE
+                FAIL("Invalid year")
+            END IF ELSE
+
+
+    ABSTRACT SUBMODULE: clone
+        IMPORT: none
+        EXPORT: an identical object to the current object which has been made
+        ASSERTION: returns a cloned object of the current object
+
+    ABSTRACT SUBMODULE: equals
+    IMPORT: inObjct (object)
+    EXPORT: isSame (boolean)
+    ASSERTION: two submarines are interchangable if they have the same hull,
+               and max depth
 
 

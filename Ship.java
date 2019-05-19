@@ -214,7 +214,7 @@ public abstract class Ship
         else
         {
             throw new IllegalArgumentException("\nInvalid whole part of the "+
-                                               "decimal number\n");
+                                               "serial number\n");
         }
     
         return isValid; 
@@ -246,7 +246,7 @@ public abstract class Ship
         }
         else
         {
-            throw new IllegalArgumentException("\ninvalid decimal part of "+
+            throw new IllegalArgumentException("\nInvalid decimal part of "+
                                                "serial number\n");
         }
 
