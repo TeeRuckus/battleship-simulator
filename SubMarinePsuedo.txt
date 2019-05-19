@@ -160,10 +160,10 @@ CLASS: SubMarine
         ASSERTION:
 
         ALGORITHM:
-           str := "The ship " +serialNum+ " was comissioned in " +year+ ", its
-                   engine has " +cylinders+ " cylinders and runs on " +fuel+ ". It
-                   is a submarine with a " +hull+ " hull and a max depth of "
-                    +maxDepth+ "."
+
+           str := super.toString <- none + getEngine <- none.toString <- none+
+                  " It is a submarine with a " +hull" " hull and a max depth "
+                  "of" +maxDepth+ "."
 
     SUBMODULE: toFileString
         IMPORT: none
@@ -171,5 +171,6 @@ CLASS: SubMarine
         ASSERTION:
 
         ALGOTITHM:
-            str := "S," +serialNum+ "," +year+ "," +cylinders+ "," +fuel+ "," +hull+
-                   "," +maxDepth
+            str := "S," +  super.toFileString <- none + ", " + 
+                   +getEngine <- none.toFileString <- none + "," + hull + ","
+                   +maxDepth
