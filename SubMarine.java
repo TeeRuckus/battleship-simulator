@@ -137,7 +137,7 @@ public class SubMarine extends Ship
     IMPORT: inHull (String)
     EXPORT: isValid (boolean)
     ASSERTION: it will only validate inHull if it's one of the following
-               three; steel, alloym and titanium.
+               three; steel, alloy and titanium.
     ********************************************************************/
     private boolean validateHull(String inHull)
     {
@@ -172,7 +172,7 @@ public class SubMarine extends Ship
         }
         else
         {
-            throw new IllegalArgumentException("\nInvalid max  depth\n");
+            throw new IllegalArgumentException("\nInvalid max depth\n");
         }
 
         return isValid;

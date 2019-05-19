@@ -89,71 +89,29 @@ CLASS: SubMarine
 
         ALGORITHM:
             
+            (Real) ratio := (Real) distance / (double) getEngine <- none. 
+                                                        getCylinders <- none
+            (Real) denom := 10.00 + getMaxDepth <- none * -1.00
+            (Real) invDenom = 1.00/ denom
+
+            (Real) result := ratio * invDenom
+            
      PRIVATE SUBMODULES:
-
-        SUBMODULE: validateSerialNum
-            IMPORT: inSerialNum (Real)
-            EXPORT: isValid (Boolean)
-            ASSERTION: validates serial numbers as true whereby its first three
-                       digits are between 100 to 200 (inclusive), and the last three
-                       digits are between 001 - 999 (inclusive), otherwise it will
-                       validate them as false.
-
-            ALGORITHM:
-                isValid := FALSE
-
-                inSerialNum := inSerialNum * 1 000
-                wholePart := (interger)inSerialNum DIV 1 000
-                decimalPart := (interger)inSerialNum MOD 1 000
-
-                IF (validSerialFormat <- inSerialNum, wholePart, decimalPart) THEN
-                    isValid := TRUE
-                END IF
-
-        SUBMODULE: validSerialFormat
-            IMPORT: inSerialNum (Real), wholePart (interger), decimalPart (interger)
-            EXPORT: isValid (Boolean)
-            PURPOSE: to ensure that the serial number is written in this format
-                     XXX.YYY and not in any other format.
-            ASSERTION: inSerialNum will be true if it's inputed in the following
-                       formatting XXX.YYY, otherwise, an error will be thrown to the
-                       user
-
-            ALGORITHM:
-                isValid := FALSE
-
-                checkDecimalPart := inSerialNum - (Real)(wholePart * 1000)
-                IF (AbsouleValueOf(checkDecimalPart - decimalPart) < TOL)
-                    IF (100 <= wholePart <= 300) THEN
-                        IF (1 <= decimalPart <= 999) THEN
-                            isValid := TRUE
-                END IF
-
-        SUBMODULE: validateYear
-            IMPORT: inYear (intergers)
-            EXPORT: isValid (Boolean)
-            ASSERTION: A commission year between 1950 to 2022 (interger) will be
-                       valid, otherwise an error will be thrown to the user
-
-            ALGORITHM:
-                isValid := FALSE
-
-                IF ( 1950 <= inYear <= 2022) THEN
-                    isValid :=   TRUE
-                END IF
-
 
         SUBMODULE: validateHull
             IMPORT: inHull (String)
             EXPORT: isValid (boolean)
             ASSERTION: it will only validate inHull if it's one of the following
-                       three; steel, alloym and titanium.
+                       three; steel, alloy and titanium.
 
             ALGORITHM:
+
                 isValid := FALSE
                 IF (inHull equals to STEEL or ALY or TTNM) THEN
                     isValid := TRUE
-                END IF
+                ELSE
+                    FAIL("Invalid hull")
+                END IF ELSE
 
         SUBMODULE: validateMaxDepth
             IMPORT: inMaxDepth (Real)
@@ -166,7 +124,9 @@ CLASS: SubMarine
 
                 IF (-500.0 <= inMaxDepth <= 0) THEN
                     isValid := TRUE
-                END IF
+                ELSE
+                    FAIL("Invalid max depth")
+                END IF ELSE
 
     OTHER METHODS:
 
@@ -176,12 +136,7 @@ CLASS: SubMarine
         ASSERTION: returns a cloned object of the current object
 
         ALGORITHM:
-            CONSTRUCT cloneSubmarine USING ALTERNATE CONSTRUCTOR with
-                -serialNum
-                -year
-                -hull
-                -maxDepth
-                -engine
+            construct cloneSubMarine using this
 
     SUBMODULE: equals
         IMPORT: inObjct (object)
