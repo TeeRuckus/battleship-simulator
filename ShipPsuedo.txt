@@ -209,9 +209,26 @@ ABSTRACT CLASS: Ship
         ASSERTION: returns a cloned object of the current object
 
     ABSTRACT SUBMODULE: equals
-    IMPORT: inObjct (object)
-    EXPORT: isSame (boolean)
-    ASSERTION: two submarines are interchangable if they have the same hull,
-               and max depth
+        IMPORT: inObjct (object)
+        EXPORT: isSame (boolean)
+        ASSERTION: two submarines are interchangable if they have the same hull,
+                   and max depth
 
 
+    SUBMODULE: toString
+        IMPORT: none
+        EXPORT: str
+        ASSERTION:
+
+    ALGORITHM: 
+
+    (String) str := "The ship " +serialNum+ " was comissioned in " +year
+
+
+    SUBMODULE: toFileString
+        IMPORT: none
+        EXPORT: str
+        ASSERTION:
+
+    ALGORITHM:
+        str := serialNum+ "," +year
