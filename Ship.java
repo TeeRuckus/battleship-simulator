@@ -28,8 +28,8 @@ public abstract class Ship
     ALTERNATE Constructor
     IMPORT: inSerialNum (String), inYear (Interger), inEngine (Engine object)
     EXPORT: none
-    ASSERTION: creates an object if the imports are valid, otherwise it will
-               FAIL
+    ASSERTION: creates an object of an abstract object of ship, otherwise it 
+               fails
     ***********************************************************************/
     public Ship(String inSerialNum, int inYear, Engine inEngine)
     {
@@ -45,9 +45,9 @@ public abstract class Ship
     }
     /***********************************************************************
     COPY Constructor
-    IMPORT: inSubmarine (SubMarineClass)
+    IMPORT: inShip (Ship)
     EXPORT: none
-    ASSERTION: creates an objext which is identical to the importred onkect
+    ASSERTION: creates a copy of the current object 
     ***********************************************************************/
     public Ship(Ship inShip)
     {

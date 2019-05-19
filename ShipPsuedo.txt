@@ -1,3 +1,47 @@
+ABSTRACT CLASS: Ship  
+    
+    CLASS FIELDS:
+        String serialNum
+        Integer year
+        Engine engine
+
+    CONSTRUCTORS:
+
+    DEFUALT Constructor
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: an abstract ship with a serial number of 123.456, commissioned
+               in 2000, with an engine object is a valid state
+
+    ALGORITHM:
+        
+        serialNum := "123.456"
+        year := 2000
+        engine := new instance of Engine <- none
+
+    ALTERNATE Constructor
+    IMPORT: inSerialNum (String), inYear (integer), inEngine (Engine Object)
+    EXPORT: none
+    ASSERTION: creates an object of an abstract object of ship, otherwise it 
+               fails
+
+    ALGORITHM:
+        IF (validateSerialNum(inSerialNum)) THEN
+            IF (validateYear(inYear)) THEN
+                serialNum := inSerialNum
+                year := inYear
+                eninge := inEngine
+            END IF
+        END IF
+
+    COPY Constructor 
+    IMPORT: inShip (Ship)
+    EXPORT: none
+    ASSERTION: creates a copy of the current object 
+
+    ALGORITHM:
+        
+
   SUBMODULES: getSerialNum
         IMPORT: none
         EXPORT: serialNum (Real) 
