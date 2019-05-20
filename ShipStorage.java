@@ -128,15 +128,15 @@ public class ShipStorage
     **********************************************************************/
     public Ship [] findDuplicateShips() 
     {
-        Ship duplicates [] = new Ship[MAX_CAP];
+        Ship duplicates [] = new Ship[(countShips -1) * 2];
         
-        for (int ii = 0 ;ii < countShips; ii++) 
+        for (int ii = 0 ;ii < countShips - 1; ii++) 
         {
             /*I am starting the looping variable at one because 1 don't
              want the programme to store itself as a dupilcate, hence
              it will search for objects after itself*/
 
-            for(int jj = ii+1 ; jj < countShips;jj++)
+            for(int jj = ii+1 ; jj < countShips -1 ;jj++)
             {
                 if(storeShips[ii].equals(storeShips[jj])) 
                 {

@@ -24,10 +24,6 @@ public class ShipStorageTestHarness
             jets[2] = new FighterJet("199.666", 1969, "ninjas", 4, new Engine());
             jets[3] = new FighterJet("100.300", 1955, "OOPD is insane", 5, new
                                      Engine(4,"BIO"));
-            SubMarine[] duplicatesSubs = new 
-                                         SubMarine[shipStorage.MAX_CAP * 2];
-            FighterJet[] duplicatesJets = new 
-                                          FighterJet[shipStorage.MAX_CAP * 2];
 
             //ADD SHIPS TESTING
             for(int ii = 0; ii < 4; ii++)
@@ -52,26 +48,14 @@ public class ShipStorageTestHarness
 
             System.out.println("\n FIND DUPLICATES TEST \n");
             
-            shipStorage.findDuplicateShips();
+            Ship[] shipInfo = new Ship[ShipStorage.MAX_CAP * 2];
+            shipInfo = shipStorage.findDuplicateShips();
             System.out.println("\n Submarine duplicates \n"); 
-            for(int ii = 0; ii < 4; ii++)
+            for(int ii = 0; ii < 3; ii++)
             {
                 System.out.println("Submarine["+ii+"]\n"+ 
-                                    duplicatesSubs[ii].toString());
-                for(int jj = 1; jj < 4; ii++)
-                {
-                    System.out.println("Submarine duplicate ["+(jj-1)+"]\n"+
-                                        duplicatesSubs[jj].toString());
-                }
+                                    shipInfo[ii].toString());
             }
-
-            System.out.println("\n FighterJet duplicates \n");
-            
-            
-
-            
-            
-            
         }
         catch(IllegalArgumentException err)
         {
