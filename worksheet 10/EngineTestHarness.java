@@ -47,12 +47,13 @@ public class EngineTestHarness
             EngineTestHarness test = new EngineTestHarness();
 
             boolean actual;
-            
+            System.out.println("\nvalidateCylinders\n");
+
             assert false == test.validateCylinders(1): "inCylinders <= 2";
             assert false == test.validateCylinders(40): "inCylinders >= 20";
             assert true  == test.validateCylinders(20): "2 > inCylinders < 20";
-            System.out.println("\nvalidateCylinders: Passed\n");
 
+            System.out.println("\nvalidateFuel\n");
             String mssg = "inFuel equal to ";
             assert true == test.validateFuel("BATTERY"): mssg+"battery in "+
                                                         "upper cases";
@@ -70,9 +71,6 @@ public class EngineTestHarness
                                                  "an empty string";
             assert false == test.validateFuel("#%^&%"):mssg+
                                               "string with special characters";
-            System.out.println("\nvalidateFuel: Passed\n");
-
-            System.out.println("\nall test passed\n");
 
 
         }

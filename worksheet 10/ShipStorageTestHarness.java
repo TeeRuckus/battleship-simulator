@@ -46,17 +46,16 @@ public class ShipStorageTestHarness
             System.out.println("\nget jet method: \n"+
                                "\n" +shipStorage.getShip().toString()+"\n");
 
-            System.out.println("\nFIND DUPLICATES TEST\n");
+            System.out.println("\n FIND DUPLICATES TEST \n");
             
             Ship[] shipInfo = new Ship[ShipStorage.MAX_CAP * 2];
             shipInfo = shipStorage.findDuplicateShips();
-            System.out.println("\nSubmarine duplicates\n"); 
-            System.out.println(shipInfo[0].toString());
-            /*for(int ii = 0; ii < 3; ii++)
+            System.out.println("\n Submarine duplicates \n"); 
+            for(int ii = 0; ii < 3; ii++)
             {
                 System.out.println("Submarine["+ii+"]\n"+ 
                                     shipInfo[ii].toString());
-            }*/
+            }
         }
         catch(IllegalArgumentException err)
         {

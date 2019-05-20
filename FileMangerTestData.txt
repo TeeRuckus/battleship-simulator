@@ -1,0 +1,2 @@
+try to make some ship objects from this file and try to get ShipManger to 
+create them

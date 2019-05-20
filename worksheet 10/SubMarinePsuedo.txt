@@ -1,0 +1,176 @@
+CLASS: SubMarine
+
+    PUBLIC CLASS CONSTANTS:
+        STEEL := "STEEL"
+        ALLY := "ALLOY"
+        TTNM := "TITANIUM"
+
+    CLASS FIELDS:
+        hull (string)
+        maxDepth (Real)
+
+    COSTRUCTORS:
+
+    Defualt:
+        IMPORT: none
+        EXPORT: none
+        ASSERTION: a sumbmarine which inherits its defualt constructor with a 
+                   maxDepth of -500 and a hull of titanium is a valid defualt
+                   state
+
+        ALGORITHM:
+            super default constructor
+            maxDepth := -500.0
+            hull := TTNM
+
+    Alternate
+        IMPORT: inSerialNum (Real), inYear (Interger), inHull (String),
+                inMaxDepth (Real)
+        EXPORT: none
+        ASSERTIONS: creates an object if the imports are valid, otherwise it 
+                    will FAIL
+
+        ALGORITHM:
+            super <- inSerialNum, inYear, inEngine
+            IF (validateHull <- inHull) THEN
+                IF (validateMaxDepth <- inMaxDepth) THEN
+                    hull := inHull
+                    maxDepth := inMaxDepth
+                END IF
+            END IF 
+
+    Copy:
+        IMPORT: inSubMarine (SubMarineClass)
+        EXPORT: none
+        ASSERTION: creates an object which is identical to the imported object
+
+        ALGORITHM:
+            super <- inSubMarine
+            hull := inSubMarine.getHull <- none
+            maxDepth := inSubMarine.getMaxDepth <- none
+
+    ACCESSORS
+
+    SUBMODULE: get getHull
+        IMPORT: none
+        EXPORT: hull
+        ASSERTION: returns the last set hull
+
+    SUBMODULE: getMaxDepth
+        IMPORT: none
+        EXPORT: maxDepth
+        ASSERTION: returns the last set max depth
+
+    MUTATORS:
+
+    SUBMODULE: setHull
+        IMPORT: inHull (String)
+        EXPORT: none
+        ASSERTION: set hull to to inHull if it's valid, otherwise it will fail
+
+        ALGORITHM:
+            IF (validateHull <- inHull) THEN
+                hull := inHull
+            END IF 
+
+    SUBMODULE: setMaxDepth
+        IMPORT: inMaxDepth (Real)
+        EXPORT: none
+        ASSERTION: set max depth to inMaxDepth if it's valid, otherwise
+
+        ALGORITHM:
+            IF (validateMaxDepth <- inMaxdepth) THEN
+                maxDepth :=  inMaxDepth
+            END IF
+    SUBMODULE: calcTravelTime
+        IMPORT: inShip SubMarine object), distance (integer)
+        EXPORT: timeHours (Real)
+        PURPOSE: is to calculate the travel time of submarine in hours
+
+        ALGORITHM:
+            
+            (Real) ratio := (Real) distance / (double) getEngine <- none. 
+                                                        getCylinders <- none
+            (Real) denom := 10.00 + getMaxDepth <- none * -1.00
+            (Real) invDenom = 1.00/ denom
+
+            (Real) result := ratio * invDenom
+            
+     PRIVATE SUBMODULES:
+
+        SUBMODULE: validateHull
+            IMPORT: inHull (String)
+            EXPORT: isValid (boolean)
+            ASSERTION: it will only validate inHull if it's one of the following
+                       three; steel, alloy and titanium.
+
+            ALGORITHM:
+
+                isValid := FALSE
+                IF (inHull equals to STEEL or ALY or TTNM) THEN
+                    isValid := TRUE
+                ELSE
+                    FAIL("Invalid hull")
+                END IF ELSE
+
+        SUBMODULE: validateMaxDepth
+            IMPORT: inMaxDepth (Real)
+            EXPORT: isValid (Boolean)
+            ASSERTION: a maxdepth of between -500 - 0 will be validate otherwise, an
+                       error will be thrown to the user
+
+            ALGORITHM:
+                isValid := FALSE
+
+                IF (-500.0 <= inMaxDepth <= 0) THEN
+                    isValid := TRUE
+                ELSE
+                    FAIL("Invalid max depth")
+                END IF ELSE
+
+    OTHER METHODS:
+
+    SUBMODULE: clone
+        IMPORT: none
+        EXPORT: cloneSubMarine (Object)
+        ASSERTION: returns a cloned object of the current object
+
+        ALGORITHM:
+            construct cloneSubMarine using this
+
+    SUBMODULE: equals
+        IMPORT: inObjct (object)
+        EXPORT: isSame (boolean)
+        ASSERTION: two submarines are interchangable if they have the same hull, and
+                    max depth
+
+        ALGORITHM:
+            isSame := FALSE
+            IF (inObj ISA SubMarine) THEN
+                inSubmarine  := (Convert to SubMarine)inObjct
+                isSame := (hull EQUALS inSubmarine.getHull <- none) AND
+                          (maxDepth EQUALS inSubmarine.getMaxDepth <- none) AND
+                          engine EQUALS getEngine <- none
+            END IF
+
+
+    SUBMODULE: toString
+        IMPORT: none
+        EXPORT: str
+        ASSERTION:
+
+        ALGORITHM:
+
+           str := super.toString <- none + getEngine <- none.toString <- none+
+                  " It is a submarine with a " +hull" " hull and a max depth "
+                  "of" +maxDepth+ "."
+
+    SUBMODULE: toFileString
+        IMPORT: none
+        EXPORT: str
+        ASSERTION:
+
+        ALGOTITHM:
+            str := "S," +  super.toFileString <- none + ", " + 
+                   +getEngine <- none.toFileString <- none + "," + hull + ","
+                   +maxDepth

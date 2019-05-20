@@ -1,7 +1,5 @@
 public class FighterJetTestHarness
 {
-    public static final double TOL = 0.0001;
-
     public static void main(String [] args)
     {
         try
@@ -48,34 +46,9 @@ public class FighterJetTestHarness
             System.out.println(fighterJet[0].getWingSpan() + " = " 
                                + fighterJet[1].getWingSpan());
 
-            //testing the contained in fighterJet
-            double actual, expected;
+            //testing the methods
             System.out.println("\ncalcTravelTimeJet\n");
-            fighterJet[0] = new FighterJet("199.666", 1969, "turrents", 4.0,
-                                            new Engine(12, "BIO"));
             
-            actual = fighterJet[0].calcTravelTime(1000);
-            assert Math.abs(0.14 - actual) < TOL: "Valid case";
-            
-
-            /*int testCases = 15;
-            int[] distance = new int [testCases];
-            double[] wingSpan = new double [testCases];
-            int[] cylinders = new int[testCases];
-            boolean[] expected = new boolean[testCases];
-
-            distance = {10, -5, 5, 1000, 3000, 9000, 8000, -2, 50, -5, -1, -4,
-                        -1, 50, -50};
-            wingSpan = {};
-            cylinders = {};
-            expected = {};
-            
-            //creating the
-            for(int ii = 0; ii < testCases; ii++)
-            {
-            }*/
-
-
 
         }
         catch(IllegalArgumentException err)

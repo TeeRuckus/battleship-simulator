@@ -121,7 +121,7 @@ public class ShipStorage
     }*/
    
     /**********************************************************************
-    SUBMODULE: findDuplicateShips
+    SUBMODULE: findDuplicateSubs
     IMPORTS: none
     EXPORT: dupilicates[] (Object) 
     ASSERTION:
@@ -240,8 +240,7 @@ public class ShipStorage
     }
     
     //OTHER METHODS:
-    
-    //MAKE A CLONE METHOD
+
     /**********************************************************************
     SUBODULE: equalsArray
     IMPORT: arrayOne (Object), arrayTwo (object Two)

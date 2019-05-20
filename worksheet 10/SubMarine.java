@@ -205,7 +205,6 @@ public class SubMarine extends Ship
         boolean isSame = false;
         if(inObjct instanceof SubMarine)
         {
-            //calll super
             SubMarine inSubmarine = (SubMarine)inObjct;
             isSame = hull.equals(inSubmarine.getHull()) &&
                       maxDepth == (inSubmarine.getMaxDepth()) &&

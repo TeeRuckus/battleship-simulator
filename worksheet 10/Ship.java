@@ -14,8 +14,7 @@ public abstract class Ship
     /***********************************************************************
     DEFUALT Constructor
     IMPORT: none
-    EXPORT: none            /**/
-
+    EXPORT: none
     ASSERTION: an abstract ship with a serial number of 123.456, commissioned
                in 2000, with an engine object is a valid state.
     ***********************************************************************/
@@ -40,7 +39,7 @@ public abstract class Ship
             {
                 serialNum = inSerialNum;
                 year = inYear;
-                engine = new Engine(inEngiene);hinEngine; //make 
+                engine = inEngine;
             }
         }
     }
@@ -70,7 +69,7 @@ public abstract class Ship
     }
     public Engine getEngine()
     {
-        return new Engine(engine);
+        return new Engine();
     }
 
     //MUTATORS
@@ -295,7 +294,6 @@ public abstract class Ship
                and max depth
     ********************************************************************/
     public abstract boolean equals(Object inObject, Engine inEngine);
-    //make equals
       
     /********************************************************************
     SUBMODULE: toString
