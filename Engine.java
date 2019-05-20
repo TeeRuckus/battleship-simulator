@@ -134,9 +134,12 @@ public class Engine
         ********************************************************************/
         private boolean validateFuel(String inFuel)
         {
+            String upperCaseInFuel;
             boolean isValid = false;
-
-            if(inFuel.equals(BATRY) || inFuel.equals(DSL) ||inFuel.equals(BIO))
+            // allows inFuel to be any combination of casing
+            upperCaseInFuel = inFuel.toUpperCase();
+            if(upperCaseInFuel.equals(BATRY) || upperCaseInFuel.equals(DSL) 
+               || upperCaseInFuel.equals(BIO))
             {
                 isValid = true;
             }

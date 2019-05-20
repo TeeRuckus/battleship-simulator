@@ -104,8 +104,9 @@ CLASS: Engine
 
             ALGORITHM:
                isValid := False
-               
-                IF (inFuel EQUALS TO BATRY or DSL or BIO) THEN 
+               (Stringg) upperCaseInFuel := inFuel CONVERT to upper cases
+
+                IF (upperCaseInFuel EQUALS TO BATRY or DSL or BIO) THEN 
                     isValid := TRUE
                 ELSE
                     FAIL("Invalid fuel")
