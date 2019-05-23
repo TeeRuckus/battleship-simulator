@@ -121,12 +121,16 @@ public class SubMarine extends Ship
     public double calcTravelTime(int distance)
     {
         double ratio, denom, invDenom;
-   
+        /*splitting up the calculations in the assignemnt specification to make
+          it more comphredable and to make it easier to type cast values and
+          debug */
+
         ratio = ( (double) distance / (double) getEngine().getCylinders());
         denom = (10.00 + getMaxDepth() * -1.00);
         invDenom = 1.00 / denom;
+        timeHours = ratio * invDenom;
     
-        return ratio * invDenom;
+        return timeHours;
     }
     
 
@@ -141,10 +145,13 @@ public class SubMarine extends Ship
     ********************************************************************/
     private boolean validateHull(String inHull)
     {
+        String uppperCaseInHull;
         boolean isValid = false;
-
-        if(inHull.equals(STEEL) || inHull.equals(ALLY) ||
-           inHull.equals(TTNM))
+        /* converting inHull to be upper case, to allow any casing for fuel 
+           to be passed to the method as reuired in the specification */
+        upperCaseinHull = inHull.toUpper();
+        if(upperCaseinHull.equals(STEEL) || upperCaseinHull.equals(ALLY) ||
+           upperCaseinHull.equals(TTNM))
         {
             isValid = true;
         }
@@ -176,7 +183,7 @@ public class SubMarine extends Ship
         }
 
         return isValid;
-    }
+}
 
     //OTHER METHODS
 
@@ -205,11 +212,24 @@ public class SubMarine extends Ship
         boolean isSame = false;
         if(inObjct instanceof SubMarine)
         {
-            //calll super
-            SubMarine inSubmarine = (SubMarine)inObjct;
+            //call the super here, as it's meant to have any equals method
+            //SubMarine inSubmarine = (SubMarine)inObjct;
+            
+            /* a ship object are only the same if they're constructed with the
+            same hull, has the same maxdepth and the same engine type. Morever,
+            a ship can still be the same even if they have different serial
+            numbers as a serial number is only an idenfication number. Hence 
+            only hull, maxdepth and engine need to be checked if they're the 
+            same */
+
             isSame = hull.equals(inSubmarine.getHull()) &&
                       maxDepth == (inSubmarine.getMaxDepth()) &&
                       getEngine().equals(inEngine); 
+        }
+        else
+        {
+            throw new IllegalArgumentException("ERROR: objects are not the "+
+                                                "same");
         }
 
         return isSame;

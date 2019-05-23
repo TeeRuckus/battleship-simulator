@@ -136,7 +136,10 @@ public class Engine
         {
             String upperCaseInFuel;
             boolean isValid = false;
-            // allows inFuel to be any combination of casing
+
+            /* converting inFuel to be upper case, to allow any casing for fuel
+               to be passed to this method as specified in the specification*/
+
             upperCaseInFuel = inFuel.toUpperCase();
             if(upperCaseInFuel.equals(BATRY) || upperCaseInFuel.equals(DSL) 
                || upperCaseInFuel.equals(BIO))

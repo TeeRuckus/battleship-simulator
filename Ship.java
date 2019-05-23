@@ -14,8 +14,7 @@ public abstract class Ship
     /***********************************************************************
     DEFUALT Constructor
     IMPORT: none
-    EXPORT: none            /**/
-
+    EXPORT: none
     ASSERTION: an abstract ship with a serial number of 123.456, commissioned
                in 2000, with an engine object is a valid state.
     ***********************************************************************/
@@ -34,6 +33,9 @@ public abstract class Ship
     ***********************************************************************/
     public Ship(String inSerialNum, int inYear, Engine inEngine)
     {
+        /* Checking if the all the imported values, are valid and suit the ship
+           specification  */ 
+
         if(validateSerialNum(inSerialNum))
         {
             if(validateYear(inYear))
@@ -112,6 +114,9 @@ public abstract class Ship
     ***********************************************************************/
     public void  setEngine(Engine inEngine) 
     {
+        /* we don't care if the engine constructs are valid as the engine class
+           does that by itself. We only if it's only an engine or not */
+
         if(!(inEngine instanceof Engine))
         {
             throw new IllegalArgumentException("ERROR: not a valid "+
@@ -148,9 +153,16 @@ public abstract class Ship
     private boolean validateSerialNum(String inSerialNum)
     {
         boolean isValid = false;
+        /* making a string of 2 elements to support both parts of the number
+           (XXX.YYY) after it has been split i.e part[0] = XXX, and part[1] =
+           YYY. Although if there's more than one decimal point, the variable
+           parts will throw an NullPointerException which will fail the
+           programme which is what we want, hence we don't need to catch the
+           exception */
+
         String [] parts = new String[2];
         parts = inSerialNum.split("\\.");
-        
+               
         if(validateSerialNumLength(inSerialNum))
         {
             if(validateWholePart(parts[0]))
@@ -174,6 +186,10 @@ public abstract class Ship
     private boolean validateSerialNumLength(String serialNum)
     {
         boolean isValid = false;
+        
+        /* the serial number is  digits, although we also need to account for
+           the decimal point  "." hence it will be 7 elements due to the extra 
+           decimal point */
 
         if(serialNum.length() == 7)
         {
@@ -201,10 +217,11 @@ public abstract class Ship
     {
         int wholePartInt;
         boolean isValid; 
-
         
-        /* we need to convert wholePart into an integer so we can check 
-           if it's in the valid range og 100 to 300 */
+        /* we convert wholePartInt to an integer to allow the algorithm to
+           preform appropriate comparsion arithemric to validate if lays in the
+           correct range integer range */
+        
         wholePartInt = Integer.parseInt(wholePart);
         isValid = false;
 
@@ -233,10 +250,9 @@ public abstract class Ship
         int decimalPartInt;
         boolean isValid;
 
-        /* we need to convert decimalPart to an integer so we can check if 
-           it's in the valid range of 001 to 999. However we don't need to
-           check if it has 3 numbers places as another method handles 
-           that */
+        /* we convert DecialPartInt to an integer to allow the algorithm to
+           preform appropriate comparsion arithemric to validate if lays in the
+           correct range integer range */
         
         decimalPartInt = Integer.parseInt(decimalPart); 
         isValid = false;
@@ -285,6 +301,8 @@ public abstract class Ship
     EXPORT: an identical object to the current object which has been made
     ASSERTION: returns a cloned object of the current object
     ********************************************************************/
+
+    //creating an abstract class to force the subclasses to use the submodule
     public abstract Object clone();
 
     /********************************************************************
@@ -294,8 +312,9 @@ public abstract class Ship
     ASSERTION: two submarines are interchangable if they have the same hull,
                and max depth
     ********************************************************************/
+    //creating an abstract class to force the subclasses to use the submodule
     public abstract boolean equals(Object inObject, Engine inEngine);
-    //make equals
+    //make equals, do it for the serialNum and the rest of the shit
       
     /********************************************************************
     SUBMODULE: toString
