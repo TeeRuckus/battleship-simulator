@@ -121,6 +121,7 @@ public class SubMarine extends Ship
     public double calcTravelTime(int distance)
     {
         double ratio, denom, invDenom;
+
         /*splitting up the calculations in the assignemnt specification to make
           it more comphredable and to make it easier to type cast values and
           debug */
@@ -147,8 +148,10 @@ public class SubMarine extends Ship
     {
         String uppperCaseInHull;
         boolean isValid = false;
+
         /* converting inHull to be upper case, to allow any casing for fuel 
            to be passed to the method as reuired in the specification */
+
         upperCaseinHull = inHull.toUpper();
         if(upperCaseinHull.equals(STEEL) || upperCaseinHull.equals(ALLY) ||
            upperCaseinHull.equals(TTNM))
@@ -166,6 +169,8 @@ public class SubMarine extends Ship
     SUBMODULE: validateMaxDepth
     IMPORT: inMaxDepth (Real)
     EXPORT: isValid (Boolean)
+    PURPOSE: To ensure the inputed max depth is between the range of -500 t0
+             0 metres.
     ASSERTION: a maxdepth of between -500 - 0 will be validate otherwise, an
                error will be thrown to the user
     ********************************************************************/
@@ -191,6 +196,7 @@ public class SubMarine extends Ship
     SUBMODULE: clone
     IMPORT: none
     EXPORT: an identical object to the current object which has been made
+    PURPOSE: To creaete a copy/cone of the current object.
     ASSERTION: returns a cloned object of the current object
     ********************************************************************/
     @Override
@@ -203,8 +209,8 @@ public class SubMarine extends Ship
     SUBMODULE: equals
     IMPORT: inObjct (object)
     EXPORT: isSame (boolean)
-    ASSERTION: two submarines are interchangable if they have the same hull,
-               and max depth
+    PURPOSE: to validate if two submarine objects are the same. Submarine
+             objects are the same if they have the same hull, and max depth.
     ********************************************************************/
     @Override
     public boolean equals(Object inObjct, Engine inEngine)
@@ -213,7 +219,7 @@ public class SubMarine extends Ship
         if(inObjct instanceof SubMarine)
         {
             //call the super here, as it's meant to have any equals method
-            //SubMarine inSubmarine = (SubMarine)inObjct;
+            SubMarine inSubmarine = (SubMarine)inObjct;
             
             /* a ship object are only the same if they're constructed with the
             same hull, has the same maxdepth and the same engine type. Morever,
@@ -239,7 +245,10 @@ public class SubMarine extends Ship
     SUBMODULE: toString
     IMPORT: none
     EXPORT: str
-    ASSERTION:
+    PURPOSE: to create a string which will describe the states of the submarine
+              object
+    ASSERTION: returns a string which describes the state of the submarine 
+               object
     ********************************************************************/
     @Override
     public String toString()
@@ -256,7 +265,8 @@ public class SubMarine extends Ship
     SUBMODULE: toFileString
     IMPORT: none
     EXPORT: str
-    ASSERTION:
+    PURPOSE: It's to return a string which will be written to a file, to allow
+             another class to create ship objects from the written string
     ********************************************************************/
     @Override
     public String toFileString()

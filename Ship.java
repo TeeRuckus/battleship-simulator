@@ -313,7 +313,15 @@ public abstract class Ship
                and max depth
     ********************************************************************/
     //creating an abstract class to force the subclasses to use the submodule
-    public abstract boolean equals(Object inObject, Engine inEngine);
+    public boolean equals(Object inObject, Engine inEngine);
+    {
+        //I am pretty sure this is from amy's example, reference this properly
+        boolean isSame = false;
+        if(inObjct instanceof
+        {
+            isSame = serialNum == (in
+        }
+    }
     //make equals, do it for the serialNum and the rest of the shit
       
     /********************************************************************
