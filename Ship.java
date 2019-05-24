@@ -37,7 +37,7 @@ public abstract class Ship
         {
             if(validateYear(inYear))
             {
-                serialNum = inSerialNum;
+                serialNum = new String(inSerialNum);
                 year = inYear;
                 engine = new Engine(inEngine);
             }
@@ -53,14 +53,14 @@ public abstract class Ship
     {
         serialNum = inShip.getSerialNum();
         year = inShip.getYear();
-        engine = getEngine();
+        engine = inShip.getEngine();
     }
 
     //ACCESSORS
 
     public String getSerialNum()
     {
-        return serialNum;
+        return new String(serialNum);
     }
 
     public int getYear()
@@ -69,8 +69,7 @@ public abstract class Ship
     }
     public Engine getEngine()
     {
-        return Engine(engine);
-        //return new Engine(engine);
+        return new Engine(engine);
     }
 
     //MUTATORS

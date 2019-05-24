@@ -84,7 +84,7 @@ public class FighterJet extends Ship
     {
         if(validateOrdance(inOrdance)) 
         {
-            ordance = inOrdance;
+            ordance = new String (inOrdance);
         }
 
     }
@@ -114,7 +114,7 @@ public class FighterJet extends Ship
     public double calcTravelTime(int distance)
     {
         double denom, timeHours;
-        denom = getWingSpan() * (double)getEngine().getCylinders() 
+        denom = getWingSpan() * (double)(getEngine().getCylinders()) 
                 * 150.00;
         timeHours = (double)distance / denom;
         
@@ -190,15 +190,14 @@ public class FighterJet extends Ship
                ordance and wingspan
     ********************************************************************/
     @Override
-    public boolean equals(Object inObjct, Engine inEngine)
+    public boolean equals(Object inObjct)
     {
         boolean isSame = false;
         if(inObjct instanceof FighterJet) 
         {
             FighterJet inFighterJet = (FighterJet)inObjct;
             isSame = ordance.equals(inFighterJet.getOrdance()) &&
-                      wingSpan == (inFighterJet.getWingSpan()) &&
-                      getEngine().equals(inEngine);
+                      wingSpan == (inFighterJet.getWingSpan());
         }
 
         return isSame;
@@ -213,7 +212,7 @@ public class FighterJet extends Ship
     public String toString()
     {
         String str;
-        str = super.toString() +getEngine().toString()+ " It is a fighter jet"+
+        str = super.toString()+ " It is a fighter jet"+
                     " with a wing span of " +wingSpan+ " metres and equiped "+
                     "with " +ordance+ ".";
         return str;
@@ -228,8 +227,8 @@ public class FighterJet extends Ship
     public String toFileString()
     {
         String str;
-        str = "F," + super.toFileString() + "," + getEngine().toFileString() +
-              "," + wingSpan + "," + ordance;
+        str = "F," + super.toFileString() + ","+ "," + wingSpan + "," 
+              + ordance;
     
         return str;
     }

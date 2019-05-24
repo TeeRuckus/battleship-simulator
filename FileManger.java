@@ -13,9 +13,11 @@ public class FileManger
     public static final String BATRY = "BATTERY";
     public static final String DSL = "DIESEL";
     public static final String BIO = "BIO";
+
     public static final String STEEL = "STEEL";
     public static final String ALLY = "ALLOY";
     public static final String TTNM = "TITANIUM";
+
     //STATIC METHODS
 
     /**************************************************************************
@@ -73,6 +75,7 @@ public class FileManger
     EXPORT: none
     PURPOSE: to write the contents in the submarine object to a file
     **************************************************************************/
+    //don't pass ShipStorage here, try to make it genric asf.
     public static void writeFile(String fileName, ShipStorage storageUnit) 
     {
         //psudo code adapted from lecture 5 of OOPD     

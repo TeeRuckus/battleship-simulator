@@ -46,7 +46,7 @@ public class SubMarine extends Ship
         {
             if(validateMaxDepth(inMaxDepth))
             {
-                hull = inHull;
+                hull = new String(inHull);
                 maxDepth = inMaxDepth;
             }
         }
@@ -70,7 +70,7 @@ public class SubMarine extends Ship
 
     public String getHull()
     {
-        return hull;
+        return new String(hull);
     }
 
     public double getMaxDepth()
