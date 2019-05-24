@@ -33,16 +33,13 @@ public abstract class Ship
     ***********************************************************************/
     public Ship(String inSerialNum, int inYear, Engine inEngine)
     {
-        /* Checking if the all the imported values, are valid and suit the ship
-           specification  */ 
-
         if(validateSerialNum(inSerialNum))
         {
             if(validateYear(inYear))
             {
                 serialNum = inSerialNum;
                 year = inYear;
-                engine = new Engine(inEngiene);hinEngine; //make 
+                engine = new Engine(inEngine);
             }
         }
     }
@@ -72,7 +69,8 @@ public abstract class Ship
     }
     public Engine getEngine()
     {
-        return new Engine(engine);
+        return Engine(engine);
+        //return new Engine(engine);
     }
 
     //MUTATORS
@@ -115,7 +113,7 @@ public abstract class Ship
     public void  setEngine(Engine inEngine) 
     {
         /* we don't care if the engine constructs are valid as the engine class
-           does that by itself. We only if it's only an engine or not */
+           does that by itself. We only care if it's only an engine or not */
 
         if(!(inEngine instanceof Engine))
         {
@@ -309,20 +307,31 @@ public abstract class Ship
     ABSTRACT SUBMODULE: equals
     IMPORT: inObjct (object)
     EXPORT: isSame (boolean)
-    ASSERTION: two submarines are interchangable if they have the same hull,
-               and max depth
+    PURPOSE: to validate if two ships are the same, two ships will be the same
+             if they have the same comission year and engine. The serial 
+             number is just an identification number hence it can be different
+             for each ship.
     ********************************************************************/
-    //creating an abstract class to force the subclasses to use the submodule
-    public boolean equals(Object inObject, Engine inEngine);
+    public boolean equals(Object inObjct)
     {
         //I am pretty sure this is from amy's example, reference this properly
         boolean isSame = false;
-        if(inObjct instanceof
+        if(inObjct instanceof Ship)
         {
-            isSame = serialNum == (in
+            /* we need to type cast inObjct to a Ship class because the object
+            class is not specific enough, and it won't be suitable for 
+            any boolean operations */
+
+            Ship inShip = (Ship)inObjct;
+            
+            /* a ship class are only the same if they're made in the same year
+            and if they have the same engine */
+            isSame = year == inShip.getYear() && 
+                                  engine.equals(inShip.getEngine());
         }
+
+        return isSame;
     }
-    //make equals, do it for the serialNum and the rest of the shit
       
     /********************************************************************
     SUBMODULE: toString

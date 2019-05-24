@@ -37,10 +37,12 @@ public class Engine
         ***********************************************************************/
         public Engine(int inCylinders, String inFuel)
         {
+            System.out.println(inCylinders);
             if(validateCylinders(inCylinders))
             {
                 if(validateFuel(inFuel))
                 {
+            System.out.println(getCylinders());
                     cylinders = inCylinders;
                     fuel = inFuel;
 
@@ -198,9 +200,13 @@ public class Engine
         ********************************************************************/
         public String toString()
         {
+            /* fuel is formatteded in upper cases and this is not very user
+            friendly, hence it needs to be formetted to lower cases */
 
+            String fuelLowerCase;
+            fuelLowerCase = fuel.toLowerCase();
             return(" The engine has " +cylinders+ " cylinders, and it runs on "
-                  +fuel+ " fuel.");
+                  +fuelLowerCase+ " fuel.");
         }
         /********************************************************************
         SUBMODULE: toFileString

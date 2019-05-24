@@ -120,7 +120,7 @@ public class SubMarine extends Ship
     @Override
     public double calcTravelTime(int distance)
     {
-        double ratio, denom, invDenom;
+        double ratio, denom, invDenom, timeHours;
 
         /*splitting up the calculations in the assignemnt specification to make
           it more comphredable and to make it easier to type cast values and
@@ -146,15 +146,15 @@ public class SubMarine extends Ship
     ********************************************************************/
     private boolean validateHull(String inHull)
     {
-        String uppperCaseInHull;
+        String upperCaseInHull;
         boolean isValid = false;
 
         /* converting inHull to be upper case, to allow any casing for fuel 
            to be passed to the method as reuired in the specification */
 
-        upperCaseinHull = inHull.toUpper();
-        if(upperCaseinHull.equals(STEEL) || upperCaseinHull.equals(ALLY) ||
-           upperCaseinHull.equals(TTNM))
+        upperCaseInHull = inHull.toUpperCase();
+        if(upperCaseInHull.equals(STEEL) || upperCaseInHull.equals(ALLY) ||
+           upperCaseInHull.equals(TTNM))
         {
             isValid = true;
         }
@@ -213,12 +213,15 @@ public class SubMarine extends Ship
              objects are the same if they have the same hull, and max depth.
     ********************************************************************/
     @Override
-    public boolean equals(Object inObjct, Engine inEngine)
+    public boolean equals(Object inObjct)
     {
+        super.equals(inObjct);
         boolean isSame = false;
         if(inObjct instanceof SubMarine)
         {
-            //call the super here, as it's meant to have any equals method
+            /* we need to type cast inObjct to a submarine class because 
+            the object data type is not sepcific enough, and it won't be 
+            suitable for boolean operations */
             SubMarine inSubmarine = (SubMarine)inObjct;
             
             /* a ship object are only the same if they're constructed with the
@@ -228,9 +231,8 @@ public class SubMarine extends Ship
             only hull, maxdepth and engine need to be checked if they're the 
             same */
 
-            isSame = hull.equals(inSubmarine.getHull()) &&
-                      maxDepth == (inSubmarine.getMaxDepth()) &&
-                      getEngine().equals(inEngine); 
+            isSame = getHull().equals(inSubmarine.getHull()) &&
+                      getMaxDepth() == (inSubmarine.getMaxDepth());
         }
         else
         {

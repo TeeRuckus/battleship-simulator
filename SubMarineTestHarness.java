@@ -12,7 +12,7 @@ public class SubMarineTestHarness
                                     new Engine(12, "BIO"), SubMarine.TTNM, 
                                     -200.0);
             subMarine[2] = new SubMarine(subMarine[1]);
-            subMarine[3] = subMarine[1].clone();
+            //subMarine[3] = subMarine[1].clone();
 
             //printing out created objects
             System.out.println("\n CONSTRUCTOR TESTS: \n");
@@ -48,7 +48,7 @@ public class SubMarineTestHarness
                                + " = " + subMarine[1].getMaxDepth());
             
             //testing submodules
-            System.out.println=("\nCalcTravelTIme\n");
+            System.out.println("\nCalcTravelTIme\n");
 
         }
         catch(IllegalArgumentException err)

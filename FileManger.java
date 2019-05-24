@@ -240,7 +240,7 @@ SUBMODULE: searchDir
     }
 
 
-    // coopy and pasted, theese methods needs to be deleted
+    // copy and pasted, theese methods from submarine and fighter jet
     /***********************************************************************
     SUBMODULE: validateSerialNum
     IMPORT: inSerialNum (Real)
