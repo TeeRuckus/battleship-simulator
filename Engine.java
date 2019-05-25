@@ -202,7 +202,8 @@ public class Engine
     public String toString()
     {
         /* fuel is formatteded in upper cases and this is not very user
-        friendly, hence it needs to be formetted to lower cases */
+        friendly, hence it needs to be formetted to lower cases. Thus a
+        creation of a lower case variable*/
 
         String fuelLowerCase;
         fuelLowerCase = fuel.toLowerCase();

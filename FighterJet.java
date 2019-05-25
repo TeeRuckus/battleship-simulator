@@ -221,9 +221,9 @@ public class FighterJet extends Ship
     public String toString()
     {
         String str;
-        str = super.toString()+ " It is a fighter jet"+
-                    " with a wing span of " +wingSpan+ " metres and equiped "+
-                    "with " +ordance+ ".";
+        str = super.toString()+ getEngine().toString()+
+              " It is a fighter jet with a wing span of " +wingSpan+ 
+              " metres and equiped with " +ordance+ ".";
         return str;
     }
     /********************************************************************

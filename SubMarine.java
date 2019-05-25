@@ -257,10 +257,15 @@ public class SubMarine extends Ship
     @Override
     public String toString()
     {
-        String str;
+        /* hull is formatteded in upper cases and this is not user friendly,
+        hence it needs to be formatted to lower case. Thus a creation of a
+        lower case variable*/
+        String str, hullLowerCase;
+        hullLowerCase = hull.toLowerCase();
+
         str = super.toString() + getEngine().toString()+ 
-              " It is a submarine with a " +hull+ " hull and a  max depth of " 
-               +maxDepth+ ".";
+              " It is a submarine with a " +hullLowerCase+ " hullLowerCase "+
+              "and a  max depth of " +maxDepth+ ".";
 
         return str;
     }

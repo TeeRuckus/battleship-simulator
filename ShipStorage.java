@@ -253,9 +253,10 @@ public class ShipStorage
     **********************************************************************/
     public boolean equalsArr(Object[] arrayOne, Object[] arrayTwo)
     {
+        //THIS METHOD IS INCREDIBILY FLAWED 
 
         /* this code was adapted from worksheet 9 (REFERENCE PROPERLY) */
-        boolean isSame = false;
+        boolean equal = false;
 
         if (arrayOne.length ==  arrayTwo.length) 
         {
@@ -266,13 +267,28 @@ public class ShipStorage
 
             do
             {
-                isSame = arrayOne[compareElements].equals(
+                equal = arrayOne[compareElements].equals(
                                 arrayTwo[compareElements]);
                 compareElements++;
-            }while(compareElements < arrayOne.length);
+            }while(compareElements < arrayOne.length && 
+                                     equal < arrayOne.length);
         }
+
         return isSame; 
     }
+
+    /**********************************************************************
+    SUBODULE: equals
+    IMPORT: arrayOne (Object), arrayTwo (object Two)
+    EXPORT: isValid (Boolean)
+    ASSERTION: if two array objects are the same class type and length, 
+               and have the same objects in the array and it's valid.
+    **********************************************************************/
+    public boolean equals(Object inObjct)
+    {
+
+    }
+
     
     /**********************************************************************
     SUBMODULE: toStringArr
