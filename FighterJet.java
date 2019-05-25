@@ -42,7 +42,7 @@ public class FighterJet extends Ship
         {
             if(validateWingSpan(inWingSpan))
             {      
-                ordance = inOrdance; 
+                ordance = new String (inOrdance);
                 wingSpan = inWingSpan;  
             }
         }
@@ -64,7 +64,7 @@ public class FighterJet extends Ship
 
     public String getOrdance()
     {
-        return ordance;
+        return new String (ordance);
     }
 
     public double getWingSpan()
@@ -123,7 +123,7 @@ public class FighterJet extends Ship
         }
         else
         {
-            throw new IllegalArgumentException("ERROR: negative distance");
+            throw new IllegalArgumentException("\nERROR: negative distance\n");
         }
 
         return timeHours;
@@ -152,6 +152,7 @@ public class FighterJet extends Ship
 
         return isValid;
     }
+
     /*******************************************************************
     SUBMODULE: validateWingSpan
     IMPORT: inWingSpan (Real)

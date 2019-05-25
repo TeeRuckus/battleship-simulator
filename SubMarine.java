@@ -90,7 +90,7 @@ public class SubMarine extends Ship
     {
         if(validateHull(inHull))
         {
-            hull = inHull;
+            hull = new String (inHull); 
         }
     }
 
@@ -122,6 +122,8 @@ public class SubMarine extends Ship
     {
         double ratio, denom, invDenom, timeHours;
 
+        if(distance >= 0)
+        {
         /*splitting up the calculations in the assignemnt specification to make
           it more comphredable and to make it easier to type cast values and
           debug */
@@ -130,6 +132,11 @@ public class SubMarine extends Ship
         denom = (10.00 + getMaxDepth() * -1.00);
         invDenom = 1.00 / denom;
         timeHours = ratio * invDenom;
+        }
+        else
+        {
+            throw new IllegalArgumentException("\nERROR: negative distance\n");
+        }
     
         return timeHours;
     }
@@ -188,7 +195,7 @@ public class SubMarine extends Ship
         }
 
         return isValid;
-}
+    }
 
     //OTHER METHODS
 
@@ -233,11 +240,6 @@ public class SubMarine extends Ship
 
             isSame = getHull().equals(inSubmarine.getHull()) &&
                       getMaxDepth() == (inSubmarine.getMaxDepth());
-        }
-        else
-        {
-            throw new IllegalArgumentException("ERROR: objects are not the "+
-                                                "same");
         }
 
         return isSame;
