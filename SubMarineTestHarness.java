@@ -2,6 +2,13 @@ public class SubMarineTestHarness
 {
     public static final double TOL = 0.001;
 
+    /*copied class constants from SubMarine.java so we can test the private 
+    submodules appropriately */
+
+    public static final String STEEL = "STEEL";
+    public static final String ALLY = "ALLOY";
+    public static final String TTNM = "TITANIUM";
+
     public static void main(String [] args)
     {
         //we only care up to decimal places
@@ -104,14 +111,26 @@ public class SubMarineTestHarness
         //we expecting this test to fail, hence we need to catch it
         try
         {
-            assert true = test.validateHull(" ");
-            Sysem.out.println("test failed"); 
+            assert false == test.validateHull(" ");
+            System.out.println("test failed"); 
         }
         catch(IllegalArgumentException err)
         {
-            System.out.println("Expected exception" +err.getMessage()) 
-            System.out.ptintln("test passed"); 
+            System.out.println("Expected exception:\n" +err.getMessage());
+            System.out.println("test passed"); 
         }
+
+        try
+        {
+            assert false == test.validateHull("sakhdjl");
+            System.out.println ("test failed");
+        }
+        catch(IllegalArgumentException err)
+        {
+            System.out.println("Expected exception:\n" +err.getMessage());
+            System.out.println("test passed");
+        }
+
     }
     /*private submodules cannot be invoked from outside its class, hence
     I have copied and pasted submaries private submodules here to test them*/
