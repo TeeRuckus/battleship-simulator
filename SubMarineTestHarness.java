@@ -2,10 +2,12 @@ public class SubMarineTestHarness
 {
     public static void main(String [] args)
     {
+        //we only care up to decimal places
+        public static final double TOL = 0.001;
         try
         {
             SubMarine [] subMarine = new SubMarine[4];
-            engine = new Engine(12, "bio"); 
+            Engine engine = new Engine(12, "bio"); 
 
             // creating objects for testing
             subMarine[0] = new SubMarine();
@@ -20,6 +22,16 @@ public class SubMarineTestHarness
             {
                 System.out.println("\nsubMarine [" +ii+ "]: \n"
                                    +subMarine[ii].toString());
+            }
+            // testing toFileString method
+            System.out.println("\ntesting the toFile method\n\nExpecteded to "+
+                               "file string:\nS, <serialNumber>, <commission "+
+                               "year, <cylinders>, <fuel>, <hull>, "+
+                               "<max depth>");
+            for(int ii = 0; ii < subMarine.length; ii++)
+            {
+                System.out.println("\nSubMarine [" +ii+ "]: \n" 
+                                    +subMarine[ii].toFileString());
             }
 
             //equals method
@@ -46,9 +58,33 @@ public class SubMarineTestHarness
             subMarine[0].setMaxDepth(subMarine[1].getMaxDepth());
             System.out.println(subMarine[0].getMaxDepth() 
                                + " = " + subMarine[1].getMaxDepth());
+
+             //testing calc Travel 
+            double actual, expected;
+            System.out.println("\ncalcTravelTime\n");
+
+            subMarine[0] = new SubMarine("199.666", 1969, 
+                               new Engine(12, "bio"), SubMarine.TTNM, -300.0);
             
-            //testing submodules
-            System.out.println("\nCalcTravelTIme\n");
+            actual = subMarine[0].calcTravelTime(20000);
+            assert Math.abs(2.778 - actual) < TOL;
+            System.out.println("test 7 passed[x]");
+            
+
+            try
+            {
+                actual = subMarine[0].calcTravelTime(-100);
+                assert false == test.validateWingSpan(30.0);
+                System.out.println("test 8 failed[]");
+            }
+            catch(IllegalArgumentException err)
+            {
+                System.out.println("\nExpecteded exception: " +err);
+                System.out.println("test 8 passed[x]");
+            }
+            System.out.println("test 3 passed[x]");
+            
+            System.out.println("\nCalcTravel all tests passed\n");
 
         }
         catch(IllegalArgumentException err)
