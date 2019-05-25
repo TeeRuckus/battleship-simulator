@@ -7,6 +7,12 @@ PURPOSE: to create a class which will model the functionality of a real life
 *******************************************************************************/
 public class FighterJet extends Ship
 {
+    //Class constants
+    
+    /*we only care for numbers which are in 2 decimal places, hence our
+    tolerance needs to correspond so */
+
+    public static final double TOL = 0.001;
     //private class fields
     private double wingSpan; 
     private String ordance;
@@ -177,6 +183,15 @@ public class FighterJet extends Ship
 
     }
 
+    /*******************************************************************
+    SUBMODULE: isSame
+    IMPORT: realNumOne (Real), realNumTwo (real)
+    EXPORT: isValid (Boolean)
+    ASSERTION: to compare if two real numbers are the same given a specific 
+               tolerance
+    ********************************************************************/
+    private boolean isSame(double realNumOne, double realNumTwo)
+
     //OTHER METHODS
 
     /********************************************************************
@@ -202,11 +217,13 @@ public class FighterJet extends Ship
     public boolean equals(Object inObjct)
     {
         boolean isSame = false;
+
         if(inObjct instanceof FighterJet) 
         {
             FighterJet inFighterJet = (FighterJet)inObjct;
             isSame = ordance.equals(inFighterJet.getOrdance()) &&
                       wingSpan == (inFighterJet.getWingSpan());
+                      // this is not the way you compare wingspans
         }
 
         return isSame;

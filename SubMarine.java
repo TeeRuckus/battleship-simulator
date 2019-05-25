@@ -216,9 +216,7 @@ public class SubMarine extends Ship
     SUBMODULE: equals
     IMPORT: inObjct (object)
     EXPORT: isSame (boolean)
-    PURPOSE: to validate if two submarine objects are the same. Submarine
-             objects are the same if they have the same hull, and max depth,
-             and serial number. 
+    PURPOSE:
     ********************************************************************/
     @Override
     public boolean equals(Object inObjct)
@@ -238,10 +236,10 @@ public class SubMarine extends Ship
             numbers as a serial number is only an idenfication number. Hence 
             only hull, maxdepth and engine need to be checked if they're the 
             same */
-
+            
+            //RECONSIDER REDESIGNING THIS 
             isSame = getHull().equals(inSubmarine.getHull()) &&
-                      getMaxDepth() == (inSubmarine.getMaxDepth()) &&
-                      serial
+                      getMaxDepth() == (inSubmarine.getMaxDepth());
         }
 
         return isSame;

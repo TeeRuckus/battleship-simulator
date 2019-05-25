@@ -10,6 +10,7 @@ public class ShipStorageTestHarness
         
             //creating objects for testing
             shipStorage = new ShipStorage();
+
             subs[0] = new SubMarine();
             subs[1] = new SubMarine("200.500", 1969, new Engine(4,"BIO"),
                                     SubMarine.TTNM, -200);
@@ -46,7 +47,6 @@ public class ShipStorageTestHarness
             the duplicates method */
             Ship[] shipDuplicates = new Ship[ShipStorage.MAX_CAP * 2];
             shipDuplicates = shipStorage.findDuplicateShips();
-
             System.out.println("\nShip duplicates:\n"); 
             for(int ii = 0; ii < 4; ii++)
             {

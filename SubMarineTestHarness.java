@@ -108,28 +108,11 @@ public class SubMarineTestHarness
         assert true == test.validateHull("TiTaniUM");
         assert true == test.validateHull("allOY");
 
-        //we expecting this test to fail, hence we need to catch it
-        try
-        {
             assert false == test.validateHull(" ");
-            System.out.println("test failed"); 
-        }
-        catch(IllegalArgumentException err)
-        {
-            System.out.println("Expected exception:\n" +err.getMessage());
-            System.out.println("test passed"); 
-        }
-
-        try
-        {
-            assert false == test.validateHull("sakhdjl");
-            System.out.println ("test failed");
-        }
-        catch(IllegalArgumentException err)
-        {
-            System.out.println("Expected exception:\n" +err.getMessage());
             System.out.println("test passed");
-        }
+
+            assert false == test.validateHull("sakhdjl");
+            System.out.println("test passed");
 
     }
     /*private submodules cannot be invoked from outside its class, hence

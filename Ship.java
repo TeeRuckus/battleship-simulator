@@ -306,10 +306,7 @@ public abstract class Ship
     ABSTRACT SUBMODULE: equals
     IMPORT: inObjct (object)
     EXPORT: isSame (boolean)
-    PURPOSE: to validate if two ships are the same, two ships will be the same
-             if they have the same comission year and engine. The serial 
-             number is just an identification number hence it can be different
-             for each ship.
+    PURPOSE: 
     ********************************************************************/
     public boolean equals(Object inObjct)
     {
@@ -326,6 +323,7 @@ public abstract class Ship
             /* a ship class are only the same if they're made in the same year
             and if they have the same engine */
             isSame = year == inShip.getYear() && 
+                             serialNum.equals(inShip.getSerialNum()) &&
                                   engine.equals(inShip.getEngine());
         }
 

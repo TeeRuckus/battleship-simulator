@@ -244,6 +244,18 @@ public class ShipStorage
     //OTHER METHODS:
     
     //MAKE A CLONE METHOD
+    /********************************************************************
+    SUBMODULE: clone
+    IMPORT: none
+    EXPORT: an identical object to the current object which has been made
+    PURPOSE: To creaete a copy/cone of the current object.
+    ASSERTION: returns a cloned object of the current object
+    ********************************************************************/
+    /*public Ship clone()
+    {
+        return new Ship(this);
+    }*/
+
     /**********************************************************************
     SUBODULE: equalsArray
     IMPORT: arrayOne (Object), arrayTwo (object Two)
