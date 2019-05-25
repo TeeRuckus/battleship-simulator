@@ -21,7 +21,17 @@ public class FighterJetTestHarness
             for(int ii = 0; ii < fighterJet.length; ii++)
             {
                 System.out.println("\nfighterJet [" +ii+ "]: \n"
-                                   +fighterJet[1].toString());
+                                   +fighterJet[ii].toString());
+            }
+            // testing toFileString method
+            System.out.println("\ntesting the toFile method\n\nExpecteded to "+
+                               "file string:\nF, <serialNumber>, <commission "+
+                               "year, <cylinders>, <fuel>, <wingspan>, "+
+                               "<ordance>");
+            for(int ii = 0; ii < fighterJet.length; ii++)
+            {
+                System.out.println("\nFighterJet [" +ii+ "]: \n" 
+                                    +fighterJet[ii].toFileString());
             }
 
             //equals method
@@ -127,14 +137,6 @@ public class FighterJetTestHarness
             System.out.println("test 3 passed[x]");
             
             System.out.println("\nCalcTravel all tests passed\n");
-
-            System.out.println("\ntesting the toFile method\n Expecteded to "+
-                               "file string: F, <serialNumber>, <commission "+
-                               "year, <cylinders>, <fuel>, <wingspan>, "+
-                               "<ordance>");
-            for(int ii = 0; ii < fighterJet.length; ii++)
-            {
-            }
         }
         catch(IllegalArgumentException err)
         {
