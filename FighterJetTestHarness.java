@@ -115,7 +115,7 @@ public class FighterJetTestHarness
 
             try
             {
-                actual = fighterJet[0].calcTravelTime();
+                actual = fighterJet[0].calcTravelTime(-100);
                 assert false == test.validateWingSpan(30.0);
                 System.out.println("test 8 failed[]");
             }

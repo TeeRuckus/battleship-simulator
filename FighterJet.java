@@ -114,10 +114,18 @@ public class FighterJet extends Ship
     public double calcTravelTime(int distance)
     {
         double denom, timeHours;
-        denom = getWingSpan() * (double)(getEngine().getCylinders()) 
-                * 150.00;
-        timeHours = (double)distance / denom;
-        
+
+        if(distance >= 0)
+        {
+            denom = getWingSpan() * (double)(getEngine().getCylinders()) 
+                    * 150.00;
+            timeHours = (double)distance / denom;
+        }
+        else
+        {
+            throw new IllegalArgumentException("ERROR: negative distance");
+        }
+
         return timeHours;
     }
 
