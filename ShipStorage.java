@@ -128,6 +128,8 @@ public class ShipStorage
     **********************************************************************/
     public Ship [] findDuplicateShips() 
     {
+        /* I am subtracting one because the other the methods which use 
+        counSihps move to a null index of the */
         Ship duplicates [] = new Ship[(countShips -1) * 2];
         
         for (int ii = 0 ;ii < countShips - 1; ii++) 
