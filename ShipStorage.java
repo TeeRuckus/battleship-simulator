@@ -270,11 +270,10 @@ public class ShipStorage
                 equal = arrayOne[compareElements].equals(
                                 arrayTwo[compareElements]);
                 compareElements++;
-            }while(compareElements < arrayOne.length && 
-                                     equal < arrayOne.length);
+            }while(compareElements < arrayOne.length);
         }
 
-        return isSame; 
+        return equal;
     }
 
     /**********************************************************************
@@ -284,10 +283,20 @@ public class ShipStorage
     ASSERTION: if two array objects are the same class type and length, 
                and have the same objects in the array and it's valid.
     **********************************************************************/
-    public boolean equals(Object inObjct)
+    /*public boolean equals(Object inObjct)
     {
+        boolean isSame;
+        Ship inShip;
+        if(inObjct instanceof Ship)
+        {
+            /* we need to type cast inObjct to a ship classs because the object
+            data type of object is not specific enough, and it won't be
+            suitable for booolean operations */
+      /*      inShip = (Ship)inObjct;
 
-    }
+            isSame = 
+        }
+    }*/
 
     
     /**********************************************************************
