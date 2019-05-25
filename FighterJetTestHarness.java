@@ -103,7 +103,7 @@ public class FighterJetTestHarness
             
             //testing calc Travel 
             double actual, expected;
-            System.out.println("\ncalcTravelTimeJet\n");
+            System.out.println("\ncalcTravelTime\n");
 
             fighterJet[0] = new FighterJet("199.666", 1969, "turrents", 4.0,
                                             new Engine(12, "BIO"));
@@ -121,29 +121,20 @@ public class FighterJetTestHarness
             }
             catch(IllegalArgumentException err)
             {
-                System.out.println("Expecteded exception: " +err);
+                System.out.println("\nExpecteded exception: " +err);
                 System.out.println("test 8 passed[x]");
             }
             System.out.println("test 3 passed[x]");
-            /*int testCases = 15;
-            int[] distance = new int [testCases];
-            double[] wingSpan = new double [testCases];
-            int[] cylinders = new int[testCases];
-            boolean[] expected = new boolean[testCases];
-
-            distance = {10, -5, 5, 1000, 3000, 9000, 8000, -2, 50, -5, -1, -4,
-                        -1, 50, -50};
-            wingSpan = {};
-            cylinders = {};
-            expected = {};
             
-            //creating the
-            for(int ii = 0; ii < testCases; ii++)
+            System.out.println("\nCalcTravel all tests passed\n");
+
+            System.out.println("\ntesting the toFile method\n Expecteded to "+
+                               "file string: F, <serialNumber>, <commission "+
+                               "year, <cylinders>, <fuel>, <wingspan>, "+
+                               "<ordance>");
+            for(int ii = 0; ii < fighterJet.length; ii++)
             {
-            }*/
-
-
-
+            }
         }
         catch(IllegalArgumentException err)
         {
