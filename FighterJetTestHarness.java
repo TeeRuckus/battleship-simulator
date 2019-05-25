@@ -70,7 +70,7 @@ public class FighterJetTestHarness
             }
             catch(IllegalArgumentException err)
             {
-                System.out.println("Expecteded error: " +err);
+                System.out.println("Expecteded error: " +err.getMessage()); 
             }
             System.out.println("test 1 passed[x]");
 
@@ -88,7 +88,7 @@ public class FighterJetTestHarness
             }
             catch(IllegalArgumentException err)
             {
-                System.out.println("Expecteded exception: " +err);
+                System.out.println("Expecteded exception: " +err.getMessage());
             }
 
             try
@@ -98,7 +98,7 @@ public class FighterJetTestHarness
             }
             catch(IllegalArgumentException err)
             {
-                System.out.println("Expecteded exception: " +err);
+                System.out.println("Expecteded exception: " +err.getMessage());
             }
             System.out.println("test 3 passed[x]");
 
@@ -126,12 +126,12 @@ public class FighterJetTestHarness
             try
             {
                 actual = fighterJet[0].calcTravelTime(-100);
-                assert false == test.validateWingSpan(30.0);
                 System.out.println("test 8 failed[]");
             }
             catch(IllegalArgumentException err)
             {
-                System.out.println("\nExpecteded exception: " +err);
+                System.out.println("\nExpecteded exception: " 
+                                    +err.getMessage());
                 System.out.println("test 8 passed[x]");
             }
             System.out.println("test 3 passed[x]");

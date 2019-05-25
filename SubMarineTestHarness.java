@@ -1,9 +1,10 @@
 public class SubMarineTestHarness
 {
+    public static final double TOL = 0.001;
+
     public static void main(String [] args)
     {
         //we only care up to decimal places
-        public static final double TOL = 0.001;
         try
         {
             SubMarine [] subMarine = new SubMarine[4];
@@ -67,14 +68,13 @@ public class SubMarineTestHarness
                                new Engine(12, "bio"), SubMarine.TTNM, -300.0);
             
             actual = subMarine[0].calcTravelTime(20000);
-            assert Math.abs(2.778 - actual) < TOL;
+            assert Math.abs(5.376 - actual) < TOL;
             System.out.println("test 7 passed[x]");
             
 
             try
             {
                 actual = subMarine[0].calcTravelTime(-100);
-                assert false == test.validateWingSpan(30.0);
                 System.out.println("test 8 failed[]");
             }
             catch(IllegalArgumentException err)
@@ -82,7 +82,6 @@ public class SubMarineTestHarness
                 System.out.println("\nExpecteded exception: " +err);
                 System.out.println("test 8 passed[x]");
             }
-            System.out.println("test 3 passed[x]");
             
             System.out.println("\nCalcTravel all tests passed\n");
 
@@ -92,5 +91,80 @@ public class SubMarineTestHarness
             System.out.println(err.getMessage());
         }
 
+        //testing private submodules
+        SubMarineTestHarness test = new SubMarineTestHarness();
+        System.out.println("\nTesting private submodules\n");
+
+        System.out.println("\ntesting validateHull\n"); 
+
+        assert true == test.validateHull("STeeL");
+        assert true == test.validateHull("TiTaniUM");
+        assert true == test.validateHull("allOY");
+
+        //we expecting this test to fail, hence we need to catch it
+        try
+        {
+            assert true = test.validateHull(" ");
+            Sysem.out.println("test failed"); 
+        }
+        catch(IllegalArgumentException err)
+        {
+            System.out.println("Expected exception" +err.getMessage()) 
+            System.out.ptintln("test passed"); 
+        }
+    }
+    /*private submodules cannot be invoked from outside its class, hence
+    I have copied and pasted submaries private submodules here to test them*/
+    /**********************************************************************
+    SUBMODULE: validateHull
+    IMPORT: inHull (String)
+    EXPORT: isValid (boolean)
+    ASSERTION: it will only validate inHull if it's one of the following
+               three; steel, alloy and titanium.
+    ********************************************************************/
+    private boolean validateHull(String inHull)
+    {
+        String upperCaseInHull;
+        boolean isValid = false;
+
+        /* converting inHull to be upper case, to allow any casing for fuel 
+           to be passed to the method as reuired in the specification */
+
+        upperCaseInHull = inHull.toUpperCase();
+        if(upperCaseInHull.equals(STEEL) || upperCaseInHull.equals(ALLY) ||
+           upperCaseInHull.equals(TTNM))
+        {
+            isValid = true;
+        }
+        else
+        {
+            throw new IllegalArgumentException("\nInvalid hull\n");
+        }
+
+        return isValid;
+    }
+    /*******************************************************************
+    SUBMODULE: validateMaxDepth
+    IMPORT: inMaxDepth (Real)
+    EXPORT: isValid (Boolean)
+    PURPOSE: To ensure the inputed max depth is between the range of -500 t0
+             0 metres.
+    ASSERTION: a maxdepth of between -500 - 0 will be validate otherwise, an
+               error will be thrown to the user
+    ********************************************************************/
+    private boolean validateMaxDepth(double inMaxDepth)
+    {
+        boolean isValid = false;
+
+        if(inMaxDepth >= -500 && inMaxDepth <= 0)
+        {
+            isValid = true;
+        }
+        else
+        {
+            throw new IllegalArgumentException("\nInvalid max depth\n");
+        }
+
+        return isValid;
     }
 }
