@@ -1,5 +1,12 @@
 ABSTRACT CLASS: Ship  
     
+    CLASS CONSTANTS:
+    
+    COMMENT: In this programme we only car about numbers to two decimal places, 
+             hence the tolerance is 0.001 
+
+    TOL (Real) := 0.001
+
     CLASS FIELDS:
         String serialNum
         Integer year
@@ -28,9 +35,9 @@ ABSTRACT CLASS: Ship
     ALGORITHM:
         IF (validateSerialNum(inSerialNum)) THEN
             IF (validateYear(inYear)) THEN
-                serialNum := inSerialNum
+                serialNum := inSerialNum <- make a copy
                 year := inYear
-                eninge := inEngine
+                eninge := inEngine <- make a copy
             END IF
         END IF
 
@@ -49,7 +56,7 @@ ABSTRACT CLASS: Ship
     SUBMODULES: getSerialNum
         IMPORT: none
         EXPORT: serialNum (Real) 
-        ASSERTION: returns the last set serial number set
+        ASSERTION: returns a copy of the last set serial number set
 
     SUBMODULE: getYear
         IMPORT: none
@@ -59,7 +66,7 @@ ABSTRACT CLASS: Ship
     SUBMODULE: getEngine 
         IMPORT: none
         EXPORT: new Engine object
-        ASSERTION: returns the last created engine object
+        ASSERTION: returns a copy the last created engine object
 
     MUTATORS
 
@@ -71,7 +78,7 @@ ABSTRACT CLASS: Ship
 
         ALGORITHM:
             IF (validateSerialNum <- inSerialNum) THEN
-                serialNum := inSerialNum
+                serialNum := inSerialNum <- make a copy
             END IF
 
     SUBMODULE: setYear
@@ -91,10 +98,14 @@ ABSTRACT CLASS: Ship
 
         ALGORITHM:
 
+            COMMENT:we don't care if the engine constructs are valid as the 
+                    engine class does that by itself. We only care if it's only 
+                    an engine or not 
+
             IF(NOT(inEngine ISA Engine)) THEN
                 FAIL
             ELSE
-                engine := inEngine
+                engine := inEngine <- make a copy
             END IF ELSE
     
     DOING METHODS
@@ -202,24 +213,72 @@ ABSTRACT CLASS: Ship
                 FAIL("Invalid year")
             END IF ELSE
 
+    PROTECTED METHODS
+
+    SUBMODULE: isSame
+        IMPORT: realNumOne (Real), realNumTwo (Real)
+        EXPORT: isSame (Boolean)
+        PURPOSE: to check the equality of two real numbers, given a specific
+        tolerance.
+    
+        ALGORITHM:
+        
+        isSame (Boolean) := FALSE
+        IF(absoluite value of (realNumOne - realNumTwo) < TOL) THEN
+            isSame = TRUE
+        END IF
+
+    SUBMODULE: isSame
+        IMPORT: stringOne (String), stringTwo (String)
+        EXPORT: isSame (Boolean)
+        PURPOSE: To check the equality of two strings whereby the casing 
+                 doesn't matter
+
+        ALGORITHM:
+
+        stringOneLower (String) := stringOne <- convert to lower case
+        stringTwoLower (String) := stringTwo <- convert to lower casse
+
+        IF(stringOneLower EQUALS stringTwoLower) THEN
+            isSame = TRUE
+        END IF
+
+        OTHER METHODS 
 
     ABSTRACT SUBMODULE: clone
         IMPORT: none
         EXPORT: an identical object to the current object which has been made
         ASSERTION: returns a cloned object of the current object
 
-    ABSTRACT SUBMODULE: equals
+    SUBMODULE: equals
         IMPORT: inObjct (object)
         EXPORT: isSame (boolean)
-        ASSERTION: two submarines are interchangable if they have the same hull,
-                   and max depth
+        PURPOSE: to compare the equality of two ships, given the classfields
+                 of serial number, year and engine
 
+        ALGORITHM:
+            (Boolean) isEqual = FALSE 
+            IF (inObjct is an instance of Ship) THEN
+                
+                COMMENT:we need to type cast inObjct to a Ship class because 
+                        the object class is not specific enough, and it won't 
+                        be suitable for any boolean operations 
+
+                (Ship) inShip := inObjct <- convert to Ship
+
+                IF(year EQUALS inShip <- getYear) THEN
+                    IF(serialNum EQUALS inShip <- getSerialNum) THEN
+                        IF(engine EQUALS inShip <- getEngine) THEN
+                            isEqual := TRUE 
+                        END IF
+                    END IF
+                END IF
 
     SUBMODULE: toString
         IMPORT: none
         EXPORT: str
-        ASSERTION:
-
+        PURPOSE: display the ships class fields to the user in a readable
+                 format
     ALGORITHM: 
 
     (String) str := "The ship " +serialNum+ " was comissioned in " +year
@@ -228,7 +287,8 @@ ABSTRACT CLASS: Ship
     SUBMODULE: toFileString
         IMPORT: none
         EXPORT: str
-        ASSERTION:
+        PURPOSE: a method which writes a string in a file format thus another
+                 class is able to create objects from the string
 
     ALGORITHM:
         str := serialNum+ "," +year

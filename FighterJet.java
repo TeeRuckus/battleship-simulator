@@ -1,7 +1,7 @@
 /*******************************************************************************
 AUTHOR: Tawana David Kwaramaba
 STUDENT ID: 19476700
-DATE:
+DATE: 27/05/19
 PURPOSE: to create a class which will model the functionality of a real life 
          fighter jet
 *******************************************************************************/
@@ -11,8 +11,10 @@ public class FighterJet extends Ship
     
     /*we only care for numbers which are in 2 decimal places, hence our
     tolerance needs to correspond so */
-
     public static final double TOL = 0.001;
+    public static final double MIN_WING_SPAN = 2.20;
+    public static final double MAX_WING_SPAN = 25.6;
+
     //private class fields
     private double wingSpan; 
     private String ordance;
@@ -21,9 +23,8 @@ public class FighterJet extends Ship
     DEFUALT Constructor
     IMPORT: none
     EXPORT: none
-    ASSERTION: a fighter jet with a serial number of 123.250, commissioned 
-               in 1950, with an engine ordance of titanium with a maximum 
-               depth of 500.0 is a valid defualt state
+    ASSERTION: a fighter jet with an ordance of "machine guns" and a 
+               wingspan of 3.0 metres
     ***********************************************************************/
     public FighterJet()
     {
@@ -170,7 +171,7 @@ public class FighterJet extends Ship
     {
         
         boolean isValid = false;
-        if(inWingSpan >= 2.2 && inWingSpan <= 25.6)
+        if(inWingSpan >= MIN_WING_SPAN && inWingSpan <= MAX_WING_SPAN)
         {
             isValid = true;            
         }
@@ -200,15 +201,15 @@ public class FighterJet extends Ship
     /********************************************************************
     SUBMODULE: equals
     IMPORT: inObjct (object)
-    EXPORT: isSame (boolean)
-    ASSERTION: two fighter jets are interchangable if they have the same 
+    EXPORT: isEqual (boolean)
+    ASSERTION: two fighter jets are equal if they have the same 
                ordance and wingspan
     ********************************************************************/
     @Override
     public boolean equals(Object inObjct)
     {
+        super.equals(inObjct);
         boolean isEqual = false;
-
         if(inObjct instanceof FighterJet) 
         {
             //this is from the association lecture slide
@@ -223,10 +224,6 @@ public class FighterJet extends Ship
             }
         }
 
-            //isSame = ordance.equals(inFighterJet.getOrdance()) &&
-                     // wingSpan == (inFighterJet.getWingSpan());
-                      // this is not the way you compare wingspans
-
         return isEqual;
     }
 
@@ -234,7 +231,8 @@ public class FighterJet extends Ship
     SUBMODULE: toString
     IMPORT: none
     EXPORT: str (String)
-    ASSERTION:
+    PURPOSE: to create a string which contains fighter jets current class
+             fileds in a format which can be easily read
     ********************************************************************/
     @Override 
     public String toString()

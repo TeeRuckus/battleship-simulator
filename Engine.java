@@ -1,7 +1,7 @@
 /*******************************************************************************
 AUTHOR: Tawana David Kwaramaba
 STUDENT ID: 19476700
-DATE:
+DATE: 27/05/19
 PURPOSE: to create a class which will model the functionality of a real life
          fighter jet
 *******************************************************************************/
@@ -45,7 +45,6 @@ public class Engine
             {
                 cylinders = inCylinders;
                 fuel = new String(inFuel);
-
             }
         }
 
@@ -116,7 +115,7 @@ public class Engine
     {
         boolean isValid = false;
 
-        if(inCylinders >= 2 && inCylinders <= 20)
+        if(inCylinders >= MINCYLINDERS && inCylinders <= MAXCYLINDERS)
         {
             isValid = true;
         }
@@ -167,12 +166,9 @@ public class Engine
     ********************************************************************/
     public Engine clone()
     {
-        /*
-        Engine cloneEngine;
-
-        cloneEngine = new Engine(this.cylinders, this.fuel);*/
 
         return new Engine(this);
+
     }
     /********************************************************************
     SUBMODULE: equals
@@ -197,7 +193,7 @@ public class Engine
     SUBMODULE: toString
     IMPORT: none
     EXPORT: str (String)
-    ASSERTION:
+    PURPOSE: to return a string of the engines classfields states
     ********************************************************************/
     public String toString()
     {
@@ -214,7 +210,8 @@ public class Engine
     SUBMODULE: toFileString
     IMPORT: none
     EXPORT: str (String)
-    ASSERTION:
+    PURPSOSE: to return a string of the engines classfields in a file 
+              format
     ********************************************************************/
     public String toFileString()
     {

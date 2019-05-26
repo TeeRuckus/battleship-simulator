@@ -1,8 +1,8 @@
 /*******************************************************************************
 AUTHOR: Tawana David Kwaramaba
 STUDENT ID: 19476700
-DATE:
-PURPOSE:
+DATE: 27/05/19
+PURPOSE: to act as the super class to the subclasses of fighterJet and SubMarine
 *******************************************************************************/
 public abstract class Ship
 {
@@ -91,7 +91,7 @@ public abstract class Ship
     {
        if(validateSerialNum(inSerialNum))
         {
-            serialNum = inSerialNum;
+            serialNum = new String(inSerialNum);
         }
     }
 
@@ -127,7 +127,7 @@ public abstract class Ship
         }
         else
         {
-            engine = inEngine;
+            engine = new Engine(inEngine);
         }
         
     }
@@ -138,7 +138,7 @@ public abstract class Ship
     SUBMODULE: calcTravelTime
     IMPORT: inShip (Submarine Object), distance (Integer)
     EXPORT: timeHours (Real) 
-    PUROSE: is to calculate the travel time of submarine in hours 
+    PUROSE: to allow the subclasses of ship to inherit this method 
     **********************************************************************/
     public abstract double calcTravelTime(int distance);
     
@@ -352,7 +352,8 @@ public abstract class Ship
     ABSTRACT SUBMODULE: clone
     IMPORT: none
     EXPORT: an identical object to the current object which has been made
-    ASSERTION: returns a cloned object of the current object
+    PURPOSE: to create an abstract class to force the subclasses to use 
+             this submodule
     ********************************************************************/
 
     //creating an abstract class to force the subclasses to use the submodule
@@ -362,7 +363,8 @@ public abstract class Ship
     ABSTRACT SUBMODULE: equals
     IMPORT: inObjct (object)
     EXPORT: isSame (boolean)
-    PURPOSE: 
+    PURPOSE: to compare the equality of two ships, given the classfields
+             of serial number, year and engine
     ********************************************************************/
     public boolean equals(Object inObjct)
     {
@@ -388,12 +390,6 @@ public abstract class Ship
             }
         }
             
-            /* a ship class are only the same if they're made in the same year
-            and if they have the same engine */
-            //isSame = year == inShip.getYear() && 
-              //               serialNum.equals(inShip.getSerialNum()) &&
-                //                  engine.equals(inShip.getEngine());
-
         return isEqual;
     }
       
@@ -401,7 +397,8 @@ public abstract class Ship
     SUBMODULE: toString
     IMPORT: none
     EXPORT: str
-    ASSERTION:
+    PURPOSE: display the ships class fields to the user in a readable
+             format
     ********************************************************************/
     public String toString()
     {
@@ -414,8 +411,8 @@ public abstract class Ship
     /********************************************************************
     SUBMODULE: toFileString
     IMPORT: none
-    EXPORT: str
-    ASSERTION:
+    PURPOSE: a method which writes a string in a file format thus another
+             class is able to create objects from the string
     ********************************************************************/
     public String toFileString()
     {

@@ -1,9 +1,12 @@
 CLASS: SubMarine
 
     PUBLIC CLASS CONSTANTS:
-        STEEL := "STEEL"
-        ALLY := "ALLOY"
-        TTNM := "TITANIUM"
+        STEEL (strings) := "STEEL"
+        ALLY (strings) := "ALLOY"
+        TTNM (strings):= "TITANIUM"
+        MAX_DEPTH (Real) := 0.0
+        MIN_DEPTH (Real) := -500.0
+
 
     CLASS FIELDS:
         hull (string)
@@ -20,8 +23,8 @@ CLASS: SubMarine
 
         ALGORITHM:
             super default constructor
-            maxDepth := -500.0
             hull := TTNM
+            maxDepth := -500.0
 
     Alternate
         IMPORT: inSerialNum (Real), inYear (Interger), inHull (String),
@@ -34,7 +37,7 @@ CLASS: SubMarine
             super <- inSerialNum, inYear, inEngine
             IF (validateHull <- inHull) THEN
                 IF (validateMaxDepth <- inMaxDepth) THEN
-                    hull := inHull
+                    hull := inHull < make a copy
                     maxDepth := inMaxDepth
                 END IF
             END IF 
@@ -42,7 +45,8 @@ CLASS: SubMarine
     Copy:
         IMPORT: inSubMarine (SubMarineClass)
         EXPORT: none
-        ASSERTION: creates an object which is identical to the imported object
+        ASSERTION: creates an object which is identical to the alternate
+                   constructor
 
         ALGORITHM:
             super <- inSubMarine
@@ -54,7 +58,7 @@ CLASS: SubMarine
     SUBMODULE: get getHull
         IMPORT: none
         EXPORT: hull
-        ASSERTION: returns the last set hull
+        ASSERTION: returns a copy of the last set hull
 
     SUBMODULE: getMaxDepth
         IMPORT: none
@@ -69,8 +73,9 @@ CLASS: SubMarine
         ASSERTION: set hull to to inHull if it's valid, otherwise it will fail
 
         ALGORITHM:
+
             IF (validateHull <- inHull) THEN
-                hull := inHull
+                hull := inHull <- make a copy
             END IF 
 
     SUBMODULE: setMaxDepth
@@ -82,20 +87,29 @@ CLASS: SubMarine
             IF (validateMaxDepth <- inMaxdepth) THEN
                 maxDepth :=  inMaxDepth
             END IF
+
+    DOING METHODS
+
     SUBMODULE: calcTravelTime
         IMPORT: inShip SubMarine object), distance (integer)
         EXPORT: timeHours (Real)
         PURPOSE: is to calculate the travel time of submarine in hours
 
         ALGORITHM:
-            
-            (Real) ratio := (Real) distance / (double) getEngine <- none. 
-                                                        getCylinders <- none
-            (Real) denom := 10.00 + getMaxDepth <- none * -1.00
-            (Real) invDenom = 1.00/ denom
+            IF(distance >= 0) THEN
+                COMMENT: splitting up the calculations in the assignemnt specification to
+                make it more comphredable and to make it easier to type cast values 
+                and debug 
+                (Real) ratio := (Real) distance / (double) getEngine <- none. 
+                                                            getCylinders <- none
+                (Real) denom := 10.00 + getMaxDepth <- none * -1.00
+                (Real) invDenom = 1.00/ denom
 
-            (Real) result := ratio * invDenom
-            
+                (Real) result := ratio * invDenom
+            ELSE
+                FAIL("ERROR: negative distance")
+            END IF ELSE
+                
      PRIVATE SUBMODULES:
 
         SUBMODULE: validateHull
@@ -105,9 +119,15 @@ CLASS: SubMarine
                        three; steel, alloy and titanium.
 
             ALGORITHM:
+                
+                COMMENT: converting inHull to be upper case, to allow any 
+                         casing for fuel to be passed to the method as reuired 
+                         in the specification 
 
                 isValid := FALSE
-                IF (inHull equals to STEEL or ALY or TTNM) THEN
+
+                (String) upperCaseInHull := inHull <- convert to a lower case
+                IF (upperCaseInHull equals to STEEL or ALY or TTNM) THEN
                     isValid := TRUE
                 ELSE
                     FAIL("Invalid hull")
@@ -116,13 +136,13 @@ CLASS: SubMarine
         SUBMODULE: validateMaxDepth
             IMPORT: inMaxDepth (Real)
             EXPORT: isValid (Boolean)
-            ASSERTION: a maxdepth of between -500 - 0 will be validate otherwise, an
-                       error will be thrown to the user
+            ASSERTION: a maxdepth of between -500 - 0 will be validate 
+                       otherwise, an error will be thrown to the user
 
             ALGORITHM:
                 isValid := FALSE
 
-                IF (-500.0 <= inMaxDepth <= 0) THEN
+                IF (MAX_DEPTH <= inMaxDepth <= MIN_DEPTH) THEN
                     isValid := TRUE
                 ELSE
                     FAIL("Invalid max depth")
@@ -141,23 +161,32 @@ CLASS: SubMarine
     SUBMODULE: equals
         IMPORT: inObjct (object)
         EXPORT: isSame (boolean)
-        ASSERTION: two submarines are interchangable if they have the same hull, and
+        ASSERTION: two submarines are equal if they have the same hull, and
                     max depth
 
         ALGORITHM:
-            isSame := FALSE
+            isEqual := FALSE
             IF (inObj ISA SubMarine) THEN
+
+                COMMENT: we need to type cast inObjct to a submarine class because 
+                the object data type is not sepcific enough, and it won't be 
+                suitable for boolean operations
+
                 inSubmarine  := (Convert to SubMarine)inObjct
-                isSame := (hull EQUALS inSubmarine.getHull <- none) AND
-                          (maxDepth EQUALS inSubmarine.getMaxDepth <- none) AND
-                          engine EQUALS getEngine <- none
+                
+                IF(isSame(hull, inSubMarine.getHull <- none) THEN
+                    IF(isSame(maxDepth, inSubMarine.getMaxDepth <- none))
+                        isEqual := TRUE
+                    END IF
+                END IF
             END IF
 
 
     SUBMODULE: toString
         IMPORT: none
         EXPORT: str
-        ASSERTION:
+        PURPOSE: to display submarines classfields in a readable format format 
+                 for the user
 
         ALGORITHM:
 
@@ -168,7 +197,8 @@ CLASS: SubMarine
     SUBMODULE: toFileString
         IMPORT: none
         EXPORT: str
-        ASSERTION:
+        PURPOSE: It's to return a string which will be written to a file, to allow
+                 another class to create ship objects from the written string
 
         ALGOTITHM:
             str := "S," +  super.toFileString <- none + ", " + 

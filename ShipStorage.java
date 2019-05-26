@@ -1,7 +1,7 @@
 /*******************************************************************************
 AUTHOR: Tawana David Kwaramba
 STUDENT ID: 19476700
-LAST MODIFIED:
+LAST MODIFIED: 27/05/19
 PURPOSE: A class which stores a submarine and a fighter jet object
 *******************************************************************************/
 public class ShipStorage
@@ -30,11 +30,18 @@ public class ShipStorage
         storeShips = new Ship[MAX_CAP];
     }
 
+    //ACCESSORS
+
+    public int getCount()
+    {
+        return countShips;
+    }
+
     //DOING METHODS
 
     /**********************************************************************
-    SUBMODULE: addShipSub
-    IMPORT: inSub (subMarine object) , countShips (int)
+    SUBMODULE: addShip
+    IMPORT: inSub (subMarine object) 
     EXPORT: none
     ASSERTION: a sub will be added to storeShips if the inSub is valid, and
                 storeShips hasn't exceeded the MAX_CAP
@@ -52,8 +59,8 @@ public class ShipStorage
     }
 
     /**********************************************************************
-    SUBMODULE: addShipJet
-    IMPORT: inJet (FighterJet object) , countShips (int)
+    SUBMODULE: addShip
+    IMPORT: inJet (FighterJet object) 
     EXPORT: none
     ASSERTION: a jet will be added to storeJEts if the inJet is valid, and
                storeShips hasn't exceeded MAX_CAP
@@ -72,9 +79,9 @@ public class ShipStorage
 
 
    /**********************************************************************
-    SUBMODULE: getLastSub (SubMarine Object) 
+    SUBMODULE: getShip (Ship) 
     IMPORT: none
-    EXOPORT: sub (subMarine Object)
+    PURPOSE: get the last ship stored in storeShips
     **********************************************************************/
     public Ship getShip()
     {
@@ -83,23 +90,22 @@ public class ShipStorage
         variable to the next available index, hence you have to
         subtract one to get the last stored submarine*/
     
-        ship = storeShips[countShips - 1]; 
-        return ship;
+        return storeShips[countShips -1];
     } 
 
     /**********************************************************************
-    SUBMODULE: destinationCheckSub
+    SUBMODULE: destinationCheck
     IMPORT: (integer) distance
-    EXPORTS: (String) str 
+    EXPORTS: (String) 
     **********************************************************************/
     public String destinationCheck(int distance) 
     {
         Ship fastestShip;
         fastestShip = null;
 
-        for(int ii = 0; ii < countShips - 1; ii++)
+        for(int ii = 0; ii < countShips; ii++)
         {
-            for(int jj = ii + 1; jj < countShips -1; jj++)
+            for(int jj = ii + 1; jj < countShips; jj++)
             {
                 if((storeShips[ii].calcTravelTime(distance)) < 
                                     (storeShips[jj].calcTravelTime(distance)))
@@ -111,31 +117,28 @@ public class ShipStorage
 
         return fastestShip.toString();
     }
-   
+
     /**********************************************************************
     SUBMODULE: findDuplicateShips
     IMPORTS: none
     EXPORT: dupilicates[] (Object) 
-    ASSERTION:
+    PURPOSE: finds the duplicates in storeSubs and displays the ship
     **********************************************************************/
     public Ship [] findDuplicateShips() 
     {
-        /* I am subtracting one because the other the methods which use 
-        counShipps move to a null index of the storeShips array, hence to go 
-        back to a non-null index we need to subtract one */
 
-        Ship duplicates [] = new Ship[(countShips -1) * 2];
+        Ship duplicates [] = new Ship[(countShips) * 2];
         
         int found;
         found = 0;
         
-        for (int ii = 0 ;ii < countShips - 1; ii++) 
+        for (int ii = 0 ;ii < countShips; ii++) 
         {
             /*I am adding one to the looping variable at one because I don't
              want the programme to store itself as a dupilcate, hence
              it will search for objects after itself*/
 
-            for(int jj = ii+1 ; jj < countShips - 1 ;jj++)
+            for(int jj = ii+1 ; jj < countShips;jj++)
             {
                 if(storeShips[ii].equals(storeShips[jj])) 
                 {
@@ -143,12 +146,6 @@ public class ShipStorage
                     array is filled from the begginning index onwards */
 
                     duplicates[found] = storeShips[ii];
-
-                    /* we need to add one to found so we can store the 
-                    duplicate ships next to each other in the duplicates array
-                    */
-
-                    //duplicates[found + 1] = storeShips[jj];
                     found++;
                 }
             }
@@ -248,19 +245,6 @@ public class ShipStorage
     }
     
     //OTHER METHODS:
-    
-    //MAKE A CLONE METHOD
-    /********************************************************************
-    SUBMODULE: clone
-    IMPORT: none
-    EXPORT: an identical object to the current object which has been made
-    PURPOSE: To creaete a copy/cone of the current object.
-    ASSERTION: returns a cloned object of the current object
-    ********************************************************************/
- /*   public Ship[] clone()
-    {
-        return new storeShips(this);
-    }*/
 
     /**********************************************************************
     SUBODULE: equalsArray
@@ -296,10 +280,9 @@ public class ShipStorage
 
     /**********************************************************************
     SUBODULE: equals
-    IMPORT: arrayOne (Object), arrayTwo (object Two)
-    EXPORT: isValid (Boolean)
-    ASSERTION: if two array objects are the same class type and length, 
-               and have the same objects in the array and it's valid.
+    IMPORT: inObjct (Object)
+    EXPORT: isEqual (Boolean)
+    PURPOSE: to check the equality of two shipStorages
     **********************************************************************/
     /*public boolean equals(Object inObjct)
     {
@@ -321,7 +304,7 @@ public class ShipStorage
     SUBMODULE: toStringArr
     IMPORT: none
     EXPORT: strArry [] (String)
-    ASSERTION:
+    PURPOSE: to create an array of storeShips toString methods
     **********************************************************************/
     public String[] toStringArr() 
     {
@@ -329,7 +312,7 @@ public class ShipStorage
         use countShips will move to a null index in the storeShips array, hence
         we want to move back to a non-null index so we don't get a null pointer
         exception */
-        String strArr [] = new String [countShips - 1];
+        String strArr [] = new String [countShips];
 
         for (int ii= 0 ; ii < countShips; ii++)
         {
@@ -339,12 +322,11 @@ public class ShipStorage
        return strArr;
     }
 
-    //you need to test if this works
     /**********************************************************************
     SUBMODULE: toFileStringArr
     IMPORT: none
     EXPORT: strArry [] (String)
-    ASSERTION:
+    PURPOSE: to create an array of storeShips toFileString method
     **********************************************************************/
     public String[] toFileStringArr()
     {

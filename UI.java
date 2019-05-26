@@ -2,24 +2,15 @@
 AUTHOR: Tawana David Kwaramba
 FILENAME: UI.java
 STUDENT ID: 19476700
-LAST MODifIED:
+LAST MODifIED: 27/05/19
 PURPOSE: A class which is reponsible for all the user input and output.
 ******************************************************************************/
 import java.util.*;
 
 public class UI
 {
-    //Class constants. COPIED FROM SubMarine NEEDS to be DELETED
-    /*public static final String SubMarine.STEEL = "SubMarine.STEEL";
-    public static final String SubMarine.ALLY = "ALLOY";
-    public static final String SubMarine.TTNM = "TITANIUM";
-    public static final String Engine.BATRY = "BATTERY";
-    public static final String Engine.DSL = "DIESEL";
-    public static final String Engine.BIO = "Engine.BIO";*/
-
-
     //CLASS FIELDS: 
-    ShipStorage shipStorage; 
+    private ShipStorage shipStorage; 
 
     //COSTRUCTORS:
 
@@ -233,15 +224,14 @@ public class UI
         int cylinders = 0;
         do 
         {
-                System.out.print("\nNumber of cylinders of the ships: ");
-                cylinders = in.nextInt();
-        
-                if(!(validateCylinders(cylinders)))
-                {
-                    System.out.println("\nERROR:Please ensure cylinders "+
-                                       "is between 2 and 20 (inclusive)");
-                }
+            cylinders = inputIntMenu("\nNumber of cylinders of the ships: ");
 
+            if(!(validateCylinders(cylinders)))
+            {
+                System.out.println("\nERROR:Please ensure cylinders "+
+                                   "is between 2 and 20 (inclusive)");
+            }
+        
         }while (!(validateCylinders(cylinders)));
         
         return cylinders;
@@ -287,7 +277,8 @@ public class UI
             if (!(validateMaxDepth(depth)))
             {
                 System.out.println("ERROR: Please entet a max depth "+
-                                "between -500 to 0 meters (inclusive");
+                                "between " +SubMarine.MIN_DEPTH+" to " +
+                                SubMarine.MAX_DEPTH+ " meters (inclusive");
             }
 
         }while(!(validateMaxDepth(depth)));
@@ -310,7 +301,9 @@ public class UI
             if (!(validateWingSpan(wingSpan)))
             {
                 System.out.println("\nERROR: please enter a wingspan "+
-                                    "2.20 and 25.6 metres (inclusive)");
+                                    FighterJet.MIN_WING_SPAN+ " and "+
+                                    FighterJet.MAX_WING_SPAN+ " 25.6 metres "+
+                                    "(inclusive)");
             }
         }while (!(validateWingSpan(wingSpan)));
 
@@ -517,160 +510,68 @@ public class UI
         }while ((userOp !=  1) && (userOp != 2));
 
     }
-    /**********************************************************************
-    SUBMODULE: viewShips
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
-    **********************************************************************/
-    /*public void viewShipsMenu() 
-    {
-        int userOp;
-        do
-        {
-            userOp = inputIntMenu("1. View all ships\n"+
-                                      "2. View submarines only\n"+
-                                      "3. View fighter jets only ");
-            switch(userOp)
-            {
-               case 1: 
-                    viewSubs();
-                    viewJets();
-                    break;
-               case 2: 
-                    viewSubs();   
-                    break;
-               case 3:
-                    viewJets();
-                    break;
-                default:
-                    System.out.println("\nPleae enter an option which is "+
-                                        "in the following menu.\n");
-                    break; 
-            }
-        }while ((userOp != 1) && (userOp != 2) && (userOp != 3));
-        
-    }*/ 
-
+  
     /**********************************************************************
     SUBMPODULE: viewShips
     IMPORT: none
     EXPORT: none
-    PURPOSE:
+    PURPOSE: to display all the storeShips strings to the user
     **********************************************************************/
     public void viewShips()
     {
         String [] shipStrs = new String [shipStorage.MAX_CAP];
-        shipStrs = shipStorage.toStringArr();
-
-        for(int ii = 0; ii < shipStorage.MAX_CAP; ii++)  
+        try
         {
-            System.out.println(shipStrs[ii]);
+            shipStrs = shipStorage.toStringArr();
+            for(int ii = 0; ii < shipStorage.getCount(); ii++)  
+            {
+                System.out.println("\n"+shipStrs[ii]);
+            }
+        }
+        catch(NegativeArraySizeException err) 
+        {
+            System.out.println("\nERROR: nothing has been added to the system"+
+                               ": " +err.getMessage());
+        }
+        catch(ArrayIndexOutOfBoundsException errX2)
+        {
+            System.out.println(errX2.getMessage());
         }
     }
-    /**********************************************************************
-    SUBMODULE: viewJets
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
-    **********************************************************************/
-    /*public void viewJets()
-    {
-        String [] shipStrs = new String [shipStorage.MAX_CAP];
-        shipStrs = shipStorage.toStringJetArr();
-        for(int ii = 0; ii < shipStorage.MAX_CAP; ii++) 
-        {
-            System.out.println(shipStrs);
-        }
-    }*/
-    /**********************************************************************
-    SUBMODULE: duplicatesMenu 
-    IMPORT: none
-    EXPROT: none
-    PURPOSE
-    **********************************************************************/
-   /* public void findDuplicatesMenu()
-    {
-        int userOp;
-        do 
-        {
-            userOp = inputIntMenu("1. Find all duplicates\n"+
-                                  "2. Find submarine duplicates only\n"+
-                                  "3. Find fighter Jet duplicates only");
-            switch(userOp)
-            {
-               case 1:
-                    displayDuplicates();              
-                    break;
-               case 2:
-                    displaySubDuplicates();
-                    break;
-               case 3:
-                    displayJetDuplicates();
-                    break;
-                default:
-                    System.out.println("\nplease input what is in the "+
-                                       "menu below\n");
-                    break; 
-            }
-        }while((userOp != 1) && (userOp != 2) && (userOp != 3));
 
-    }*/
-    /**********************************************************************
+   /**********************************************************************
     SUBMODULE: displaySubDuplicates:
     IMPORT: none
     EXPORT: none
-    PURPOSE:
+    PURPOSE: to display all the duplicates found to the user 
     **********************************************************************/
     public void displayDuplicates()
     {
         int ii = 0;
         Ship[] duplicates = new SubMarine[shipStorage.MAX_CAP];
-        duplicates = shipStorage.findDuplicateShips();
-
-        System.out.println("\nThe following ships have duplicates\n");
-
-        do
+        try
         {
-            System.out.println("\n" +duplicates[ii]+ "\n");
-            ii++;
-        }while(duplicates[ii] != null);
+            duplicates = shipStorage.findDuplicateShips();
+            System.out.println("\nThe following ships have duplicates\n");
 
-/*           for(int ii = 0; ii < shipStorage.MAX_CAP * 2; ii++)
-        {
-            System.out.println("SubMarine["+ii+"]\n" +
-                               duplicates[ii].toString());
-            for(int jj = 1; jj < shipStorage.MAX_CAP * 2; jj++) 
+            do
             {
-                System.out.println("SubMarine duplicate ["+(jj-1)+"]\n" +
-                                    duplicates[jj].toString());
-            }
-        }*/
-    }
-    /**********************************************************************
-    SUBMODULE: displayJetDuplicates: 
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
-    **********************************************************************/
-    /*public void displayJetDuplicates()
-    {
-        FighterJet[] duplicates = new FighterJet[shipStorage.MAX_CAP * 2];
-        duplicates = shipStorage.findDuplicateJets();
-        System.out.println("The duplicates pairs are as follows: ");
-
-        for(int ii = 0; ii < shipStorage.MAX_CAP * 2; ii++) 
-        {
-            System.out.println("FighterJet [ii]\n" +
-                               duplicates[ii].toString()); 
-            for(int jj = 1; jj < shipStorage.MAX_CAP * 2; jj++) 
-            {
-                System.out.println("FighterJet Duplicate [jj-1] "+
-                                      duplicates[jj].toString());
-            }
+                System.out.println("\n" +duplicates[ii]+ "\n");
+                ii++;
+            }while(duplicates[ii] != null);
         }
-    }*/
-    /**********************************************************************
+        catch(NegativeArraySizeException err) 
+        {
+            System.out.println("\nERROR: nothing has been added to the system"+
+                                " yet: " +err.getMessage());
+        }
+        catch(ArrayIndexOutOfBoundsException errX2)
+        {
+            System.out.println("\nERROR: array is out of index: "
+                                +errX2.getMessage());
+        }
+   }
+   /**********************************************************************
     SUBMODULE: destinationCheck
     IMPORT: none
     EXPORT: none
@@ -678,15 +579,25 @@ public class UI
     **********************************************************************/
     public void destinationCheck()
     {
-        /*double distance; 
-        int roundDisrance;
-        distance = inputDoublemenu("\nPlease input a distance: ");
-        roundDistance = (int) Math.round(distance);
+        double distance, distanceRound;
+        int distanceRoundInt;
+        String fastestShip; 
 
-        destinationCheckS*/
-        System.out.println("not yet implementeded");
-        
-        
+        distance = inputDoubleMenu("\nEnter a distance to calculate the "+
+                                   "fastest ship which can tranverse that "+
+                                   "distance: ");
+        try
+        {
+            distanceRound = Math.round(distance);
+            distanceRoundInt = (int) distanceRound;
+            fastestShip = shipStorage.destinationCheck(distanceRoundInt);
+            System.out.println("\n the  fastest ship: " +fastestShip+ "\n");
+        }
+        catch(NullPointerException err)
+        {
+            System.out.println("\nERROR: nothing has been added to the system"+
+                               " : " +err.getMessage());
+        }
     }
     /**********************************************************************
     SUBMODULE: loadShips
@@ -710,15 +621,32 @@ public class UI
     {
         int ii = 0;
         String [] savedShips = new String [shipStorage.MAX_CAP];
-        savedShips = shipStorage.toFileStringArr();
-        String fileName = inputStringMenu("Please input a file name to "+
-                                          " save ships: ");
-        do 
+
+        try
         {
-            FileManger.writeFile(fileName, savedShips[ii]);
-            ii++;
-        }while(savedShips[ii] != null && ii < shipStorage.MAX_CAP);
-        //FileManger.writeFile(fileName, shipStorage);
+            savedShips = shipStorage.toFileStringArr();
+            String fileName = inputStringMenu("Please input a file name to "+
+                                          " save ships: ");
+            do 
+            {
+                FileManger.writeFile(fileName, savedShips[ii]);
+                ii++;
+            }while(savedShips[ii] != null && ii < shipStorage.getCount());
+        }
+        catch(NegativeArraySizeException err)
+        {
+            System.out.println("\nERROR: nothing has been added to the system"+
+                               "yet: " +err.getMessage());
+        }
+        catch(ArrayIndexOutOfBoundsException errX2) 
+        {
+            System.out.println(errX2.getMessage());
+        }
+    }
+
+    public static void showError(String error)
+    {
+        System.out.println(error);
     }
 
     /* These following private methods are copied from other classes from this
@@ -897,7 +825,8 @@ public class UI
     {
         boolean isValid = false;
 
-        if(inMaxDepth >= -500 && inMaxDepth <= 0)
+        if(inMaxDepth >= SubMarine.MAX_DEPTH && inMaxDepth <= 
+                                                           SubMarine.MIN_DEPTH)
         {
             isValid = true;
         }
@@ -934,7 +863,8 @@ public class UI
     {
         
         boolean isValid = false;
-        if(inWingSpan >= 2.2 && inWingSpan <= 25.6)
+        if(inWingSpan >= FighterJet.MIN_WING_SPAN && inWingSpan <= 
+                                                      FighterJet.MAX_WING_SPAN)
         {
             isValid = true;            
         }

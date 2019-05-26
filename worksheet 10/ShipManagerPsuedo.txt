@@ -1,6 +1,0 @@
-MAIN:
-
-    create a new UI object with the name userInterface
-    userInterface.mainMenu
-    
-END MAIN:

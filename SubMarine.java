@@ -1,7 +1,7 @@
 /*******************************************************************************
 AUTHOR: Tawana David Kwaramaba
 STUDENT ID: 19476700
-DATE:
+DATE: 27/05/19
 PURPOSE: to create a class which will model the functionality of a real life
          submarine
 *******************************************************************************/
@@ -11,6 +11,8 @@ public class SubMarine extends Ship
     public static final String STEEL = "STEEL";
     public static final String ALLY = "ALLOY";
     public static final String TTNM = "TITANIUM";
+    public static final double MIN_DEPTH = 0.0; 
+    public static final double MAX_DEPTH = -500.0;
 
     //private class fields
     private double maxDepth;
@@ -20,7 +22,7 @@ public class SubMarine extends Ship
     DEFUALT Constructor
     IMPORT: none
     EXPORT: none
-    ASSERTION: a submarine whihc inherits its defualt constructor with a max
+    ASSERTION: a submarine which inherits its defualt constructor with a max
                depth of -500 and a hull of titanium is a valid defualt state
     ***********************************************************************/
     public SubMarine()
@@ -124,14 +126,14 @@ public class SubMarine extends Ship
 
         if(distance >= 0)
         {
-        /*splitting up the calculations in the assignemnt specification to make
-          it more comphredable and to make it easier to type cast values and
-          debug */
+            /*splitting up the calculations in the assignemnt specification to
+            make it more comphredable and to make it easier to type cast values 
+            and debug */
 
-        ratio = ( (double) distance / (double) getEngine().getCylinders());
-        denom = (10.00 + getMaxDepth() * -1.00);
-        invDenom = 1.00 / denom;
-        timeHours = ratio * invDenom;
+            ratio = ( (double) distance / (double) getEngine().getCylinders());
+            denom = (10.00 + getMaxDepth() * -1.00);
+            invDenom = 1.00 / denom;
+            timeHours = ratio * invDenom;
         }
         else
         {
@@ -185,7 +187,7 @@ public class SubMarine extends Ship
     {
         boolean isValid = false;
 
-        if(inMaxDepth >= -500 && inMaxDepth <= 0)
+        if(inMaxDepth >= MAX_DEPTH && inMaxDepth <= MIN_DEPTH)
         {
             isValid = true;
         }
@@ -216,7 +218,8 @@ public class SubMarine extends Ship
     SUBMODULE: equals
     IMPORT: inObjct (object)
     EXPORT: isSame (boolean)
-    PURPOSE:
+    ASSERTION: two submarines are equal if they have the same hull, and
+                max depth
     ********************************************************************/
     @Override
     public boolean equals(Object inObjct)
@@ -239,17 +242,6 @@ public class SubMarine extends Ship
             }
         }
             
-            /* a ship object are only the same if they're constructed with the
-            same hull, has the same maxdepth and the same engine type. Morever,
-            a ship can still be the same even if they have different serial
-            numbers as a serial number is only an idenfication number. Hence 
-            only hull, maxdepth and engine need to be checked if they're the 
-            same */
-            
-            //RECONSIDER REDESIGNING THIS 
-            //isSame = getHull().equals(inSubmarine.getHull()) &&
-              //        getMaxDepth() == (inSubmarine.getMaxDepth());
-
         return isEqual;
     }
 
@@ -257,10 +249,8 @@ public class SubMarine extends Ship
     SUBMODULE: toString
     IMPORT: none
     EXPORT: str
-    PURPOSE: to create a string which will describe the states of the submarine
-              object
-    ASSERTION: returns a string which describes the state of the submarine 
-               object
+    PURPOSE: to display submarines classfields in a readable format format 
+             for the user
     ********************************************************************/
     @Override
     public String toString()

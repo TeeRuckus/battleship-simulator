@@ -261,8 +261,7 @@ SUBMODULE: addShipsFile
 
     ALGORITHM: 
         OUTPUT: "Please enter file name to read ships from"
-        INPUT: fileName (String)
-        FileManger.readFile <- fileName
+        FileManger.readFile <- fileName, shipStorage
 
 OTHER METHODS
 
@@ -287,7 +286,7 @@ SUBMODULE: mainMenu
                 OUTPUT: "Please enter an option which is in the menu below: "
             END IF 
 
-        WHILE userOP doesn't equal to 1 or 2 or 3 or 4 or 5 or 6 or 7
+        WHILE userOP doesn't equal 7
 
         CASE userOP
             1:
@@ -334,27 +333,20 @@ SUBMODULE: addShipsMenu
 SUBMODULE: viewShips
     IMPORT: none
     EXPORT: none
-    PURPOSE:
+    PURPOSE: to display all the storeShips strings to the user
 
     ALGORITHM:
-        DO
-            (Integer) userOp := inputIntMenu <- ("1. View all ships
-                                                  2. View submarines only
-                                                  3. View fighter jets 
-                                                    only ")
-            IF (userOp doesn't equal to 1 or 2 or 3 ) THEN
-                OUTPUT "Pleae enter an option which is in the following meanu:
-            END  IF
-        WHILE (userOp doesn't equal 1 or 2 or 3)
-        
-        CASE userOp
-            1: 
-                viewSubs <- none
-                viewJets <-none
-            2: 
-                viewSubs <- none    
-            3:
-                viewJets <- none
+        String[] ShipStrs = SIZE of shipStrage <- MAX_CAP
+
+        TRY
+            shipStrs := shipStorage <- toStringStrr <- none
+            FOR(integer ii := 0 TO shipStorage <- getCount <- none CHNAGEBY 1)
+               THEN 
+               OUTPUT: shipStrsa
+            END FOR
+        CATCH(NegativeArraySizeException)
+            OUTPUT: "ERROR: nothing has beenadded to the system: "
+                    getMessage <- none
 
 SUBMPODULE: viewSubs
     IMPORT: none
@@ -367,76 +359,24 @@ SUBMPODULE: viewSubs
             OUTPUT: shipStorage.toStringSubArr[ii]
         END FOR
 
-SUBMODULE: viewJets
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
-
-    ALGOTITHM:
-        
-        FOR ((Integer) ii TO shipStorage.MAXCAP (exclusive) CHANGEBY 1) THEN
-            OUTPUT: shipStorage.toStringJetArr[ii]
-        END FOR
-
-SUBMODULE: duplicatesMenu 
-    IMPORT: none
-    EXPROT: none
-    PURPOSE
-
-    ALGORITHM:
-        DO 
-            (Integer) userOp := inputIntMenu <- ("1. Find all duplicates
-                                                  2. Find submarine 
-                                                     duplicates only
-                                                  3. Find fighter Jet
-                                                     duplicates only")
-            IF (userOp doesn't equal to 1 or 2 or 3) THEN
-                OUTPUT: "please input what is in the menu below: "
-            END IF
-        WHILE (userOp doesn't equal to 1 or 2 or 3 ) 
-
-        case userOp
-            1:
-                displaySubDuplicates <- none
-                displayJetDuplicates <- none              
-            2:
-                displaySubDuplicates <- none
-            3:
-                displayJetDuplicates <- none
 
 SUBMODULE: displaySubDuplicates:
     IMPORT: none
     EXPORT: none
-    PURPOSE:
+    PURPOSE: to display all the duplicates found to the user 
 
     ALGORITHM:
-
-        OUTPUT: "The duplicates pairs are as follows"
-
-        FOR ((integer) ii := 0 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
-            OUTPUT: "SubMarine [ii] " 
-                    +shipStorage.findDUplcateSub[ii].toString
-            FOR((integer)ii := 1 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
-                OUTPUT: "SubMarine duplicate [ii-1] "
-                        +shipStorage.findDuplicateSub[ii+1]
-        END FOR
-
-SUBMODULE: displayJetDuplicates: 
-    IMPORT: none
-    EXPORT: none
-    PURPOSE:
-
-    ALGORITHM:
-
-        OUTPUT: "The duplicates pairs are as follows: "
-
-        FOR ((integer) ii := 0 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
-            OUTPUT: "FighterJet[ii] "
-                     +shipStorage.findDuplicateJet[ii].toStringJet+ 
-            FOR((integer)ii := 1 TO shipStorage.MAXCAP * 2 CHANGEBY 1) THEN
-                OUTPUT: "FighterJet Duplicate [ii-1] "
-                         +shipStorage.findDuplicateJet[ii+1]
-        END FOR
+        Ship[] duplicates := SIZE OF shipStorage <- MAX_CAP
+        TRY
+            duplicates = shipStorage <- findDuplicate <-  none
+            OUTPUT: "the following ships have duplicates "
+            DO
+                OUTPUT: duplicates[ii]
+            WHILE duplicates[ii] doesn't equal to null
+        CATCH (NegativeArraySizeExceptions)
+            OUTPUT: "ERROR: nothing has been added to the system yet: <- get
+                    error message
+        END TRY CATCH
 
 SUBMODULE: destinationCheck
     IMPORT: none
@@ -445,7 +385,18 @@ SUBMODULE: destinationCheck
 
     ALGORITHM:
         
-        OUTPUT: "not yet implememntededed"
+        distance := inputDoubleMenu <-"Enter a distance to calculate the "+
+                                   "fastest ship which can tranverse that "+
+                                   "distance:")
+        TRY 
+            distanceRound (Real) := round  up distance
+            distanceRoundInt := (integer) distanceRound
+            fastestShip := shipStorage <- destinationCheck <- distanceRoundInt
+            OUTPUT "The fastest ship " +fastestShip
+        CATCH(NullPointerException)
+            OUTPUT: "ERROR: nothing has been added to the system" +get error
+                    message
+        END TRY CATCH
 
 SUBMODULE: loadShips
     IMPORT: none
@@ -454,19 +405,36 @@ SUBMODULE: loadShips
 
     ALGORITHM:
         
-        OUTPUT: "Please input a fileName to load ships: "
-        INPUT: fileName (String)
-        FileManger.readFile(fileName) 
+        fileName (Stin) :=inpuutStringMenu <- "Please input a fileName to load 
+                                             ships: "
+        FileManger.readFile(fileName, shipStorage)
 
 SUBMODULE: saveShips
     IMPORT: fileName (String)
     EXPORT: none
 
     ALGORITHM:
-        
-        OUTPUT: "Please inpu  a file
+        String[] savedShips := SIZE OF shipStorage <- MAX_CAP
+        TRY
+            savedShips := shipStorage <- toFileString <- none
+            fileName (string) := inputStringMenu <- "Please input a file name 
+                                                    to save ships: "
+            DO
+                FileManger <- writeFile <- fileName, savedShips[ii]
+                ii := ii+1
+            WHILE savedShips[ii] doesn't equal null AND ii < shipStorage <-
+                  getCount <- none
+        CATCH(NegativeArraySizeException)
+            OUTPUT: "ERROR: nothing has been added to the system yet: " +get
+                    error message
 
-SUBMODULE: errorMssg
-    IMPORT: mssg(String)
-    EXPORT: errMssg (String)
+SUBMODULE: showError
+    IMPORT: error (String)
+    EXPORT: none
     ASSERTION: returns the error message of the specific methods been called
+
+    ALGORITHM
+        OUTPUT: error
+
+    the rest of the code is copied and pasted from  other classes and I am not
+    copying the psuedo here

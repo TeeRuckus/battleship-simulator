@@ -1,12 +1,14 @@
 CLASS: Engine
 
     PUBLIC CLASS CONSTANTS:
-        BATRY := "BATTERY"
-        DSL := "DIESEL" 
-        BIO := "BIO" 
+        BATRY (String) := "BATTERY"
+        DSL (String) := "DIESEL" 
+        BIO (String) := "BIO" 
+        MAXCYLINDERS (integer) := 20
+        MINCYLINDERS (integer) := 2
 
     CLASS FIELDS:
-        cyliners (Interger)
+        cyliners (Integer)
         fuel (String)
 
     COSTRUCTORS:
@@ -30,8 +32,9 @@ CLASS: Engine
             IF (validateCylinders <- inCylinders) THEN
                 IF (validateFuel <- inFuel) THEN
                     
-                    fuel := inFuel
                     cylinders := inCylinders
+                    fuel := inFuel <- make a copy
+
                 END IF
             END IF
 
@@ -90,7 +93,7 @@ CLASS: Engine
             ALGORITHM:
                 isValid := FALSE           
                 
-                IF ( 2 <= inCylinders <= 20) THEN
+                IF (MINCYLNDERS <= inCylinders <= MAXCYLINDERS) THEN
                     isValid := TRUE
                 ELSE
                     FAIL("Invalid cylinders")
@@ -104,12 +107,18 @@ CLASS: Engine
 
             ALGORITHM:
                isValid := False
-               (Stringg) upperCaseInFuel := inFuel CONVERT to upper cases
+
+               COMMENT: converting inFuel to be upper case, to allow any casing 
+                        for fuel to be passed to this method as specified in 
+                        the specification
+
+               (String) upperCaseInFuel := inFuel CONVERT to upper cases
 
                 IF (upperCaseInFuel EQUALS TO BATRY or DSL or BIO) THEN 
                     isValid := TRUE
                 ELSE
                     FAIL("Invalid fuel")
+                END IF ELSE
 
     OTHER METHODS:
 
@@ -119,7 +128,7 @@ CLASS: Engine
         ASSERTION: returns a cloned object of the current object
 
         ALGORITHM:
-            construct cloneEngine using this
+            construct cloneEngine using this 
 
     SUBMODULE: equals
         IMPORT: inObjct (object)
@@ -139,16 +148,23 @@ CLASS: Engine
     SUBMODULE: toString
         IMPORT: none
         EXPORT: str (String)
-        ASSERTION:
+        PURPOSE: to return a string of the engines classfields states
 
         ALGORITHM:
-           str := " The engine has" +cylinders+ " cylinders, and it runs on"
-                    +fuel+ " fuel".
+
+            COMMENT: fuel is formatteded in upper cases and this is not very 
+            user friendly, hence it needs to be formetted to lower cases. Thus 
+            a creation of a lower case variable
+
+            fuelLowerCase (String) := fuel <- convert to lower case
+            str := " The engine has" +cylinders+ " cylinders, and it runs on"
+                    +fuelLowerCase+ " fuel".
 
     SUBMODULE: toFileString
         IMPORT: none
         EXPORT: str (String) 
-        ASSERTION:
+        PURPSOSE: to return a string of the engines classfields in a file 
+                  format
 
         ALGOTITHM:
             str :=  +cylinders+ ", " +fuel+ "."

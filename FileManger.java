@@ -1,8 +1,8 @@
 /*****************************************************************************
-AUTHOR: Tawana David Kwaramba
+AUTHOR: Tawana David Kwaramba}
 FILENAME: UI.java
 STUDENT ID: 19476700
-LAST MODifIED:
+LAST MODifIED: 27/05/19
 PURPOSE: A class which is reponsible for all the user input and output.
 ******************************************************************************/
 import java.io.*;
@@ -16,7 +16,7 @@ public class FileManger
     EXPORT: none
     PURPOSE: to read and prcess the contents of a file
     **************************************************************************/
-    public static void readFile(String fileName, ShipStorage storageUnit)
+    public static void readFile(String fileName, ShipStorage shipStorage)
     {
         //Psudo code adapted from lecture 5 of OOPD 
     
@@ -35,13 +35,12 @@ public class FileManger
             line = buffRdr.readLine();
             /*I am miultiplying MAX_CAP by 2 because there's 2 storage 
             units of for submarines and jets.*/
-
             while(line != null && lineNum < ShipStorage.MAX_CAP)
             {
                 try
                 {
                     lineNum++;
-                    processLine(line, storageUnit);
+                    processLine(line, shipStorage);
                     line = buffRdr.readLine();
                 }
                 catch(IllegalArgumentException err)
@@ -56,7 +55,7 @@ public class FileManger
         }
         catch(IOException err)
         {
-            System.out.println("File not found");
+            UI.showError(err.getMessage());
             if(strm != null)  
             {
                 try
@@ -110,7 +109,7 @@ public class FileManger
     IMPORT: line (String)
     EXPORT: none 
     **************************************************************************/
-    public static void processLine(String line, ShipStorage storageUnit)
+    public static void processLine(String line, ShipStorage shipStorage)
     {
         //this was adapted from OOPD worksheet 8: REFERENCE THIS LATER
         String[] lineContents = new String[7]; 
@@ -119,7 +118,7 @@ public class FileManger
 
         if(validateLine(lineContents))
         {
-            createShipObjcts(lineContents, storageUnit); 
+            createShipObjcts(lineContents, shipStorage); 
         }
     }
          
@@ -138,7 +137,7 @@ public class FileManger
         double maxDepth, wingSpan;
         int year, cylinders;
         String fuel, hull, ordance; 
-        shipType = lineContents[0].charAt(0);
+
 
         //intiliasing the variables to 0 or nothing, to allow java to compile    
 
@@ -165,16 +164,15 @@ public class FileManger
         }*/
         try
         {
+            shipType = lineContents[0].charAt(0);
             serialNum = lineContents[1];
             year = Integer.parseInt(lineContents[2]);
             cylinders = Integer.parseInt(lineContents[3]);
             fuel = lineContents[4];
 
-            Engine egine = new Engine(cylinders, fuel);
             switch (Character.toUpperCase(shipType))
             {
                 case 'S':
-
                     hull = lineContents[5];
                     maxDepth = Double.parseDouble(lineContents[6]); 
                     SubMarine sub = new SubMarine(serialNum, year,
@@ -198,7 +196,8 @@ public class FileManger
             /* to cacth any expcetions which may have been thrown by the
             submarine and fighterjet class */
 
-            String error = err.getMessage();
+            UI.showError(err.getMessage());
+
         }
     }
 /*
