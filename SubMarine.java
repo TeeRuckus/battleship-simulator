@@ -289,7 +289,7 @@ public class SubMarine extends Ship
     public String toFileString()
     {
         String str;
-        str = "S," + super.toFileString() +", "+ getEngine().toFileString() + 
+        str = "S," + super.toFileString() +","+ getEngine().toFileString() + 
               "," + hull + "," +maxDepth;
         return str;
     }

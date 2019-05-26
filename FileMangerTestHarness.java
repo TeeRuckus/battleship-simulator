@@ -32,13 +32,18 @@ public class FileMangerTestHarness
             {
                 FileManger.writeFile("testData.txt", storageFileInfo[ii]);
             }
+            System.out.println("\nwriting to a file test passed[x]\n");
 
-            
-            FileManger.writeFile("play.txt", "hey");
-            FileManger.writeFile("play.txt", "my name is asdfklasdjhf");
-            FileManger.writeFile("play.txt", "lol, I don't even know aye");
+            //Reading the writing files and creating objects fro itS
+            FileManger.readFile("testData.txt", shipStorage);
+            System.out.println("\nreading a file test passed[x]\n");
 
-            //FileManger.writeFile("testData.txt", shipStorage.toFileStringArr());
+            //appending bad data onto testData.txt.
+            FileManger.writeFile("testData.txt", "I like to troll");
+            System.out.println("\nappended bad data onto file\n");
 
+            //trying to read the file again with the bad data
+            FileManger.readFile("testData.txt", shipStorage); 
+            System.out.println("\nreading the file with bad data, passed\n");
     }
 }

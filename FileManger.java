@@ -33,16 +33,25 @@ public class FileManger
 
             lineNum = 1;
             line = buffRdr.readLine();
-            
             /*I am miultiplying MAX_CAP by 2 because there's 2 storage 
             units of for submarines and jets.*/
 
-            while(line != null && lineNum < ShipStorage.MAX_CAP * 2) 
+            while(line != null && lineNum < ShipStorage.MAX_CAP)
             {
-                lineNum++;
-                line = buffRdr.readLine();
-                processLine(line, storageUnit);
-            } 
+                try
+                {
+                    lineNum++;
+                    processLine(line, storageUnit);
+                    line = buffRdr.readLine();
+                }
+                catch(IllegalArgumentException err)
+                {
+                    /* I want to catch any badil/incorrectly written lines and
+                    keep searching throug the file for correctly written
+                    lines */
+                }
+            }
+
             strm.close();
         }
         catch(IOException err)
@@ -63,22 +72,24 @@ public class FileManger
     SUBMODULE: writeFile
     IMPORT: fileName (String)
     EXPORT: none
-    PURPOSE: to write the contents in the submarine object to a file
+    PURPOSE: to create a file whereby the user can write onto it
     **************************************************************************/
-    public static void writeFile(String fileName, String line) 
+    public static void writeFile(String fileName, String line)
     {
         //psudo code adapted from lecture 5 of OOPD     
         FileOutputStream strm = null;
         PrintWriter pw; 
         try
         {
-            strm = new FileOutputStream(fileName);
+            strm = new FileOutputStream(fileName, true);
             pw = new PrintWriter(strm);
 
-            for(int ii = 0; ii < ShipStorage.MAX_CAP; ii++) 
+            /*for(int ii = 0; ii < ShipStorage.MAX_CAP; ii++) 
             {
                 pw.println(line);
-            } 
+            } */
+            pw.println(line);
+
             pw.close();           
         }
         catch( IOException err)
@@ -94,7 +105,7 @@ public class FileManger
             }
         }
     }
-    /**************************************************************************
+   /**************************************************************************
     SUBMODULE: processLine
     IMPORT: line (String)
     EXPORT: none 
@@ -103,8 +114,8 @@ public class FileManger
     {
         //this was adapted from OOPD worksheet 8: REFERENCE THIS LATER
         String[] lineContents = new String[7]; 
+        //lineContents = line.split("\\,");
         lineContents = line.split(",");
-        //lineContents [] = line.split(",") ;
 
         if(validateLine(lineContents))
         {
@@ -216,9 +227,7 @@ SUBMODULE: searchDir
 
         if(lineContents.length != 7)
         {
-            throw new IllegalArgumentException("ERROR: incorrect file format "+
-                                               "the line must contain 7 "+
-                                               "elements");
+            throw new IllegalArgumentException("ERROR: incorrect file format");
         }
          
         if(lineContents[0].length() != 1)

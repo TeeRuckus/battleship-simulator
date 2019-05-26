@@ -331,7 +331,7 @@ public class ShipStorage
         exception */
         String strArr [] = new String [countShips - 1];
 
-        for (int ii= 0 ; ii < countShips - 1; ii++)
+        for (int ii= 0 ; ii < countShips; ii++)
         {
             strArr [ii] =  storeShips[ii].toString();
         }

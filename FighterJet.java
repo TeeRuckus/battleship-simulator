@@ -255,8 +255,8 @@ public class FighterJet extends Ship
     public String toFileString()
     {
         String str;
-        str = "F," + super.toFileString() + ","+ "," + wingSpan + "," 
-              + ordance;
+        str = "F," + super.toFileString() + ","+getEngine().toFileString()+ "," 
+              + wingSpan + "," + ordance;
     
         return str;
     }
