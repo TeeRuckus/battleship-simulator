@@ -26,8 +26,8 @@ public class SubMarine extends Ship
     public SubMarine()
     {
         super();
-        maxDepth = -500.0;
         hull = TTNM;
+        maxDepth = -500.0;
     }
 
     /***********************************************************************
@@ -222,13 +222,22 @@ public class SubMarine extends Ship
     public boolean equals(Object inObjct)
     {
         super.equals(inObjct);
-        boolean isSame = false;
+        boolean isEqual = false;
         if(inObjct instanceof SubMarine)
         {
             /* we need to type cast inObjct to a submarine class because 
             the object data type is not sepcific enough, and it won't be 
             suitable for boolean operations */
-            SubMarine inSubmarine = (SubMarine)inObjct;
+            SubMarine inSubMarine = (SubMarine)inObjct;
+
+            if(isSame(hull, inSubMarine.getHull()))
+            {
+                if(isSame(maxDepth, inSubMarine.getMaxDepth()))
+                {
+                    isEqual = true;
+                }
+            }
+        }
             
             /* a ship object are only the same if they're constructed with the
             same hull, has the same maxdepth and the same engine type. Morever,
@@ -238,11 +247,10 @@ public class SubMarine extends Ship
             same */
             
             //RECONSIDER REDESIGNING THIS 
-            isSame = getHull().equals(inSubmarine.getHull()) &&
-                      getMaxDepth() == (inSubmarine.getMaxDepth());
-        }
+            //isSame = getHull().equals(inSubmarine.getHull()) &&
+              //        getMaxDepth() == (inSubmarine.getMaxDepth());
 
-        return isSame;
+        return isEqual;
     }
 
     /********************************************************************

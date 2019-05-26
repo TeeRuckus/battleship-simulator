@@ -13,7 +13,7 @@ public class FighterJetTestHarness
             fighterJet[0] = new FighterJet();
             fighterJet[1] = new FighterJet("199.666", 1969,"turrents", 
                              3, new Engine());
-            fighterJet[2] = new FighterJet(fighterJet[1]);
+            fighterJet[2] = new FighterJet(fighterJet[0]);
             fighterJet[3] = fighterJet[1].clone();
 
             //printing out created objects

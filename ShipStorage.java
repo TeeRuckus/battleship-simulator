@@ -12,7 +12,7 @@ public class ShipStorage
 
     //CLASS FIELDS:
     private int countShips;
-    Ship storeShips [];
+    private Ship storeShips [];
     private Ship ship;
 
     //COSTRUCRS:
@@ -92,33 +92,25 @@ public class ShipStorage
     IMPORT: (integer) distance
     EXPORTS: (String) str 
     **********************************************************************/
-    /*
     public String destinationCheck(int distance) 
     {
-        double compareShips;
-        Ship fatestShip;
-        
-         /* I am setting up the first ship as a reference point of 
-            comparison to other ships, and the 0 index is the most convient
-            index*/
+        Ship fastestShip;
+        fastestShip = null;
 
-      //  compareShips = ship.calcTravelTime(distance);
-    
-        /*I don't want the reference submarine of comparison, to comparew
-        by itself, as this is an ineffecient use of the machine's 
-        resouces.*/
-    /*
-        for(int ii = 1; ii < MAX_CAP; ii++)
+        for(int ii = 0; ii < countShips - 1; ii++)
         {
-            compareShips = Ship.calcTravelTime(storeShips[ii],distance);
-            if(compareShips < fastestShipTime)
+            for(int jj = ii + 1; jj < countShips -1; jj++)
             {
-                fastestShip = storeShips[ii].toString();
-            } 
+                if((storeShips[ii].calcTravelTime(distance)) < 
+                                    (storeShips[jj].calcTravelTime(distance)))
+                {
+                   fastestShip = storeShips[ii];
+                }
+            }
         }
-        
-        return fastestShip.toString(); 
-    }*/
+
+        return fastestShip.toString();
+    }
    
     /**********************************************************************
     SUBMODULE: findDuplicateShips
@@ -129,21 +121,35 @@ public class ShipStorage
     public Ship [] findDuplicateShips() 
     {
         /* I am subtracting one because the other the methods which use 
-        counSihps move to a null index of the */
+        counShipps move to a null index of the storeShips array, hence to go 
+        back to a non-null index we need to subtract one */
+
         Ship duplicates [] = new Ship[(countShips -1) * 2];
+        
+        int found;
+        found = 0;
         
         for (int ii = 0 ;ii < countShips - 1; ii++) 
         {
-            /*I am starting the looping variable at one because 1 don't
+            /*I am adding one to the looping variable at one because I don't
              want the programme to store itself as a dupilcate, hence
              it will search for objects after itself*/
 
-            for(int jj = ii+1 ; jj < countShips -1 ;jj++)
+            for(int jj = ii+1 ; jj < countShips - 1 ;jj++)
             {
                 if(storeShips[ii].equals(storeShips[jj])) 
                 {
-                    duplicates[ii] = storeShips[ii];
-                    duplicates[jj] = storeShips[jj];
+                    /* a seperate counter is used for duplicates to ensure the
+                    array is filled from the begginning index onwards */
+
+                    duplicates[found] = storeShips[ii];
+
+                    /* we need to add one to found so we can store the 
+                    duplicate ships next to each other in the duplicates array
+                    */
+
+                    //duplicates[found + 1] = storeShips[jj];
+                    found++;
                 }
             }
          }
@@ -154,7 +160,7 @@ public class ShipStorage
    //PRIVATE SUBMODULES:
    
     /**********************************************************************
-    SUBMODULE: validateSub
+    SUBMODULE: validateShip 
     IMPORT: inObjct (subMarine object)
     EXPORT: isValid (Boolean)
     ASSERTION: if inObjct is a subMarine object then it's  valid
@@ -178,7 +184,7 @@ public class ShipStorage
     }
 
     /**********************************************************************
-    SUBMODULE: validateJet
+    SUBMODULE: validateShip
     IMPORT: inObjct (fighterJet object)
     EXPORT: isValid (Boolean)
     ASSERTION: if inJet is a fighterJet object then it's valid
@@ -251,9 +257,9 @@ public class ShipStorage
     PURPOSE: To creaete a copy/cone of the current object.
     ASSERTION: returns a cloned object of the current object
     ********************************************************************/
-    /*public Ship clone()
+ /*   public Ship[] clone()
     {
-        return new Ship(this);
+        return new storeShips(this);
     }*/
 
     /**********************************************************************
@@ -319,31 +325,43 @@ public class ShipStorage
     **********************************************************************/
     public String[] toStringArr() 
     {
-        int tolShipsInfo;
+        /* I am subtracting one from countShips because the other methods which
+        use countShips will move to a null index in the storeShips array, hence
+        we want to move back to a non-null index so we don't get a null pointer
+        exception */
+        String strArr [] = new String [countShips - 1];
 
-         /*I am adding an extra 1 to tolShipsInfo. Because, I want an
-         extra index to store the summary of the ship storage units
-         (i.e. how many ships they're in total. How many jets they're,
-         and how many submarines they're)*/
-
-        tolShipsInfo = MAX_CAP + 1;
-
-        String strArr [] = new String [tolShipsInfo];
-
-        strArr [0] = "The ship storage contains " +(countShips-1)+ " ships. "+
-                     "There's " +countShips+ " submarines, and there's " +
-                      countShips+ "fighter jets in the hanger";
-
-         /*I am starting the looping condition at 1, becasue the 0 index
-         is reserved for the summary of the arrays, and I am subtracting
-         one so the for loop doesn't try to look outside the array as
-         the index of an array starts at 1*/
-
-        for (int ii= 1 ; ii < MAX_CAP; ii++)
+        for (int ii= 0 ; ii < countShips - 1; ii++)
         {
             strArr [ii] =  storeShips[ii].toString();
         }
 
        return strArr;
     }
+
+    //you need to test if this works
+    /**********************************************************************
+    SUBMODULE: toFileStringArr
+    IMPORT: none
+    EXPORT: strArry [] (String)
+    ASSERTION:
+    **********************************************************************/
+    public String[] toFileStringArr()
+    {
+
+        /* I am subtracting one from countShips because the other methods which
+        use countShips will move to a null index in the storeShips array, hence
+        we want to move back to a non-null index so we don't get a null pointer
+        exception */
+
+        String strArr [] = new String [countShips - 1];
+
+        for (int ii= 0 ; ii < countShips - 1; ii++)
+        {
+            strArr [ii] =  storeShips[ii].toFileString();
+        }
+
+       return strArr;
+    }
+
 }

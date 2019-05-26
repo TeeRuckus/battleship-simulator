@@ -218,6 +218,6 @@ public class Engine
     ********************************************************************/
     public String toFileString()
     {
-        return(cylinders+ " ," +fuel+ ".");
+        return(cylinders+ " ," +fuel);
     }
 }

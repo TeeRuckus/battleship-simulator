@@ -183,15 +183,6 @@ public class FighterJet extends Ship
 
     }
 
-    /*******************************************************************
-    SUBMODULE: isSame
-    IMPORT: realNumOne (Real), realNumTwo (real)
-    EXPORT: isValid (Boolean)
-    ASSERTION: to compare if two real numbers are the same given a specific 
-               tolerance
-    ********************************************************************/
-    private boolean isSame(double realNumOne, double realNumTwo)
-
     //OTHER METHODS
 
     /********************************************************************
@@ -216,18 +207,29 @@ public class FighterJet extends Ship
     @Override
     public boolean equals(Object inObjct)
     {
-        boolean isSame = false;
+        boolean isEqual = false;
 
         if(inObjct instanceof FighterJet) 
         {
+            //this is from the association lecture slide
             FighterJet inFighterJet = (FighterJet)inObjct;
-            isSame = ordance.equals(inFighterJet.getOrdance()) &&
-                      wingSpan == (inFighterJet.getWingSpan());
-                      // this is not the way you compare wingspans
+
+            if(isSame(ordance, inFighterJet.getOrdance()))
+            {
+                if(isSame(wingSpan, inFighterJet.getWingSpan()))
+                {
+                    isEqual = true;
+                }
+            }
         }
 
-        return isSame;
+            //isSame = ordance.equals(inFighterJet.getOrdance()) &&
+                     // wingSpan == (inFighterJet.getWingSpan());
+                      // this is not the way you compare wingspans
+
+        return isEqual;
     }
+
     /********************************************************************
     SUBMODULE: toString
     IMPORT: none

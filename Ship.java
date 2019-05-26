@@ -6,6 +6,12 @@ PURPOSE:
 *******************************************************************************/
 public abstract class Ship
 {
+    //Classs constants
+
+    /*In this programme we only car about numbers to two decimal places, hence
+    the tolerance is 0.001 */
+    public static final double TOL = 0.001;
+
     //PRIVATE CLASS FIELDS
     private String serialNum;
     private int year; 
@@ -289,7 +295,57 @@ public abstract class Ship
 
         return isValid;
     }
-  
+
+    //Protected methods
+
+    /* I want only the subclassses of Ship.java to access theses following
+    methods, hence I am making protected methods */
+
+    /***********************************************************************
+    SUBMODULE: isSame
+    IMPORT: realNumOne (Real), realNumTwo (Real)
+    EXPORT: isSame (Boolean)
+    PURPOSE: to check the equality of two real numbers, given a specific
+    tolerance.
+    **********************************************************************/
+    protected boolean isSame(double realNumOne, double realNumTwo)
+    {
+        //I adopted this code from the object oriented lectuter
+        boolean isSame;
+        isSame = false;
+        if(Math.abs(realNumOne - realNumTwo) < TOL)
+        {
+            isSame = true;
+        }
+
+        return isSame;
+    }
+    /***********************************************************************
+    SUBMODULE: isSame
+    IMPORT: stringOne (String), stringTwo (String)
+    EXPORT: isSame (Boolean)
+    PURPOSE: To check the equality of two strings whereby the casing doesn't
+    matter
+    **********************************************************************/
+    protected boolean isSame(String stringOne, String  stringTwo)
+    {
+        //this is not my idea, it's adopted from the association lecture slides
+        String stringOneLower, stringTwoLower;
+        boolean isSame;
+
+        stringOneLower = stringOne.toLowerCase();
+        stringTwoLower = stringTwo.toLowerCase();
+        isSame = false;
+
+        if(stringOneLower.equals(stringTwoLower))
+        {
+            isSame = true;
+        }
+
+        return isSame;
+    }
+        
+
     //OTHER METHODS
     
     /********************************************************************
@@ -311,7 +367,7 @@ public abstract class Ship
     public boolean equals(Object inObjct)
     {
         //I am pretty sure this is from amy's example, reference this properly
-        boolean isSame = false;
+        boolean isEqual = false;
         if(inObjct instanceof Ship)
         {
             /* we need to type cast inObjct to a Ship class because the object
@@ -319,15 +375,26 @@ public abstract class Ship
             any boolean operations */
 
             Ship inShip = (Ship)inObjct;
+
+            if(year == inShip.getYear())
+            {
+                if(serialNum.equals(inShip.getSerialNum()))
+                {
+                    if(engine.equals(inShip.getEngine()))
+                    {
+                        isEqual = true;
+                    }
+                }
+            }
+        }
             
             /* a ship class are only the same if they're made in the same year
             and if they have the same engine */
-            isSame = year == inShip.getYear() && 
-                             serialNum.equals(inShip.getSerialNum()) &&
-                                  engine.equals(inShip.getEngine());
-        }
+            //isSame = year == inShip.getYear() && 
+              //               serialNum.equals(inShip.getSerialNum()) &&
+                //                  engine.equals(inShip.getEngine());
 
-        return isSame;
+        return isEqual;
     }
       
     /********************************************************************
